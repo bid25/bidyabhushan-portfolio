@@ -15,13 +15,9 @@ import {
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
 
-// replace with your own imports, see the usage snippet for details
-import cardGLB from './card.glb';
-import lanyardImg from './lanyard.png';
-
-// Next.js resolves .png imports to StaticImageData objects; drei's useTexture
-// expects a plain URL string. Extract .src for compatibility.
-const lanyard = typeof lanyardImg === 'string' ? lanyardImg : (lanyardImg as { src: string }).src;
+// We are referencing assets from the public directory
+const cardGLB = '/card.glb';
+const lanyard = '/lanyard.png';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -284,7 +280,7 @@ function Band({
       band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true);
+      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, false);
     }
   });
 

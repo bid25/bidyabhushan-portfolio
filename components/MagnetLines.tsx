@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useEffect, CSSProperties } from 'react';
 
 interface MagnetLinesProps {
@@ -29,37 +31,67 @@ const MagnetLines: React.FC<MagnetLinesProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const items = container.querySelectorAll<HTMLSpanElement>('span');
+    const items = Array.from(container.querySelectorAll<HTMLSpanElement>('span'));
+    if (!items.length) return;
 
-    const onPointerMove = (pointer: { x: number; y: number }) => {
-      items.forEach(item => {
+    // Centers are cached and only recomputed on resize — reading
+    // getBoundingClientRect() per item on every pointermove forces a
+    // synchronous layout on every mouse tick, which gets very expensive
+    // once the grid has hundreds/thousands of items.
+    let centers: { x: number; y: number }[] = [];
+    const recomputeCenters = () => {
+      centers = items.map(item => {
         const rect = item.getBoundingClientRect();
-        const centerX = rect.x + rect.width / 2;
-        const centerY = rect.y + rect.height / 2;
-
-        const b = pointer.x - centerX;
-        const a = pointer.y - centerY;
-        const c = Math.sqrt(a * a + b * b) || 1;
-        const r = ((Math.acos(b / c) * 180) / Math.PI) * (pointer.y > centerY ? 1 : -1);
-
-        item.style.setProperty('--rotate', `${r}deg`);
+        return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
       });
+    };
+    recomputeCenters();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    let pointer = { x: centers[Math.floor(items.length / 2)].x, y: centers[Math.floor(items.length / 2)].y };
+    let rafId: number | null = null;
+
+    const applyRotation = () => {
+      rafId = null;
+      if (prefersReducedMotion.matches) return; // Skip if user prefers reduced motion
+      
+      for (let i = 0; i < items.length; i++) {
+        const center = centers[i];
+        const b = pointer.x - center.x;
+        const a = pointer.y - center.y;
+        const c = Math.sqrt(a * a + b * b) || 1;
+        const r = ((Math.acos(b / c) * 180) / Math.PI) * (pointer.y > center.y ? 1 : -1);
+        items[i].style.transform = `rotate(${r}deg)`;
+      }
+    };
+
+    // Batch to at most one recompute per animation frame, no matter how
+    // many pointermove events land within that frame.
+    const scheduleUpdate = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(applyRotation);
+      }
     };
 
     const handlePointerMove = (e: PointerEvent) => {
-      onPointerMove({ x: e.x, y: e.y });
+      pointer = { x: e.clientX, y: e.clientY };
+      scheduleUpdate();
     };
 
-    window.addEventListener('pointermove', handlePointerMove);
+    const handleResize = () => {
+      recomputeCenters();
+      scheduleUpdate();
+    };
 
-    if (items.length) {
-      const middleIndex = Math.floor(items.length / 2);
-      const rect = items[middleIndex].getBoundingClientRect();
-      onPointerMove({ x: rect.x, y: rect.y });
-    }
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('resize', handleResize);
+    scheduleUpdate();
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('resize', handleResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [rows, columns]);
 
@@ -72,9 +104,7 @@ const MagnetLines: React.FC<MagnetLinesProps> = ({
         backgroundColor: lineColor,
         width: lineWidth,
         height: lineHeight,
-        //@ts-ignore
-        '--rotate': `${baseAngle}deg`,
-        transform: 'rotate(var(--rotate))',
+        transform: `rotate(${baseAngle}deg)`,
         willChange: 'transform'
       }}
     />
