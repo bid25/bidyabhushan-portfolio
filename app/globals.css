@@ -1,26 +1,132 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* ── Terminal Session palette ────────────────────────────── */
+
+  /* Neutrals */
+  --color-void: #0A0B0D;
+  --color-ash: #6E7681;
+  --color-bone: #EDEAE4;
+
+  /* Accents — Two-Signal Rule: never combine on one element */
+  --color-amber: #F5A623;
+  --color-cyan: #22D3EE;
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-display: var(--font-display), 'JetBrains Mono', ui-monospace, monospace;
+  --font-body: var(--font-body), 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-display);
+
+  /* ── shadcn semantic mappings ────────────────────────────── */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* ── Sharp Edge Rule: radius 0 everywhere ───────────────── */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Dark-only design — single theme ──────────────────────── */
+:root {
+  --background: #0A0B0D;
+  --foreground: #EDEAE4;
+
+  --card: #0A0B0D;
+  --card-foreground: #EDEAE4;
+  --popover: #12141A;
+  --popover-foreground: #EDEAE4;
+
+  --primary: #F5A623;
+  --primary-foreground: #0A0B0D;
+
+  --secondary: #3A3E47;
+  --secondary-foreground: #EDEAE4;
+
+  --muted: #1A1D24;
+  --muted-foreground: #6E7681;
+
+  --accent: #1A1D24;
+  --accent-foreground: #EDEAE4;
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(from #6E7681 l c h / 30%);
+  --input: oklch(from #6E7681 l c h / 40%);
+  --ring: #F5A623;
+
+  --radius: 0px;
+}
+
+/* Dark class mirrors root — single-theme project */
+.dark {
+  --background: #0A0B0D;
+  --foreground: #EDEAE4;
+
+  --card: #0A0B0D;
+  --card-foreground: #EDEAE4;
+  --popover: #12141A;
+  --popover-foreground: #EDEAE4;
+
+  --primary: #F5A623;
+  --primary-foreground: #0A0B0D;
+
+  --secondary: #3A3E47;
+  --secondary-foreground: #EDEAE4;
+
+  --muted: #1A1D24;
+  --muted-foreground: #6E7681;
+
+  --accent: #1A1D24;
+  --accent-foreground: #EDEAE4;
+
+  --destructive: oklch(0.704 0.191 22.216);
+
+  --border: oklch(from #6E7681 l c h / 30%);
+  --input: oklch(from #6E7681 l c h / 40%);
+  --ring: #F5A623;
+
+  --radius: 0px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }
