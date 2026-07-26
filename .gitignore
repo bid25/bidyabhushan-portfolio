@@ -15,3 +15,10 @@ CLAUDE.md
 .codex/
 .cursor/
 node_modules
+node_modules/
+.next/
+trace.mjs
+trace_before.json
+*.tsbuildinfo
+.tmp-*
+measure.mjs
