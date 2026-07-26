@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Internal planning docs — not for public repo
+AGENTS.md
+PRD.md
+Architecture.md
+Rules.md
+Phases.md
+Memory.md
+PRODUCT.md
+DESIGN.md
+CLAUDE.md
+# Agent skill files copied into project
+.agents/
