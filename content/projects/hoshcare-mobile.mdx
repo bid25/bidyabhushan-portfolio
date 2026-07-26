@@ -1,0 +1,22 @@
+export const metadata = {
+  title: "HOSHCARE — Mobile App",
+  slug: "hoshcare-mobile",
+  status: "Active, pre-pilot",
+  stack: ["React Native", "Expo SDK 56", "TypeScript", "React Navigation v7"]
+};
+
+**Problem.** HOSHCARE stores medical documents — prescriptions, lab reports, discharge summaries — and turns them into structured, searchable records. A photo of a prescription becomes doctor, date, diagnosis, and medications: fields a user reviews before anything saves. Once saved, a record locks permanently. Health records that can be silently edited after the fact aren't records.
+
+**Contribution.** Built roughly 19 screens: onboarding, phone and Google auth, family member profiles, document capture, the extraction review flow, a records timeline, detail views, settings. Full dark mode. Shared design system carried over from the marketing site.
+
+**Specific problems solved.**
+
+Google Sign-In failed with no error message after a dependency update. The library had moved `idToken` one level deeper in its response shape, to `response.data.idToken`. The old access path returned `undefined`, which the auth call silently accepted and the server then rejected. Found by logging the raw response object instead of the field expected to be there.
+
+File uploads failed silently after an Expo upgrade. Expo 52+ ships a WinterCG-compliant `fetch` polyfill that doesn't handle React Native's `FormData` the way the previous implementation did — requests went out with an empty body. Fixed by isolating uploads into a dedicated `apiUpload()` built on `XMLHttpRequest`, which sidesteps the polyfill and reports real upload progress as a side effect.
+
+A local development build failed with no stack trace. `npx expo config --json` showed the resolved config: `expo-secure-store` was declared as a config plugin but never installed. Plugin resolution failed before producing a usable error.
+
+Tab bar overlap kept recurring on individual screens because each instance was patched separately. Fixed by auditing every screen with `useSafeAreaInsets()` at once instead of continuing to patch per-screen.
+
+**Disclosure.** Private repository — happy to walk through the code and architecture in an interview.

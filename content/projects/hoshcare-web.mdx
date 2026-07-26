@@ -1,0 +1,16 @@
+export const metadata = {
+  title: "HOSHCARE — Records Web App",
+  slug: "hoshcare-web",
+  status: "Archived",
+  stack: ["Supabase", "PostgreSQL", "JavaScript"]
+};
+
+**Problem.** The first working version of HOSHCARE, in the browser: email auth, document upload, a records timeline, file viewing through signed URLs.
+
+**What mattered.** All access control lived in the database — row-level security policies on every table, a private storage bucket, no service key anywhere in client code. A compromised frontend still couldn't read another user's rows.
+
+This wasn't taken on faith. Queried `pg_tables` directly to confirm `rowsecurity = true` on every table, then signed in as a second user and confirmed the first user's records were unreachable. Verifying a security control is a different task from configuring one.
+
+**Status.** Archived in favor of the native app. The row-level-security model shaped how authorization gets approached since.
+
+**Disclosure.** Private repository — happy to walk through the code and architecture in an interview.

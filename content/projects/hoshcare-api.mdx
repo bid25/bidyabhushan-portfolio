@@ -1,0 +1,24 @@
+export const metadata = {
+  title: "HOSHCARE — Backend API",
+  slug: "hoshcare-api",
+  status: "Superseded, July 2026",
+  stack: ["Node.js", "Express", "TypeScript", "Prisma 6", "PostgreSQL 15", "Firebase Admin"]
+};
+
+**Problem.** The original backend for HOSHCARE: token verification on every request, four data models, file storage, and a document extraction service that sent uploads to Gemini and returned structured fields for review.
+
+**Decisions.**
+
+Extraction never wrote directly to a record — output went into a review state, the user confirmed or corrected each field, and only then did the record save and lock.
+
+Authenticated file downloads needed a workaround: the browser's native download can't set an Authorization header, and the easy fix is a token in the query string. Query strings land in server logs, browser history, and referrer headers — unacceptable for the most sensitive endpoint in the system. Kept header-only auth and handled downloads client-side instead.
+
+**Specific problems solved.**
+
+Schema drift: a column existed in the Prisma schema and in application code but not in the running database. Requests failed on a field that looked present everywhere it was read. Since then, `db push` and `generate` run together, never separately.
+
+Gemini was returning `{}` with a 200 status on some documents. The `responseSchema` was under-specified — fields not explicitly declared were silently dropped rather than rejected. Fixed by declaring every field explicitly. A model deprecation and a free-tier quota that returned zero results rather than an error surfaced during the same stretch of work.
+
+**Why it's no longer running.** A co-developer had built a NestJS backend with proper migration history, refresh tokens, and Swagger docs. Running two backends against one app was the actual problem, not either backend individually. Migrated the app to the shared backend in a day — read `.env.example` directly rather than reconstructing config, and used `migrate deploy` rather than `db push` to avoid corrupting nine already-committed migrations.
+
+**Disclosure.** Private repository — happy to walk through the code and architecture in an interview.
