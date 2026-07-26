@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Instrument_Sans } from "next/font/google";
+import { Nav } from "@/components/Nav";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -30,7 +32,10 @@ export default function RootLayout({
       lang="en"
       className={`${jetbrainsMono.variable} ${instrumentSans.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Nav />
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }
