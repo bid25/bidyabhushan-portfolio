@@ -25,5 +25,5 @@ measure.mjs
 trace_dotfield.mjs
 trace_dotfield.json
 home_dotfield.png
-trace*
-*.mjs
+.DS_Store
+test-results/

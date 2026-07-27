@@ -370,7 +370,7 @@ export default function DecryptedText({
 
   return (
     <motion.span className={parentClassName} ref={containerRef} style={styles.wrapper as any} {...animateProps} {...props}>
-      <span style={styles.srOnly as any}>{displayText}</span>
+      <span style={styles.srOnly as any}>{text}</span>
 
       <span aria-hidden="true">
         {displayText.split('').map((char: string, index: number) => {
