@@ -50,6 +50,8 @@ interface LanyardProps {
   imageFit?: 'cover' | 'contain';
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  containerClassName?: string;
+  stringColor?: string;
 }
 
 export default function Lanyard({
@@ -61,7 +63,9 @@ export default function Lanyard({
   backImage = null,
   imageFit = 'cover',
   lanyardImage = null,
-  lanyardWidth = 1
+  lanyardWidth = 1,
+  containerClassName = 'w-full h-screen',
+  stringColor
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
@@ -72,7 +76,7 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
+    <div className={`relative z-0 flex justify-center items-center transform scale-100 origin-center ${containerClassName}`}>
       <Canvas
         camera={{ position, fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
@@ -88,6 +92,7 @@ export default function Lanyard({
             imageFit={imageFit}
             lanyardImage={lanyardImage}
             lanyardWidth={lanyardWidth}
+            stringColor={stringColor}
           />
         </Physics>
         <Environment blur={0.75}>
@@ -134,6 +139,7 @@ interface BandProps {
   imageFit?: 'cover' | 'contain';
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  stringColor?: string;
 }
 
 type LanyardRigidBody = RapierRigidBody & {
@@ -148,7 +154,8 @@ function Band({
   backImage = null,
   imageFit = 'cover',
   lanyardImage = null,
-  lanyardWidth = 1
+  lanyardWidth = 1,
+  stringColor
 }: BandProps) {
   const band = useRef<THREE.Mesh<InstanceType<typeof MeshLineGeometry>, InstanceType<typeof MeshLineMaterial>>>(null!);
   const fixed = useRef<RapierRigidBody>(null!);
@@ -238,9 +245,10 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  // Extend the rope lengths to 4.5 so the card rests exactly in the center of the viewport
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 4.5]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 4.5]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 4.5]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.45, 0]
@@ -289,7 +297,8 @@ function Band({
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      {/* Anchor moved from y=4 to y=15 so it is guaranteed to be way off-screen (above the top bar) */}
+      <group position={[0, 15, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps} type="dynamic">
           <BallCollider args={[0.1]} />
@@ -336,16 +345,16 @@ function Band({
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} frustumCulled={false}>
         <meshLineGeometry />
         {/* @ts-expect-error — meshline's R3F type bindings are incomplete; props work at runtime */}
         <meshLineMaterial
-          color="white"
+          color={stringColor || "white"}
           depthTest={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
-          useMap={1}
+          useMap={stringColor ? 0 : 1}
           map={texture}
-          repeat={[-4, 1]}
+          repeat={[-16, 1]} // Increased repeat to prevent stretching on the longer rope
           lineWidth={lanyardWidth}
         />
       </mesh>

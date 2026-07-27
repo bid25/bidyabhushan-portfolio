@@ -22,3 +22,8 @@ trace_before.json
 *.tsbuildinfo
 .tmp-*
 measure.mjs
+trace_dotfield.mjs
+trace_dotfield.json
+home_dotfield.png
+trace*
+*.mjs

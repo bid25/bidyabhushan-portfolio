@@ -1,42 +1,42 @@
 import type { Metadata } from "next";
-import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
-import { LazyRadar as Radar } from "@/components/LazyComponents";
+import BlurText from "@/components/BlurText";
+import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Contact — Bidyabhushan Nanda",
-  description: "Ways to reach Bidyabhushan Nanda.",
+  title: "Contact — Bidya Bhushan Nanda",
+  description: "Ways to reach Bidya Bhushan Nanda.",
 };
 
 const channels = [
-  { label: "Email", value: "bidyabhushannanda@gmail.com" },
-  { label: "GitHub", value: "github.com/bid25" },
-  { label: "LinkedIn", value: "linkedin.com/in/bidya-bhushan-nanda-6a0149369" },
-  { label: "Résumé", value: "coming soon" },
+  { label: "Email", value: "bidyabhushannanda@gmail.com", href: "mailto:bidyabhushannanda@gmail.com" },
+  { label: "GitHub", value: "github.com/bid25", href: "https://github.com/bid25" },
+  { label: "LinkedIn", value: "linkedin.com/in/bidya-bhushan-nanda", href: "https://linkedin.com/in/bidya-bhushan-nanda" },
+  { label: "Resume", value: "View / Download", href: "/Resume.pdf" },
 ];
 
 export default function ContactPage() {
   return (
-    <div className="relative min-h-screen bg-void text-bone overflow-hidden">
-      
-      {/* Radar background effect */}
-      <div className="pointer-events-none absolute right-0 bottom-0 h-full w-full opacity-30 lg:w-[800px] lg:opacity-70 mix-blend-screen">
-        <HeavyComponentWrapper fallback={
-          <div className="flex h-full w-full items-center justify-center">
-            <div className="h-64 w-64 rounded-full border border-ash/20"></div>
-          </div>
-        }>
-          <Radar />
-        </HeavyComponentWrapper>
-      </div>
-
+    <div className="relative min-h-screen text-bone overflow-hidden">
       <div className="relative z-10 mx-auto max-w-[1200px] px-4 py-16 sm:px-8 lg:px-16">
         <header className="mb-16">
-          <p className="mb-3 font-body text-xs font-medium uppercase tracking-[0.05em] text-ash">
-            Reach out
-          </p>
-          <h1 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1]">
-            Contact
-          </h1>
+          <BlurText
+            text="Reach out"
+            as="p"
+            className="mb-3 font-body text-xs font-medium uppercase tracking-[0.05em] text-ash"
+            delay={80}
+            animateBy="letters"
+            direction="top"
+            stepDuration={0.3}
+          />
+          <BlurText
+            text="Contact"
+            as="h1"
+            className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1]"
+            delay={120}
+            animateBy="words"
+            direction="top"
+            stepDuration={0.4}
+          />
         </header>
 
         <ul className="max-w-[65ch] space-y-6">
@@ -48,9 +48,20 @@ export default function ContactPage() {
               <span className="w-24 shrink-0 font-body text-xs font-medium uppercase tracking-[0.05em] text-ash">
                 {channel.label}
               </span>
-              <span className="font-body text-base text-bone">
-                {channel.value}
-              </span>
+              {channel.href ? (
+                <a
+                  href={channel.href}
+                  target={channel.href.startsWith("http") ? "_blank" : undefined}
+                  rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  {channel.value}
+                </a>
+              ) : (
+                <span className="font-body text-base text-bone">
+                  {channel.value}
+                </span>
+              )}
             </li>
           ))}
         </ul>

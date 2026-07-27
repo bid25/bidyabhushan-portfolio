@@ -8,13 +8,13 @@
   /* ── Terminal Session palette ────────────────────────────── */
 
   /* Neutrals */
-  --color-void: #0A0B0D;
-  --color-ash: #6E7681;
-  --color-bone: #EDEAE4;
+  --color-void: var(--theme-void);
+  --color-ash: var(--theme-ash);
+  --color-bone: var(--theme-bone);
 
   /* Accents — Two-Signal Rule: never combine on one element */
-  --color-amber: #F5A623;
-  --color-cyan: #22D3EE;
+  --color-amber: var(--theme-amber);
+  --color-cyan: var(--theme-cyan);
 
   /* ── Typography ─────────────────────────────────────────── */
   --font-display: var(--font-display), 'JetBrains Mono', ui-monospace, monospace;
@@ -57,64 +57,82 @@
   --radius-4xl: 0px;
 }
 
-/* ── Dark-only design — single theme ──────────────────────── */
+/* ── Light Mode Base Variables ────────────────────────────── */
 :root {
-  --background: #0A0B0D;
-  --foreground: #EDEAE4;
+  --theme-void: #F4F4F5; /* Light background */
+  --theme-bone: #0A0B0D; /* Dark text */
+  --theme-ash: #6E7681;
+  --theme-amber: #F5A623;
+  --theme-cyan: #0284C7; /* Darker cyan for better contrast in light mode */
+  --dotfield-glow: #FFFFFF;
+  --dotfield-from: rgba(10, 11, 13, 0.4);
+  --dotfield-to: rgba(10, 11, 13, 0.2);
 
-  --card: #0A0B0D;
-  --card-foreground: #EDEAE4;
-  --popover: #12141A;
-  --popover-foreground: #EDEAE4;
+  --background: var(--theme-void);
+  --foreground: var(--theme-bone);
 
-  --primary: #F5A623;
-  --primary-foreground: #0A0B0D;
+  --card: #FFFFFF;
+  --card-foreground: var(--theme-bone);
+  --popover: #FFFFFF;
+  --popover-foreground: var(--theme-bone);
 
-  --secondary: #3A3E47;
-  --secondary-foreground: #EDEAE4;
+  --primary: var(--theme-amber);
+  --primary-foreground: #FFFFFF;
 
-  --muted: #1A1D24;
-  --muted-foreground: #6E7681;
+  --secondary: #E4E4E7;
+  --secondary-foreground: var(--theme-bone);
 
-  --accent: #1A1D24;
-  --accent-foreground: #EDEAE4;
+  --muted: #E4E4E7;
+  --muted-foreground: var(--theme-ash);
+
+  --accent: #E4E4E7;
+  --accent-foreground: var(--theme-bone);
 
   --destructive: oklch(0.577 0.245 27.325);
 
-  --border: oklch(from #6E7681 l c h / 30%);
-  --input: oklch(from #6E7681 l c h / 40%);
-  --ring: #F5A623;
+  --border: oklch(from var(--theme-ash) l c h / 30%);
+  --input: oklch(from var(--theme-ash) l c h / 40%);
+  --ring: var(--theme-amber);
 
   --radius: 0px;
 }
 
-/* Dark class mirrors root — single-theme project */
+/* ── Dark Mode Variables ───────────────────────────────────── */
 .dark {
-  --background: #0A0B0D;
-  --foreground: #EDEAE4;
+  --theme-void: #0A0B0D;
+  --theme-bone: #EDEAE4;
+  --theme-ash: #6E7681;
+  --theme-amber: #F5A623;
+  --theme-cyan: #22D3EE;
+  --dotfield-glow: #120F17;
+  --dotfield-from: rgba(168, 85, 247, 0.35);
+  --dotfield-to: rgba(180, 151, 207, 0.25);
 
-  --card: #0A0B0D;
-  --card-foreground: #EDEAE4;
+  --background: var(--theme-void);
+  --foreground: var(--theme-bone);
+
+  --card: var(--theme-void);
+  --card-foreground: var(--theme-bone);
   --popover: #12141A;
-  --popover-foreground: #EDEAE4;
+  --popover-foreground: var(--theme-bone);
 
-  --primary: #F5A623;
-  --primary-foreground: #0A0B0D;
+  --primary: var(--theme-amber);
+  --primary-foreground: var(--theme-void);
 
   --secondary: #3A3E47;
-  --secondary-foreground: #EDEAE4;
+  --secondary-foreground: var(--theme-bone);
 
   --muted: #1A1D24;
-  --muted-foreground: #6E7681;
+  --muted-foreground: var(--theme-ash);
 
   --accent: #1A1D24;
-  --accent-foreground: #EDEAE4;
+  --accent-foreground: var(--theme-bone);
 
   --destructive: oklch(0.704 0.191 22.216);
 
-  --border: oklch(from #6E7681 l c h / 30%);
-  --input: oklch(from #6E7681 l c h / 40%);
-  --ring: #F5A623;
+  --border: oklch(from var(--theme-ash) l c h / 30%);
+  --input: oklch(from var(--theme-ash) l c h / 40%);
+  --ring: var(--theme-amber);
 
   --radius: 0px;
 }
@@ -129,4 +147,25 @@
   html {
     @apply font-sans;
   }
+}
+
+/* ── Lenis Smooth Scroll Recommended CSS ───────────────────── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

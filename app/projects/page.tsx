@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlurText from "@/components/BlurText";
 
 export const metadata: Metadata = {
-  title: "Projects — Bidyabhushan Nanda",
-  description: "Case studies from Bidyabhushan Nanda's engineering work.",
+  title: "Projects — Bidya Bhushan Nanda",
+  description: "Case studies from Bidya Bhushan Nanda's engineering work.",
 };
 
 const allProjects = [
@@ -33,38 +34,58 @@ const allProjects = [
   },
 ];
 
-export default function ProjectsIndexPage() {
+export default function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-void text-bone">
+    <div className="min-h-screen text-bone">
       <div className="mx-auto max-w-[1200px] px-4 py-16 sm:px-8 lg:px-16">
         <header className="mb-16">
-          <h1 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1]">
-            Projects
-          </h1>
-          <p className="mt-4 max-w-[65ch] font-body text-base leading-relaxed text-ash">
-            Case studies from confidential engineering work. Descriptions cover architecture, contribution, and the specific problems solved. Code isn't public — see each page for how to go deeper.
-          </p>
+          <BlurText
+            text="Projects"
+            as="h1"
+            className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1]"
+            delay={120}
+            animateBy="words"
+            direction="top"
+            stepDuration={0.4}
+          />
+          <BlurText
+            text="Case studies from confidential engineering work. Descriptions cover architecture, contribution, and the specific problems solved. Code isn't public — see each page for how to go deeper."
+            className="mt-4 max-w-[65ch] font-body text-base leading-relaxed text-ash"
+            delay={30}
+            animateBy="words"
+            direction="bottom"
+            stepDuration={0.3}
+          />
         </header>
 
-        <div className="space-y-10">
-          {allProjects.map((project, i) => (
-            <Link
-              key={`${project.slug}-${i}`}
-              href={`/projects/${project.slug}`}
-              className="group block border-b border-ash/20 pb-10 last:border-b-0 last:pb-0"
+        <div className="mt-16 w-full max-w-[800px] border-t border-ash/30">
+          {allProjects.map((project, idx) => (
+            <article 
+              key={project.slug} 
+              className="group relative flex flex-col items-start justify-between border-b border-ash/30 py-10 sm:flex-row sm:items-center sm:gap-8"
             >
-              <div className="mb-2 flex items-center justify-between gap-4">
-                <h2 className="font-display text-xl font-semibold text-bone group-hover:text-amber">
-                  {project.title}
-                </h2>
-                <span className="shrink-0 font-mono text-xs text-ash">
-                  {project.status}
-                </span>
+              <div className="flex flex-1 flex-col items-start gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <h2 className="font-display text-xl font-bold tracking-tight text-bone sm:text-2xl">
+                    {project.title}
+                  </h2>
+                  <span className="font-body text-[10px] font-medium uppercase tracking-[0.05em] text-cyan border border-cyan/30 px-2 py-0.5 rounded-sm bg-cyan/5">
+                    {project.status}
+                  </span>
+                </div>
+                <p className="max-w-[65ch] font-body text-sm leading-relaxed text-ash">
+                  {project.description}
+                </p>
               </div>
-              <p className="max-w-[65ch] font-body text-sm leading-relaxed text-ash">
-                {project.description}
-              </p>
-            </Link>
+              <div className="mt-6 shrink-0 sm:mt-0">
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="inline-block font-body text-sm font-medium tracking-wide text-amber transition-colors hover:text-amber/80"
+                >
+                  Read case study <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </article>
           ))}
         </div>
       </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Style Guide — Bidyabhushan Nanda",
+  title: "Style Guide — Bidya Bhushan Nanda",
   description: "Design system reference for the Terminal Session direction.",
 };
 

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Instrument_Sans } from "next/font/google";
 import { Nav } from "@/components/Nav";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { LazyLiquidEther, LazyTargetCursor } from "@/components/LazyComponents";
+import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -17,9 +20,9 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Bidyabhushan Nanda — Full-Stack Engineer",
+  title: "Bidya Bhushan Nanda — Full-Stack & AI/ML Engineer",
   description:
-    "Portfolio of Bidyabhushan Nanda. Full-stack engineering across frontend, backend, and infrastructure.",
+    "Portfolio of Bidya Bhushan Nanda. Full-stack engineering across frontend, backend, and infrastructure.",
 };
 
 export default function RootLayout({
@@ -30,11 +33,29 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jetbrainsMono.variable} ${instrumentSans.variable} h-full antialiased dark`}
+      className={`${jetbrainsMono.variable} ${instrumentSans.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col relative bg-void">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+        <LazyTargetCursor targetSelector="a, button, [role='button'], .cursor-target" />
+        <div className="fixed inset-0 pointer-events-none -z-50 opacity-90 dark:opacity-50 saturate-[1.5] contrast-[1.2] dark:saturate-100 dark:contrast-100 mix-blend-multiply dark:mix-blend-screen">
+          <HeavyComponentWrapper fallback={<div className="h-full w-full bg-void"></div>}>
+            <LazyLiquidEther 
+              colors={['#00E5FF', '#FF0055', '#4A00E0']} 
+              mouseForce={15} 
+              cursorSize={80} 
+            />
+          </HeavyComponentWrapper>
+        </div>
         <Nav />
         <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
