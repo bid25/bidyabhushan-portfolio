@@ -57,8 +57,8 @@ export default function AboutPage() {
         <div className="w-full h-full pointer-events-auto">
           <HeavyComponentWrapper fallback={null}>
             <LazyLanyard 
-              frontImage="/id.jpg" 
-              backImage="/id.jpg" 
+              frontImage="/portrait.webp" 
+              backImage="/portrait.webp" 
               containerClassName="w-full h-full"
               position={[0, 0, 15]} // Brings camera closer (makes it bigger)
               lanyardWidth={1.5}

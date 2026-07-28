@@ -121,7 +121,7 @@ export default function Home() {
                 handle="bidyabhushannanda"
                 status="Available for work"
                 contactText="Contact Me"
-                avatarUrl="/avatar.jpg"
+                avatarUrl="/avatar.webp"
                 iconUrl="/code-pattern.svg"
                 showUserInfo={true}
                 enableTilt={true}

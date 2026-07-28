@@ -19,7 +19,7 @@ export default function AsciiArtDemo() {
 
   return (
     <AsciiArt
-      src="/ascii-art.jpg"
+      src="/ascii-art.webp"
       resolution={260}
       colored={true}
       artAspectRatio={4/3}
