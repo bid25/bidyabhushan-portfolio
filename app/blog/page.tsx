@@ -1,9 +1,11 @@
 import BlurText from "@/components/BlurText";
+import { RetroGrid } from "@/components/ui/retro-grid";
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen text-bone">
-      <div className="mx-auto max-w-[1200px] px-4 py-16 sm:px-8 lg:px-16">
+    <div className="relative min-h-screen overflow-hidden text-bone">
+      <RetroGrid className="absolute inset-0 z-0" />
+      <div className="relative z-10 mx-auto max-w-[1200px] px-4 py-16 sm:px-8 lg:px-16">
         <header className="mb-16">
           <BlurText
             text="Writing"
