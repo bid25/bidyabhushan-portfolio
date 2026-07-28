@@ -1,0 +1,99 @@
+/* <Trajectory /> — ambient loops and starfield twinkle live here because
+   @keyframes can't be inlined. Scroll-scrub reveal is done via CSS custom
+   properties + calc/clamp driven by a single Motion value (see
+   revealVars()/--progress in Trajectory.tsx); only the truly ambient, fixed
+   loops are defined as real keyframes here. */
+
+.trajectory-glow {
+  filter: drop-shadow(0 0 6px oklch(from var(--color-cyan) l c h / 35%));
+}
+
+@keyframes trajectory-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes trajectory-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes trajectory-packet {
+  from {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  to {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes trajectory-twinkle {
+  0%,
+  100% {
+    opacity: var(--star-opacity, 0.2);
+  }
+  50% {
+    opacity: calc(var(--star-opacity, 0.2) * 0.35);
+  }
+}
+
+/* Resting state: no animation runs until the bounded ambient window opens. */
+.trajectory-breathe,
+.trajectory-rotate,
+.trajectory-packet {
+  animation: none;
+  opacity: 0;
+}
+
+.trajectory-rotate {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Bounded ambient loop — triggers once the trunk has fully scroll-revealed
+   (Trajectory.tsx toggles this class), runs a FIXED number of cycles, then
+   holds its final frame. Not a bare timer: the trigger is scroll-position
+   completion, and it terminates rather than looping forever, per the
+   resolution logged in Memory.md superseding the earlier interaction-gated
+   approach used for EvilEye/Radar. */
+.trajectory-ambient-play .trajectory-packet {
+  animation: trajectory-packet 7s linear 3;
+}
+
+.trajectory-ambient-play .trajectory-breathe {
+  animation: trajectory-breathe 3s ease-in-out 4;
+  opacity: 0.6;
+}
+
+.trajectory-ambient-play .trajectory-rotate {
+  animation: trajectory-rotate 20s linear 1 forwards;
+  opacity: 0.6;
+}
+
+.trajectory-star {
+  animation: trajectory-twinkle 5s ease-in-out infinite;
+  --star-opacity: 0.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trajectory-breathe,
+  .trajectory-rotate,
+  .trajectory-packet,
+  .trajectory-star {
+    animation: none !important;
+  }
+}
