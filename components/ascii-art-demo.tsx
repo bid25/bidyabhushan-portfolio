@@ -2,9 +2,11 @@
 import { AsciiArt } from "@/components/ui/ascii-art";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useMediaQuery, IS_MOBILE } from "@/hooks/useMediaQuery";
 
 export default function AsciiArtDemo() {
   const { resolvedTheme } = useTheme();
+  const isMobile = useMediaQuery(IS_MOBILE);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function AsciiArtDemo() {
   return (
     <AsciiArt
       src="/ascii-art.webp"
-      resolution={260}
+      resolution={isMobile ? 100 : 260}
       colored={true}
       artAspectRatio={4/3}
       animated={false}

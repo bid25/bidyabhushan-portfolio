@@ -103,7 +103,10 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
   // with no trailing footer, so that endpoint is unreachable and progress
   // could never hit 1. "end end" completes as soon as the whole section has
   // scrolled into view, which stays reachable regardless of what follows it.
-  const { scrollYProgress } = useScroll({ target: rootRef, offset: ["start end", "end end"] });
+  const { scrollYProgress } = useScroll({ 
+    target: rootRef, 
+    offset: orientation === "horizontal" ? ["start end", "end end"] : ["start 70%", "end 70%"] 
+  });
   const slideProgress = useTransform(scrollYProgress, [0.7, 1.0], [0, 1]);
 
   // Bounded ambient loop: once the trunk is fully drawn, run the traveling
@@ -201,7 +204,9 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
             reduced={prefersReducedMotion}
             focusedIndex={focusedIndex}
             setFocusedIndex={setFocusedIndex}
+            activeIndex={activeIndex}
             expandedIndex={expandedIndex}
+            setActiveIndex={setActiveIndex}
             setExpandedIndex={setExpandedIndex}
             handleKeyDown={handleKeyDown}
             buttonRefs={buttonRefs}
@@ -602,18 +607,20 @@ function VerticalGraph({
   reduced,
   focusedIndex,
   setFocusedIndex,
+  activeIndex,
   expandedIndex,
+  setActiveIndex,
   setExpandedIndex,
   handleKeyDown,
   buttonRefs,
 }: SharedGraphProps & {
   focusedIndex: number;
   setFocusedIndex: React.Dispatch<React.SetStateAction<number>>;
+  activeIndex: number | null;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
-  const contentPaddingLeft = layout.width + LAYOUT.contentGutter;
-
   return (
-    <div className="relative mx-auto w-full max-w-[460px]" style={{ minHeight: layout.height }}>
+    <div className="relative mx-auto w-full max-w-[340px]" style={{ minHeight: layout.height }}>
       <svg
         width={layout.width}
         height={layout.height}
@@ -626,23 +633,26 @@ function VerticalGraph({
         {layout.branchGroups.map((group) => {
           const node = nodes[group.nodeIndex];
           const nodeStart = layout.nodeArcFractions[group.nodeIndex];
+          const dim = activeIndex !== null && activeIndex !== group.nodeIndex;
           return (
-            <g key={node.id}>
+            <g key={node.id} style={{ opacity: dim ? 0.25 : 1, transition: "opacity 180ms ease" }}>
               {group.items.map((leaf, k) => {
                 const stagger = Math.min(k * 0.012, LAYOUT.revealRange * 0.5);
                 const vars = reduced ? STATIC_LP : revealVars(nodeStart + stagger, LAYOUT.revealRange);
+                const brighten = activeIndex === group.nodeIndex;
                 return (
                   <path
                     key={leaf.id}
                     d={leaf.d}
                     fill="none"
                     stroke="var(--color-cyan)"
-                    strokeOpacity={0.5}
+                    strokeOpacity={brighten ? 0.9 : 0.5}
                     strokeWidth={1.5}
                     style={{
                       ...vars,
                       strokeDasharray: leaf.length,
                       strokeDashoffset: `calc(${leaf.length} * (1 - var(--lp)))`,
+                      transition: "stroke-opacity 180ms ease",
                     }}
                     suppressHydrationWarning
                   />
@@ -662,12 +672,11 @@ function VerticalGraph({
       <div className="relative" style={{ height: layout.height }}>
         {layout.nodePositions.map((pos, i) => {
           const node = nodes[i];
-          const branches = node.branches ?? [];
-          const nextY = i < layout.nodePositions.length - 1 ? layout.nodePositions[i + 1].y : layout.height;
-          const slotHeight = nextY - pos.y;
+          const group = layout.branchGroups.find((g) => g.nodeIndex === i);
+          const gap = LAYOUT.nodeRadius + LAYOUT.nodeLabelGap;
 
           return (
-            <div key={node.id} className="absolute left-0 w-full" style={{ top: pos.y, height: slotHeight, paddingLeft: contentPaddingLeft }}>
+            <div key={node.id} className="z-20">
               <button
                 ref={(el) => {
                   buttonRefs.current[i] = el;
@@ -676,55 +685,75 @@ function VerticalGraph({
                 tabIndex={focusedIndex === i ? 0 : -1}
                 aria-label={nodeAriaLabel(node)}
                 aria-expanded={expandedIndex === i}
-                onFocus={() => setFocusedIndex(i)}
-                onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+                onFocus={() => {
+                  setActiveIndex(i);
+                  setFocusedIndex(i);
+                }}
+                onBlur={() => setActiveIndex((prev) => (prev === i ? null : prev))}
+                onMouseEnter={() => setActiveIndex(i)}
+                onMouseLeave={() => setActiveIndex((prev) => (prev === i ? null : prev))}
+                onClick={() => setExpandedIndex((prev) => (prev === i ? null : i))}
                 onKeyDown={(e) => handleKeyDown(e, i)}
-                className="flex w-full flex-col justify-center text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
-                style={{ height: LAYOUT.leafRowBase }}
+                className="absolute z-20 size-9 -translate-x-1/2 -translate-y-1/2 cursor-pointer bg-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+                style={{ left: pos.x, top: pos.y }}
+              />
+
+              <div
+                className="pointer-events-none absolute z-20 w-[180px] text-center"
+                style={{
+                  left: pos.x,
+                  top: pos.y - gap,
+                  transform: "translate(-50%, -100%)",
+                }}
               >
-                <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-bone">{node.label}</p>
+                <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.08em] text-bone">{node.label}</p>
                 <p className="font-mono text-[0.65rem] tabular-nums uppercase tracking-[0.06em] text-ash">
                   {dateRangeLabel(node)}
                 </p>
-              </button>
+              </div>
 
-              {branches.length > 0 && (
-                <div className="flex flex-col">
-                  {branches.map((b, k) => {
-                    const nodeStart = layout.nodeArcFractions[i];
+              {group && (
+                <div className="pointer-events-none absolute z-20">
+                  {group.items.map((leaf, k) => {
                     const stagger = Math.min(k * 0.012, LAYOUT.revealRange * 0.5);
-                    const vars = reduced ? STATIC_LP : revealVars(nodeStart + stagger, LAYOUT.revealRange);
+                    const vars = reduced ? STATIC_LP : revealVars(layout.nodeArcFractions[i] + stagger, LAYOUT.revealRange);
+                    const brighten = activeIndex === i;
+                    const hAlignClass = group.direction === 1 ? "text-left" : "text-right";
+                    const hTranslate = group.direction === 1 ? "0%" : "-100%";
                     return (
-                      <div
-                        key={b.id}
-                        className="flex items-center"
+                      <span
+                        key={leaf.id}
+                        className={`absolute whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.05em] ${hAlignClass}`}
                         style={{
-                          height: LAYOUT.leafGap,
                           ...vars,
+                          left: leaf.labelX,
+                          top: leaf.labelY,
+                          transform: `translate(${hTranslate}, -50%) translateY(calc((1 - var(--lp)) * 6px))`,
                           opacity: "var(--lp)",
-                          transform: "translateX(calc((1 - var(--lp)) * -6px))",
+                          color: brighten ? "var(--color-cyan)" : "var(--color-ash)",
+                          transition: "color 180ms ease",
                         }}
                         suppressHydrationWarning
                       >
-                        <span className="font-mono text-[0.65rem] uppercase tracking-[0.05em] text-cyan/80">{b.label}</span>
-                      </div>
+                        {leaf.label}
+                      </span>
                     );
                   })}
                 </div>
               )}
 
               <AnimatePresence>
-                {expandedIndex === i && (node.org || node.summary) && (
+                {(activeIndex === i || expandedIndex === i) && (node.org || node.summary) && (
                   <motion.div
-                    initial={reduced ? false : { opacity: 0, y: "-6px" }}
+                    initial={reduced ? false : { opacity: 0, y: "6px" }}
                     animate={{ opacity: 1, y: "0%" }}
-                    exit={{ opacity: 0, y: "-6px" }}
+                    exit={{ opacity: 0, y: "6px" }}
                     transition={{ duration: 0.18, ease: EASE }}
-                    className="absolute z-30 border border-ash/30 bg-void px-3 py-2"
+                    className="pointer-events-none absolute z-30 w-[240px] border border-ash/30 bg-void px-3 py-2"
                     style={{
-                      top: LAYOUT.leafRowBase + branches.length * LAYOUT.leafGap + 8,
-                      left: contentPaddingLeft,
-                      width: `calc(100% - ${contentPaddingLeft + 8}px)`,
+                      left: pos.x,
+                      top: pos.y + gap + 20,
+                      x: "-50%",
                     }}
                   >
                     {node.org && <p className="font-body text-xs text-ash">{node.org}</p>}

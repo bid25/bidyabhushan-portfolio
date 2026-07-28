@@ -505,7 +505,8 @@ export function verticalSlotHeight(branchCount: number): number {
 }
 
 export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "organic"): GraphLayout {
-  const centerX = LAYOUT.mobileTrunkX;
+  const width = 340;
+  const centerX = width / 2;
   const jitterMag = LAYOUT.mobileAnchorJitter;
   const waypointJitterMag = LAYOUT.mobileWaypointJitter;
   const perpLo = -centerX + LAYOUT.nodeRadius + 4;
@@ -518,7 +519,6 @@ export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "o
   }
   const trailing = verticalSlotHeight(branchCounts[branchCounts.length - 1]);
   const height = nodeYs[nodeYs.length - 1] + trailing;
-  const width = centerX * 2;
 
   const anchors: Point[] = nodes.map((n, i) => ({
     x: centerX + clamp(jitter(`${n.id}-anchor-v`, jitterMag), perpLo, perpHi),
@@ -577,21 +577,21 @@ export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "o
   });
   nodeArcFractions[nodeArcFractions.length - 1] = 1;
 
-  // Single-column branch stack beneath each node: a short stub off the
-  // trunk to a row that lines up with the equivalent HTML row the component
-  // renders (leafRowBase for the label block, then leafGap per branch row) —
-  // see verticalSlotHeight, which reserves exactly this much space.
-  const columnX = width + LAYOUT.leafColumnOffsetVertical;
   const branchGroups: BranchGroup[] = nodes.flatMap((n, i) => {
     const count = branchCounts[i];
     if (count === 0) return [];
     const { x: nodeX, y: nodeY } = anchors[i];
+    const dir: 1 | -1 = i % 2 === 0 ? 1 : -1;
+    const branchReach = 110;
+
     const items: LeafGeometry[] = n.branches!.map((leaf, k) => {
       const rowCenterY = nodeY + LAYOUT.leafRowBase + k * LAYOUT.leafGap + LAYOUT.leafGap / 2;
-      const { d, length } = branchPath(nodeX, nodeY, rowCenterY, columnX, routing);
-      return { id: leaf.id, label: leaf.label, d, length, labelX: columnX, labelY: rowCenterY, column: 0 };
+      const endX = nodeX + dir * branchReach;
+      const { d, length } = branchPath(nodeX, nodeY, rowCenterY, endX, routing);
+      const labelX = endX + (dir === 1 ? 8 : -8);
+      return { id: leaf.id, label: leaf.label, d, length, labelX, labelY: rowCenterY, column: 0 };
     });
-    return [{ nodeIndex: i, direction: 1 as const, items }];
+    return [{ nodeIndex: i, direction: dir, items }];
   });
 
   return {
