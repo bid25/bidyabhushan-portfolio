@@ -5,6 +5,7 @@ import { LazyProfileCard, LazyDotField, LazyDecryptedText } from "@/components/L
 import { ScrollReveal } from "@/components/ScrollReveal";
 import BlurText from "@/components/BlurText";
 import Noise from "@/components/Noise";
+import { Trajectory } from "@/components/Trajectory";
 
 const featuredProjects = [
   { 
@@ -169,6 +170,9 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* ── Trajectory ─────────────────────────────────── */}
+      <Trajectory />
     </div>
   );
 }
