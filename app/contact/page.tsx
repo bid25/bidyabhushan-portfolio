@@ -3,6 +3,7 @@ import BlurText from "@/components/BlurText";
 import { buttonVariants } from "@/components/ui/button";
 import { RetroGrid } from "@/components/ui/retro-grid";
 import AsciiArtDemo from "@/components/ascii-art-demo";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Contact — Bidya Bhushan Nanda",
@@ -87,6 +88,7 @@ export default function ContactPage() {
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden py-16">
         <RetroGrid className="absolute inset-0 z-0" />
       </section>
+      <Footer />
     </div>
   );
 }

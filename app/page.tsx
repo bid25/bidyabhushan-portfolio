@@ -6,6 +6,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import BlurText from "@/components/BlurText";
 import Noise from "@/components/Noise";
 import { Trajectory } from "@/components/Trajectory";
+import { Footer } from "@/components/Footer";
 
 const featuredProjects = [
   { 
@@ -173,6 +174,7 @@ export default function Home() {
 
       {/* ── Trajectory ─────────────────────────────────── */}
       <Trajectory />
+      <Footer />
     </div>
   );
 }

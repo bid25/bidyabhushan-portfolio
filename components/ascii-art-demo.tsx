@@ -23,9 +23,7 @@ export default function AsciiArtDemo() {
       resolution={260}
       colored={true}
       artAspectRatio={4/3}
-      animationStyle="fade"
-      animationDuration={1.5}
-      animateOnView={false}
+      animated={false}
       inverted={!isDark}
       className="mx-auto aspect-[4/3] w-full max-w-[1070px] bg-bone dark:bg-void"
     />
