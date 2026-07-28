@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { LazyLiquidEther, LazyTargetCursor } from "@/components/LazyComponents";
 import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
 import { AtmosphereFallback } from "@/components/AtmosphereFallback";
+import { VercelIntegrations } from "@/components/VercelIntegrations";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -65,6 +66,7 @@ export default function RootLayout({
         </div>
         <Nav />
         <SmoothScroll>{children}</SmoothScroll>
+        <VercelIntegrations />
         </ThemeProvider>
       </body>
     </html>
