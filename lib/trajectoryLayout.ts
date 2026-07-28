@@ -25,7 +25,12 @@ export const LAYOUT = {
   // Ring/label offset share this one constant so they can't drift apart again
   // (v1 bug: amber ring visually overlapped its own date text on two nodes).
   nodeLabelGap: 14,
-  mobileTrunkX: 22,
+  mobileTrunkX: 30,
+  // Horizontal reach of a branch stub off the mobile trunk, and the extra
+  // clearance before the text column starts — keeps the stub visually
+  // touching the label instead of stopping short or overlapping it.
+  leafColumnOffsetVertical: 30,
+  contentGutter: 14,
   // Seeded organic-trunk jitter magnitudes (px). Anchor jitter moves each
   // node's own position; waypoint jitter is intentionally smaller so the
   // wander reads as "cable laid with slack," not a zigzag.
@@ -487,15 +492,32 @@ function computeHorizontalOctilinear(
   };
 }
 
-export function computeVerticalLayout(nodes: CareerNode[]): GraphLayout {
+/**
+ * Vertical space one node's slot needs: room for its label/date block plus,
+ * if it has branches, a single-column stack of branch rows beneath it. Never
+ * less than the default `verticalGap` so unbranched nodes keep their usual
+ * breathing room.
+ */
+export function verticalSlotHeight(branchCount: number): number {
+  if (branchCount === 0) return LAYOUT.verticalGap;
+  const needed = LAYOUT.leafRowBase + branchCount * LAYOUT.leafGap + LAYOUT.paddingY / 2;
+  return Math.max(LAYOUT.verticalGap, needed);
+}
+
+export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "organic"): GraphLayout {
   const centerX = LAYOUT.mobileTrunkX;
   const jitterMag = LAYOUT.mobileAnchorJitter;
   const waypointJitterMag = LAYOUT.mobileWaypointJitter;
   const perpLo = -centerX + LAYOUT.nodeRadius + 4;
   const perpHi = centerX - LAYOUT.nodeRadius - 4;
 
-  const nodeYs = nodes.map((_, i) => LAYOUT.paddingY + i * LAYOUT.verticalGap);
-  const height = nodeYs[nodeYs.length - 1] + LAYOUT.paddingY;
+  const branchCounts = nodes.map((n) => n.branches?.length ?? 0);
+  const nodeYs: number[] = [LAYOUT.paddingY];
+  for (let i = 1; i < nodes.length; i++) {
+    nodeYs.push(nodeYs[i - 1] + verticalSlotHeight(branchCounts[i - 1]));
+  }
+  const trailing = verticalSlotHeight(branchCounts[branchCounts.length - 1]);
+  const height = nodeYs[nodeYs.length - 1] + trailing;
   const width = centerX * 2;
 
   const anchors: Point[] = nodes.map((n, i) => ({
@@ -555,6 +577,23 @@ export function computeVerticalLayout(nodes: CareerNode[]): GraphLayout {
   });
   nodeArcFractions[nodeArcFractions.length - 1] = 1;
 
+  // Single-column branch stack beneath each node: a short stub off the
+  // trunk to a row that lines up with the equivalent HTML row the component
+  // renders (leafRowBase for the label block, then leafGap per branch row) —
+  // see verticalSlotHeight, which reserves exactly this much space.
+  const columnX = width + LAYOUT.leafColumnOffsetVertical;
+  const branchGroups: BranchGroup[] = nodes.flatMap((n, i) => {
+    const count = branchCounts[i];
+    if (count === 0) return [];
+    const { x: nodeX, y: nodeY } = anchors[i];
+    const items: LeafGeometry[] = n.branches!.map((leaf, k) => {
+      const rowCenterY = nodeY + LAYOUT.leafRowBase + k * LAYOUT.leafGap + LAYOUT.leafGap / 2;
+      const { d, length } = branchPath(nodeX, nodeY, rowCenterY, columnX, routing);
+      return { id: leaf.id, label: leaf.label, d, length, labelX: columnX, labelY: rowCenterY, column: 0 };
+    });
+    return [{ nodeIndex: i, direction: 1 as const, items }];
+  });
+
   return {
     orientation: "vertical",
     width,
@@ -564,6 +603,6 @@ export function computeVerticalLayout(nodes: CareerNode[]): GraphLayout {
     trunkLive: { d: live.d, length: live.length },
     trunkDead: { d: dead.d, length: dead.length },
     liveFraction,
-    branchGroups: [],
+    branchGroups,
   };
 }

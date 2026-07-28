@@ -7,6 +7,7 @@ import {
   computeHorizontalLayout,
   computeVerticalLayout,
   createSeededRandom,
+  verticalSlotHeight,
   LAYOUT,
   type GraphLayout,
   type Routing,
@@ -81,7 +82,7 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
   const orientation: "horizontal" | "vertical" = isMobile ? "vertical" : "horizontal";
 
   const layout: GraphLayout = useMemo(() => {
-    if (orientation === "vertical") return computeVerticalLayout(nodes);
+    if (orientation === "vertical") return computeVerticalLayout(nodes, routing);
     return computeHorizontalLayout(nodes, {
       trunkGap: isTabletDown ? LAYOUT.trunkGapTablet : LAYOUT.trunkGapDesktop,
       bothSides: !isTabletDown,
@@ -93,7 +94,6 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null); // hover or focus, drives dimming
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const [skillsOpen, setSkillsOpen] = useState<Set<number>>(new Set());
 
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const rootRef = useRef<HTMLElement | null>(null);
@@ -202,8 +202,6 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
             focusedIndex={focusedIndex}
             setFocusedIndex={setFocusedIndex}
             expandedIndex={expandedIndex}
-            skillsOpen={skillsOpen}
-            setSkillsOpen={setSkillsOpen}
             setExpandedIndex={setExpandedIndex}
             handleKeyDown={handleKeyDown}
             buttonRefs={buttonRefs}
@@ -605,19 +603,17 @@ function VerticalGraph({
   focusedIndex,
   setFocusedIndex,
   expandedIndex,
-  skillsOpen,
-  setSkillsOpen,
   setExpandedIndex,
   handleKeyDown,
   buttonRefs,
 }: SharedGraphProps & {
   focusedIndex: number;
   setFocusedIndex: React.Dispatch<React.SetStateAction<number>>;
-  skillsOpen: Set<number>;
-  setSkillsOpen: (v: Set<number>) => void;
 }) {
+  const contentPaddingLeft = layout.width + LAYOUT.contentGutter;
+
   return (
-    <div className="relative" style={{ minHeight: layout.height }}>
+    <div className="relative mx-auto w-full max-w-[460px]" style={{ minHeight: layout.height }}>
       <svg
         width={layout.width}
         height={layout.height}
@@ -626,6 +622,36 @@ function VerticalGraph({
         className="pointer-events-none absolute left-0 top-0 z-10"
       >
         <TrunkPaths layout={layout} reduced={reduced} />
+
+        {layout.branchGroups.map((group) => {
+          const node = nodes[group.nodeIndex];
+          const nodeStart = layout.nodeArcFractions[group.nodeIndex];
+          return (
+            <g key={node.id}>
+              {group.items.map((leaf, k) => {
+                const stagger = Math.min(k * 0.012, LAYOUT.revealRange * 0.5);
+                const vars = reduced ? STATIC_LP : revealVars(nodeStart + stagger, LAYOUT.revealRange);
+                return (
+                  <path
+                    key={leaf.id}
+                    d={leaf.d}
+                    fill="none"
+                    stroke="var(--color-cyan)"
+                    strokeOpacity={0.5}
+                    strokeWidth={1.5}
+                    style={{
+                      ...vars,
+                      strokeDasharray: leaf.length,
+                      strokeDashoffset: `calc(${leaf.length} * (1 - var(--lp)))`,
+                    }}
+                    suppressHydrationWarning
+                  />
+                );
+              })}
+            </g>
+          );
+        })}
+
         {layout.nodePositions.map((pos, i) => (
           <g key={nodes[i].id} transform={`translate(${pos.x}, ${pos.y})`}>
             <NodeRing node={nodes[i]} reduced={reduced} arcFraction={layout.nodeArcFractions[i]} />
@@ -633,13 +659,15 @@ function VerticalGraph({
         ))}
       </svg>
 
-      <div className="flex flex-col" style={{ paddingLeft: layout.width + 16 }}>
+      <div className="relative" style={{ height: layout.height }}>
         {layout.nodePositions.map((pos, i) => {
           const node = nodes[i];
-          const count = node.branches?.length ?? 0;
-          const open = skillsOpen.has(i);
+          const branches = node.branches ?? [];
+          const nextY = i < layout.nodePositions.length - 1 ? layout.nodePositions[i + 1].y : layout.height;
+          const slotHeight = nextY - pos.y;
+
           return (
-            <div key={node.id} style={{ minHeight: LAYOUT.verticalGap }} className="relative flex flex-col justify-center">
+            <div key={node.id} className="absolute left-0 w-full" style={{ top: pos.y, height: slotHeight, paddingLeft: contentPaddingLeft }}>
               <button
                 ref={(el) => {
                   buttonRefs.current[i] = el;
@@ -651,7 +679,8 @@ function VerticalGraph({
                 onFocus={() => setFocusedIndex(i)}
                 onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
                 onKeyDown={(e) => handleKeyDown(e, i)}
-                className="text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+                className="flex w-full flex-col justify-center text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+                style={{ height: LAYOUT.leafRowBase }}
               >
                 <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-bone">{node.label}</p>
                 <p className="font-mono text-[0.65rem] tabular-nums uppercase tracking-[0.06em] text-ash">
@@ -659,40 +688,51 @@ function VerticalGraph({
                 </p>
               </button>
 
-              {expandedIndex === i && (node.org || node.summary) && (
-                <div className="mt-2 border border-ash/30 bg-void px-3 py-2">
-                  {node.org && <p className="font-body text-xs text-ash">{node.org}</p>}
-                  {node.detail && <p className="font-mono text-[0.65rem] uppercase tracking-[0.06em] text-cyan">{node.detail}</p>}
-                  {node.summary && <p className="mt-1 font-body text-xs leading-relaxed text-bone">{node.summary}</p>}
+              {branches.length > 0 && (
+                <div className="flex flex-col">
+                  {branches.map((b, k) => {
+                    const nodeStart = layout.nodeArcFractions[i];
+                    const stagger = Math.min(k * 0.012, LAYOUT.revealRange * 0.5);
+                    const vars = reduced ? STATIC_LP : revealVars(nodeStart + stagger, LAYOUT.revealRange);
+                    return (
+                      <div
+                        key={b.id}
+                        className="flex items-center"
+                        style={{
+                          height: LAYOUT.leafGap,
+                          ...vars,
+                          opacity: "var(--lp)",
+                          transform: "translateX(calc((1 - var(--lp)) * -6px))",
+                        }}
+                        suppressHydrationWarning
+                      >
+                        <span className="font-mono text-[0.65rem] uppercase tracking-[0.05em] text-cyan/80">{b.label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
-              {count > 0 && (
-                <div className="mt-2">
-                  <button
-                    type="button"
-                    aria-expanded={open}
-                    onClick={() => {
-                      const next = new Set(skillsOpen);
-                      if (open) next.delete(i);
-                      else next.add(i);
-                      setSkillsOpen(next);
+              <AnimatePresence>
+                {expandedIndex === i && (node.org || node.summary) && (
+                  <motion.div
+                    initial={reduced ? false : { opacity: 0, y: "-6px" }}
+                    animate={{ opacity: 1, y: "0%" }}
+                    exit={{ opacity: 0, y: "-6px" }}
+                    transition={{ duration: 0.18, ease: EASE }}
+                    className="absolute z-30 border border-ash/30 bg-void px-3 py-2"
+                    style={{
+                      top: LAYOUT.leafRowBase + branches.length * LAYOUT.leafGap + 8,
+                      left: contentPaddingLeft,
+                      width: `calc(100% - ${contentPaddingLeft + 8}px)`,
                     }}
-                    className="font-mono text-[0.65rem] uppercase tracking-[0.06em] text-cyan underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
                   >
-                    {count} skill{count === 1 ? "" : "s"}
-                  </button>
-                  {open && (
-                    <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
-                      {node.branches!.map((b) => (
-                        <li key={b.id} className="font-mono text-[0.65rem] uppercase tracking-[0.05em] text-cyan/80">
-                          {b.label}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
+                    {node.org && <p className="font-body text-xs text-ash">{node.org}</p>}
+                    {node.detail && <p className="font-mono text-[0.65rem] uppercase tracking-[0.06em] text-cyan">{node.detail}</p>}
+                    {node.summary && <p className="mt-1 font-body text-xs leading-relaxed text-bone">{node.summary}</p>}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { LazyLiquidEther, LazyTargetCursor } from "@/components/LazyComponents";
 import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
+import { AtmosphereFallback } from "@/components/AtmosphereFallback";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -54,7 +55,7 @@ export default function RootLayout({
         >
         <LazyTargetCursor targetSelector="a, button, [role='button'], .cursor-target" />
         <div className="fixed inset-0 pointer-events-none -z-50 opacity-90 dark:opacity-50 saturate-[1.5] contrast-[1.2] dark:saturate-100 dark:contrast-100 mix-blend-multiply dark:mix-blend-screen">
-          <HeavyComponentWrapper fallback={<div className="h-full w-full bg-void"></div>}>
+          <HeavyComponentWrapper fallback={<AtmosphereFallback />}>
             <LazyLiquidEther 
               colors={['#00E5FF', '#FF0055', '#4A00E0']} 
               mouseForce={15} 

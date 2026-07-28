@@ -25,6 +25,7 @@ export default function AsciiArtDemo() {
       artAspectRatio={4/3}
       animated={false}
       inverted={!isDark}
+      backgroundColor={isDark ? "var(--color-void)" : "var(--color-bone)"}
       className="mx-auto aspect-[4/3] w-full max-w-[1070px] bg-bone dark:bg-void"
     />
   );

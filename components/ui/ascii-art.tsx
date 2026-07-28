@@ -44,6 +44,42 @@ const resolveCharset = (charset: string): string => {
   return charset;
 };
 
+const relativeLuminance = (r: number, g: number, b: number): number =>
+  (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+const parseRgbTriplet = (colorStr: string): [number, number, number] => {
+  const nums = colorStr.match(/[\d.]+/g);
+  if (!nums || nums.length < 3) return [0, 0, 0];
+  return [parseFloat(nums[0]), parseFloat(nums[1]), parseFloat(nums[2])];
+};
+
+/**
+ * `colored` mode renders each character in the source image's own pixel
+ * color, which looks great against a mid-tone page but silently disappears
+ * wherever the source image is nearly as dark (dark mode) or as light (light
+ * mode) as the flat background behind it — there's no per-theme contrast
+ * compensation otherwise. Nudges a pixel's color toward white/black, away
+ * from the background's own luminance, only as much as needed to clear
+ * MIN_LUMINANCE_DIFF; colors already distinct from the background pass
+ * through untouched.
+ */
+const MIN_LUMINANCE_DIFF = 0.3;
+const ensureContrastAgainstBackground = (
+  r: number,
+  g: number,
+  b: number,
+  bgLuminance: number
+): [number, number, number] => {
+  const lum = relativeLuminance(r, g, b);
+  const diff = Math.abs(lum - bgLuminance);
+  if (diff >= MIN_LUMINANCE_DIFF) return [r, g, b];
+
+  const pushToward = bgLuminance < 0.5 ? 255 : 0;
+  const room = pushToward === 255 ? 1 - lum : lum;
+  const t = room > 0 ? Math.min(1, (MIN_LUMINANCE_DIFF - diff) / room) : 1;
+  return [r + (pushToward - r) * t, g + (pushToward - g) * t, b + (pushToward - b) * t];
+};
+
 const resolveCssColor = (
   color: string,
   element: HTMLElement | null
@@ -279,9 +315,11 @@ export const AsciiArt: React.FC<AsciiArtProps> = ({
       const resolvedBgColor = resolveCssColor(backgroundColor, container);
       const resolvedTextColor = resolveCssColor(textColor, container);
 
+      let bgLuminance: number | null = null;
       if (resolvedBgColor !== "transparent") {
         ctx.fillStyle = resolvedBgColor;
         ctx.fillRect(0, 0, containerWidth, containerHeight);
+        bgLuminance = relativeLuminance(...parseRgbTriplet(resolvedBgColor));
       } else {
         ctx.clearRect(0, 0, containerWidth, containerHeight);
       }
@@ -315,7 +353,13 @@ export const AsciiArt: React.FC<AsciiArtProps> = ({
 
           let displayChar = pixel.char;
           let displayColor = colored
-            ? `rgb(${pixel.r}, ${pixel.g}, ${pixel.b})`
+            ? (() => {
+                const [cr, cg, cb] =
+                  bgLuminance === null
+                    ? [pixel.r, pixel.g, pixel.b]
+                    : ensureContrastAgainstBackground(pixel.r, pixel.g, pixel.b, bgLuminance);
+                return `rgb(${cr}, ${cg}, ${cb})`;
+              })()
             : resolvedTextColor;
 
           if (animationStyle === "matrix" && matrixProgress !== undefined) {

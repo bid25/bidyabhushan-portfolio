@@ -9,15 +9,17 @@ import { Trajectory } from "@/components/Trajectory";
 import { Footer } from "@/components/Footer";
 
 const featuredProjects = [
-  { 
-    slug: "hoshcare-mobile", 
+  {
+    slug: "hoshcare-mobile",
     title: "HOSHCARE — Mobile App",
-    description: "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Pre-pilot."
+    description: "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Pre-pilot.",
+    status: "Active, pre-pilot"
   },
-  { 
-    slug: "hoshcare-api", 
+  {
+    slug: "hoshcare-api",
     title: "HOSHCARE — Backend API",
-    description: "Node/Express/Prisma backend: auth, uploads, an extraction pipeline with retry and record locking. Superseded by a shared NestJS backend, July 2026."
+    description: "Node/Express/Prisma backend: auth, uploads, an extraction pipeline with retry and record locking. Superseded by a shared NestJS backend, July 2026.",
+    status: "Superseded"
   },
 ];
 
@@ -54,8 +56,8 @@ export default function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-[1200px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="z-10 flex flex-col items-start text-left w-full gap-y-6 lg:gap-y-8 py-4">
+        <div className="mx-auto w-full max-w-[1200px] grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="z-10 order-2 lg:order-none flex flex-col items-start text-left w-full gap-y-6 lg:gap-y-8 py-4">
             <BlurText
               text="Portfolio"
               as="p"
@@ -114,9 +116,9 @@ export default function Home() {
           </div>
 
           {/* Lazy Loaded ProfileCard */}
-          <div className="w-full max-w-[480px] mx-auto lg:ml-auto lg:mr-0 flex items-center justify-center">
-            <HeavyComponentWrapper fallback={<div className="h-full w-full bg-void/50 border border-ash/10" />}>
-              <LazyProfileCard 
+          <div className="w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[480px] mx-auto order-1 lg:order-none lg:ml-auto lg:mr-0 flex items-center justify-center">
+            <HeavyComponentWrapper mobileBypass={false} fallback={<div className="h-full w-full bg-void/50 border border-ash/10" />}>
+              <LazyProfileCard
                 name="Bidya Bhushan Nanda"
                 title="Full-Stack & AI/ML Engineer"
                 handle="bidyabhushannanda"
@@ -142,22 +144,29 @@ export default function Home() {
             Featured Projects
           </h2>
 
-          <div className="w-full max-w-4xl space-y-16">
+          <div className="w-full max-w-4xl border-t border-ash/30">
             {featuredProjects.map((project, i) => (
               <ScrollReveal key={project.slug} delay={i * 0.1}>
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="group block py-4"
+                  className="group flex flex-col items-start justify-between gap-6 border-b border-ash/30 py-10 sm:flex-row sm:items-center"
                 >
-                  <h3 className="font-display text-3xl font-semibold text-bone mb-4 group-hover:text-amber transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="font-body text-lg text-ash leading-relaxed max-w-[65ch]">
-                    {project.description}
-                  </p>
-                  <div className="mt-8 font-mono text-xs text-cyan uppercase tracking-wider group-hover:text-amber transition-colors">
-                    Read Case Study →
+                  <div className="flex flex-1 flex-col items-start gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="font-display text-2xl font-bold tracking-tight text-bone sm:text-3xl">
+                        {project.title}
+                      </h3>
+                      <span className="rounded-sm border border-cyan/30 bg-cyan/5 px-2 py-0.5 font-body text-[10px] font-medium uppercase tracking-[0.05em] text-cyan">
+                        {project.status}
+                      </span>
+                    </div>
+                    <p className="max-w-[65ch] font-body text-base leading-relaxed text-ash">
+                      {project.description}
+                    </p>
                   </div>
+                  <span className="shrink-0 font-mono text-xs uppercase tracking-wider text-cyan transition-colors group-hover:text-amber">
+                    Read Case Study →
+                  </span>
                 </Link>
               </ScrollReveal>
             ))}

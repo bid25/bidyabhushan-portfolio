@@ -8,6 +8,8 @@ interface Props {
   fallback?: React.ReactNode;
   /** Custom rootMargin for intersection observer. Default: "200px 0px" */
   rootMargin?: string;
+  /** Skip the mobile viewport bypass — for children that aren't GPU/WebGL heavy. Default: true */
+  mobileBypass?: boolean;
 }
 
 function subscribeToMediaQuery(query: string) {
@@ -38,6 +40,7 @@ export function HeavyComponentWrapper({
   children,
   fallback = null,
   rootMargin = "200px 0px",
+  mobileBypass = true,
 }: Props) {
   const { ref, inView } = useInView({ rootMargin });
   const isMobile = useSyncExternalStore(
@@ -57,7 +60,7 @@ export function HeavyComponentWrapper({
   }
 
   // Mobile bypass: never mount WebGL components on small screens
-  if (isMobile) {
+  if (isMobile && mobileBypass) {
     return <div className="h-full w-full">{fallback}</div>;
   }
 

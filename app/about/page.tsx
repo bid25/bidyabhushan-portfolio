@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import BlurText from "@/components/BlurText";
 import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
 import { LazyLanyard } from "@/components/LazyComponents";
@@ -34,6 +35,21 @@ export default function AboutPage() {
           />
         </header>
 
+        {/* Static portrait — mobile/tablet only. Lanyard is a physics-simulated
+            WebGL model too heavy to mount below 768px (HeavyComponentWrapper's
+            default bypass); this gives that viewport a real image instead of
+            the empty space the null fallback used to leave. */}
+        <div className="mb-8 w-full max-w-[220px] border border-ash/20 lg:hidden">
+          <Image
+            src="/portrait.webp"
+            alt="Bidya Bhushan Nanda"
+            width={600}
+            height={800}
+            className="h-auto w-full object-cover"
+            priority
+          />
+        </div>
+
         <div className="flex flex-col lg:flex-row lg:items-start lg:gap-16 relative z-10">
           <div className="space-y-6 lg:w-1/2">
             <p className="max-w-[65ch] font-body text-base leading-relaxed text-bone">
@@ -52,8 +68,10 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Lanyard rendered absolutely to span full height so the string falls from the actual top bar */}
-      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-screen pointer-events-none z-20 flex justify-center items-center">
+      {/* Lanyard rendered absolutely to span full height so the string falls from the actual top bar.
+          Desktop only — below lg it never mounts (HeavyComponentWrapper's mobile bypass) and would
+          otherwise leave an empty pointer-events-auto box sitting over the page content. */}
+      <div className="absolute top-0 right-0 hidden h-screen w-1/2 pointer-events-none z-20 lg:flex justify-center items-center">
         <div className="w-full h-full pointer-events-auto">
           <HeavyComponentWrapper fallback={null}>
             <LazyLanyard 
