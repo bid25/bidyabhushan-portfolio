@@ -105,7 +105,7 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
   // scrolled into view, which stays reachable regardless of what follows it.
   const { scrollYProgress } = useScroll({ 
     target: rootRef, 
-    offset: orientation === "horizontal" ? ["start end", "end end"] : ["start 70%", "end 70%"] 
+    offset: orientation === "horizontal" ? ["start end", "end end"] : ["start 75%", "end end"] 
   });
   const slideProgress = useTransform(scrollYProgress, [0.7, 1.0], [0, 1]);
 
@@ -201,6 +201,7 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
           <VerticalGraph
             nodes={nodes}
             layout={layout}
+            fullTrunkD={fullTrunkD}
             reduced={prefersReducedMotion}
             focusedIndex={focusedIndex}
             setFocusedIndex={setFocusedIndex}
@@ -604,6 +605,7 @@ function HorizontalGraph({
 function VerticalGraph({
   nodes,
   layout,
+  fullTrunkD,
   reduced,
   focusedIndex,
   setFocusedIndex,
@@ -614,13 +616,14 @@ function VerticalGraph({
   handleKeyDown,
   buttonRefs,
 }: SharedGraphProps & {
+  fullTrunkD: string;
   focusedIndex: number;
   setFocusedIndex: React.Dispatch<React.SetStateAction<number>>;
   activeIndex: number | null;
   setActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
   return (
-    <div className="relative mx-auto w-full max-w-[340px]" style={{ minHeight: layout.height }}>
+    <div className="relative mx-auto w-full max-w-[360px]" style={{ minHeight: layout.height }}>
       <svg
         width={layout.width}
         height={layout.height}
@@ -668,6 +671,18 @@ function VerticalGraph({
           </g>
         ))}
       </svg>
+
+      {fullTrunkD && !reduced && (
+        <div
+          aria-hidden="true"
+          className="trajectory-packet pointer-events-none absolute z-10 h-1.5 w-1.5 rounded-none bg-[var(--color-amber)]"
+          style={{
+            offsetPath: `path("${fullTrunkD}")`,
+            offsetRotate: "0deg",
+            boxShadow: "0 0 6px 2px var(--color-amber)",
+          }}
+        />
+      )}
 
       <div className="relative" style={{ height: layout.height }}>
         {layout.nodePositions.map((pos, i) => {

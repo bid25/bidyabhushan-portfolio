@@ -505,8 +505,8 @@ export function verticalSlotHeight(branchCount: number): number {
 }
 
 export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "organic"): GraphLayout {
-  const width = 340;
-  const centerX = width / 2;
+  const width = 360;
+  const centerX = 180;
   const jitterMag = LAYOUT.mobileAnchorJitter;
   const waypointJitterMag = LAYOUT.mobileWaypointJitter;
   const perpLo = -centerX + LAYOUT.nodeRadius + 4;
@@ -582,7 +582,7 @@ export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "o
     if (count === 0) return [];
     const { x: nodeX, y: nodeY } = anchors[i];
     const dir: 1 | -1 = i % 2 === 0 ? 1 : -1;
-    const branchReach = 60;
+    const branchReach = 30;
 
     const items: LeafGeometry[] = n.branches!.map((leaf, k) => {
       const rowCenterY = nodeY + LAYOUT.leafRowBase + k * LAYOUT.leafGap + LAYOUT.leafGap / 2;
