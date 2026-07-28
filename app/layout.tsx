@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Instrument_Sans } from "next/font/google";
 import { Nav } from "@/components/Nav";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -25,6 +25,15 @@ export const metadata: Metadata = {
     "Portfolio of Bidya Bhushan Nanda. Full-stack engineering across frontend, backend, and infrastructure.",
 };
 
+// viewportFit: "cover" is what makes env(safe-area-inset-*) resolve to real
+// pixel values on notched/Dynamic-Island phones instead of always being 0.
+// Without this export Next only emits the bare default viewport meta tag.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,7 +45,7 @@ export default function RootLayout({
       className={`${jetbrainsMono.variable} ${instrumentSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col relative bg-void">
+      <body className="min-h-full flex flex-col relative bg-void overflow-x-clip">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
