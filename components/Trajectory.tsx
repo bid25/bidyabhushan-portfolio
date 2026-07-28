@@ -121,12 +121,12 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
     if (prefersReducedMotion) return;
     const el = rootRef.current;
     if (!el) return;
-    if (v >= 0.995 && !ambientTriggered.current) {
+    if (v >= 0.90 && !ambientTriggered.current) {
       ambientTriggered.current = true;
       el.classList.remove("trajectory-ambient-play");
       void el.offsetWidth; // restart keyframes if replaying
       el.classList.add("trajectory-ambient-play");
-    } else if (v < 0.9 && ambientTriggered.current) {
+    } else if (v < 0.90 && ambientTriggered.current) {
       ambientTriggered.current = false;
       el.classList.remove("trajectory-ambient-play");
     }
@@ -161,7 +161,13 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
     }
   }
 
-  const fullTrunkD = `${layout.trunkLive.d} ${layout.trunkDead.d}`.trim();
+  // For horizontal, browsers seem to handle disconnected M commands fine.
+  // For vertical, we merge live and dead paths continuously by stripping the redundant "M x,y" from the start of trunkDead.
+  const fullTrunkD = orientation === "horizontal"
+    ? `${layout.trunkLive.d} ${layout.trunkDead.d}`.trim()
+    : (layout.trunkLive.d && layout.trunkDead.d 
+        ? `${layout.trunkLive.d} ${layout.trunkDead.d.replace(/^M\s*[\d.-]+,[\d.-]+\s*/, "")}`.trim() 
+        : "");
 
   return (
     <section
@@ -675,7 +681,7 @@ function VerticalGraph({
       {fullTrunkD && !reduced && (
         <div
           aria-hidden="true"
-          className="trajectory-packet pointer-events-none absolute z-10 h-1.5 w-1.5 rounded-none bg-[var(--color-amber)]"
+          className="trajectory-packet pointer-events-none absolute top-0 left-0 z-10 h-1.5 w-1.5 rounded-none bg-[var(--color-amber)]"
           style={{
             offsetPath: `path("${fullTrunkD}")`,
             offsetRotate: "0deg",
@@ -738,7 +744,7 @@ function VerticalGraph({
                     return (
                       <span
                         key={leaf.id}
-                        className={`absolute whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.05em] ${hAlignClass}`}
+                        className={`absolute font-mono text-[10px] leading-[1.1] uppercase tracking-[0.05em] w-[90px] ${hAlignClass}`}
                         style={{
                           ...vars,
                           left: leaf.labelX,

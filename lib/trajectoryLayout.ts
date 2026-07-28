@@ -500,7 +500,7 @@ function computeHorizontalOctilinear(
  */
 export function verticalSlotHeight(branchCount: number): number {
   if (branchCount === 0) return LAYOUT.verticalGap;
-  const needed = LAYOUT.leafRowBase + branchCount * LAYOUT.leafGap + LAYOUT.paddingY / 2;
+  const needed = LAYOUT.leafRowBase + branchCount * LAYOUT.leafGap + 120;
   return Math.max(LAYOUT.verticalGap, needed);
 }
 
@@ -582,7 +582,7 @@ export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "o
     if (count === 0) return [];
     const { x: nodeX, y: nodeY } = anchors[i];
     const dir: 1 | -1 = i % 2 === 0 ? 1 : -1;
-    const branchReach = 30;
+    const branchReach = 80;
 
     const items: LeafGeometry[] = n.branches!.map((leaf, k) => {
       const rowCenterY = nodeY + LAYOUT.leafRowBase + k * LAYOUT.leafGap + LAYOUT.leafGap / 2;
