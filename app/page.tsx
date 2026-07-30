@@ -117,7 +117,7 @@ export default function Home() {
 
           {/* Lazy Loaded ProfileCard */}
           <div className="w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[480px] mx-auto order-1 lg:order-none lg:ml-auto lg:mr-0 flex items-center justify-center">
-            <HeavyComponentWrapper mobileBypass={false} fallback={<div className="h-full w-full bg-void/50 border border-ash/10" />}>
+            <HeavyComponentWrapper mobileBypass={false} fallback={<div className="w-full min-h-[300px] sm:min-h-[360px] lg:min-h-[480px] bg-void/50 border border-ash/10" />}>
               <LazyProfileCard
                 name="Bidya Bhushan Nanda"
                 title="Full-Stack & AI/ML Engineer"
