@@ -105,7 +105,7 @@ export default async function BlogPostPage({
               kicker={metadata.kind}
               title={metadata.title}
               subtitle={metadata.subtitle}
-              meta={[published, metadata.readingTime, "Bidya Bhushan Nanda"]}
+              meta={[published, "Bidya Bhushan Nanda"]}
               pdf={metadata.pdf}
             />
           </header>

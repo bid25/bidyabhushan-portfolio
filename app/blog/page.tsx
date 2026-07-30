@@ -71,8 +71,7 @@ export default function BlogPage() {
                       year: "numeric",
                     })}
                   </time>
-                  <span className="text-ash/40">/</span>
-                  <span>{post.readingTime}</span>
+
                 </div>
 
                 <h2 className="font-display text-[clamp(1.25rem,3vw,1.875rem)] font-bold leading-tight text-bone transition-colors group-hover:text-amber">
