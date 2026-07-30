@@ -57,10 +57,10 @@ export default function BlogPage() {
         <ul className="border-t border-ash/20">
           {posts.map((post) => (
             <li key={post.slug} className="border-b border-ash/20">
-              <Link
-                href={`/blog/${post.slug}`}
-                className="cursor-target group block py-6 sm:py-9 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber"
-              >
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="cursor-target group block py-6 sm:py-9 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber drop-shadow-[0_2px_10px_rgba(0,0,0,1)]"
+                >
                 <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.1em] text-ash">
                   <span className="text-amber">{post.kind}</span>
                   <span className="text-ash/40">/</span>
