@@ -56,7 +56,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
         <PointerCursor targetSelector="a, button, [role='button'], .cursor-target" />
-        <div className="pointer-events-none -z-50 opacity-90 dark:opacity-50 saturate-[1.5] contrast-[1.2] dark:saturate-100 dark:contrast-100 mix-blend-multiply dark:mix-blend-screen sm:fixed sm:inset-0 absolute top-[80vh] inset-x-0 bottom-0">
+        <div className="fixed inset-0 pointer-events-none -z-50 opacity-90 dark:opacity-50 saturate-[1.5] contrast-[1.2] dark:saturate-100 dark:contrast-100 mix-blend-multiply dark:mix-blend-screen">
           <HeavyComponentWrapper fallback={<AtmosphereFallback />}>
             <LazyLiquidEther 
               colors={['#00E5FF', '#FF0055', '#4A00E0']} 

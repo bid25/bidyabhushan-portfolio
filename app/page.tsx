@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="flex flex-1 flex-col overflow-x-clip">
       {/* ── Hero ────────────────────────────────────────── */}
-      <section className="relative isolate flex w-full flex-1 flex-col items-center justify-center px-4 py-32 sm:px-8 lg:px-16 min-h-[80vh]">
+      <section className="relative isolate flex w-full flex-1 flex-col items-center justify-center px-4 py-32 sm:px-8 lg:px-16 min-h-[80vh] bg-void sm:bg-transparent">
         
         {/* Interactive DotField background effect */}
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-100">
