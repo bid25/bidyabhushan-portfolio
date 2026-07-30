@@ -46,7 +46,7 @@ export default function Home() {
         
         {/* Interactive DotField background effect */}
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-100">
-          <HeavyComponentWrapper fallback={<div className="h-full w-full pointer-events-none absolute inset-0 -z-10 opacity-15 [background-image:radial-gradient(#6E7681_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]"></div>}>
+          <HeavyComponentWrapper fallback={<div className="h-full w-full pointer-events-none absolute inset-0 -z-10 opacity-25 [background-image:radial-gradient(#6E7681_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]"></div>}>
             <LazyDotField 
               dotRadius={1.5} 
               dotSpacing={20} 
