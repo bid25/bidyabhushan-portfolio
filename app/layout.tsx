@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   title: "Bidya Bhushan Nanda — Full-Stack & AI/ML Engineer",
   description:
     "Portfolio of Bidya Bhushan Nanda. Full-stack engineering across frontend, backend, and infrastructure.",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 // viewportFit: "cover" is what makes env(safe-area-inset-*) resolve to real
