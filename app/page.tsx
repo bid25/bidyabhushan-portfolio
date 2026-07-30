@@ -1,7 +1,13 @@
+import ReactDOM from "react-dom";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
-import { LazyProfileCard, LazyDotField, LazyDecryptedText } from "@/components/LazyComponents";
+import { LazyProfileCard, LazyDotField } from "@/components/LazyComponents";
+// Imported directly, not via next/dynamic: this renders inside the hero <h1>, so
+// it must be in the server HTML with zero Suspense boundary. It shares
+// motion/react with BlurText and ScrollReveal on this page, so splitting it out
+// bought nothing and cost a round-trip. See PERF-PLAN.md §1.1.
+import DecryptedText from "@/components/DecryptedText";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import BlurText from "@/components/BlurText";
 import Noise from "@/components/Noise";
@@ -24,6 +30,15 @@ const featuredProjects = [
 ];
 
 export default function Home() {
+  // Emits <link rel="preload" as="image" fetchpriority="high"> into the streamed
+  // HTML <head>. The avatar is the LCP element but lives inside ProfileCard,
+  // which is dynamic(ssr:false) — so without this the browser cannot discover it
+  // until the chunk downloads and React renders. Measured cost of that blind
+  // spot: 460ms "resource load delay" on mobile, 502ms on desktop, out of a
+  // 4.1s / 1.2s LCP. Must stay in sync with ProfileCard's `unoptimized` avatar
+  // so the preloaded URL matches the requested one. See PERF-PLAN.md §3.1.
+  ReactDOM.preload("/avatar.webp", { as: "image", fetchPriority: "high" });
+
   return (
     <div className="flex flex-1 flex-col overflow-x-clip">
       {/* ── Hero ────────────────────────────────────────── */}
@@ -46,14 +61,23 @@ export default function Home() {
           </HeavyComponentWrapper>
         </div>
 
+        {/* Grain keeps its animation (your call), but it now gets the same guards
+            every other effect has: skipped entirely on mobile and for
+            prefers-reduced-motion, and unmounted once the hero scrolls out of
+            view. Its rAF loop regenerates a 1000x1000 ImageData every 2 frames,
+            so this is the difference between paying that cost on every device
+            forever and paying it only on a desktop viewing the hero.
+            See PERF-PLAN.md §2.2. */}
         <div className="pointer-events-none absolute inset-0 -z-10 mix-blend-overlay opacity-50">
-          <Noise
-            patternSize={250}
-            patternScaleX={1}
-            patternScaleY={1}
-            patternRefreshInterval={2}
-            patternAlpha={15}
-          />
+          <HeavyComponentWrapper fallback={null}>
+            <Noise
+              patternSize={250}
+              patternScaleX={1}
+              patternScaleY={1}
+              patternRefreshInterval={2}
+              patternAlpha={15}
+            />
+          </HeavyComponentWrapper>
         </div>
 
         <div className="mx-auto w-full max-w-[1200px] grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -67,9 +91,15 @@ export default function Home() {
               direction="top"
               stepDuration={0.3}
             />
-            <h1 className="w-full font-display text-[clamp(3rem,5vw,4.5rem)] font-black leading-[1.1] flex flex-wrap items-start justify-start gap-x-3 sm:gap-x-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 ease-out fill-mode-both" style={{ animationDelay: '100ms' }}>
+            {/* min-h-[1.1em] is a one-line collapse guard, deliberately NOT a
+                reservation for the full wrapped height. Reserving 3 lines on
+                mobile / 2 at lg would add visible empty space at any width where
+                the text happens to wrap to fewer lines. Since the text is now
+                server-rendered the h1 can never be empty, so a single-line floor
+                is all that's needed — it can never exceed real content height. */}
+            <h1 className="w-full font-display text-[clamp(3rem,5vw,4.5rem)] font-black leading-[1.1] flex flex-wrap items-start justify-start gap-x-3 sm:gap-x-4 min-h-[1.1em] animate-in fade-in slide-in-from-bottom-4 duration-1000 ease-out fill-mode-both" style={{ animationDelay: '100ms' }}>
               <div className="flex flex-wrap items-start justify-start gap-x-[0.25em]">
-                <LazyDecryptedText
+                <DecryptedText
                   text="BIDYA"
                   animateOn="hover"
                   speed={80}
@@ -77,7 +107,7 @@ export default function Home() {
                   className="text-[#047857] dark:text-[#00FF9D]"
                   parentClassName="text-[#047857] dark:text-[#00FF9D] cursor-target"
                 />
-                <LazyDecryptedText
+                <DecryptedText
                   text="BHUSHAN"
                   animateOn="hover"
                   speed={80}
@@ -86,7 +116,7 @@ export default function Home() {
                   parentClassName="text-[#047857] dark:text-[#00FF9D] cursor-target"
                 />
               </div>
-              <LazyDecryptedText
+              <DecryptedText
                 text="NANDA"
                 animateOn="hover"
                 speed={80}
@@ -116,8 +146,13 @@ export default function Home() {
           </div>
 
           {/* Lazy Loaded ProfileCard */}
-          <div className="w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[480px] mx-auto order-1 lg:order-none lg:ml-auto lg:mr-0 flex items-center justify-center">
-            <HeavyComponentWrapper mobileBypass={false} fallback={<div className="w-full min-h-[300px] sm:min-h-[360px] lg:min-h-[480px] bg-void/50 border border-ash/10" />}>
+          {/* aspect-square lives on the CONTAINER, not the fallback. On mobile
+              this column is order-1 — above every word of copy — so anything
+              that changes its height moves the whole page. Locking the height
+              here makes the column dimensionally fixed no matter what is inside
+              it: nothing, the fallback, or the mounted card. See PERF-PLAN.md §1.3b. */}
+          <div className="w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[480px] aspect-square mx-auto order-1 lg:order-none lg:ml-auto lg:mr-0 flex items-center justify-center">
+            <HeavyComponentWrapper mobileBypass={false} fallback={<div className="h-full w-full bg-void/50" />}>
               <LazyProfileCard
                 name="Bidya Bhushan Nanda"
                 title="Full-Stack & AI/ML Engineer"

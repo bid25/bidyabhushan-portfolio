@@ -345,13 +345,25 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
             <div className="pc-shine" />
             <div className="pc-glare" />
             <div className="pc-content pc-avatar-content">
+              {/* `unoptimized` is deliberate. This is the LCP element on the
+                  home page, but ProfileCard is dynamic(ssr:false), so next/image
+                  can never emit a preload for it — the browser only discovers it
+                  after the chunk loads (measured: 460ms of pure "resource load
+                  delay" on mobile). The fix is a server-side ReactDOM.preload in
+                  app/page.tsx, and that only works if the preloaded URL matches
+                  the requested one exactly. Going through /_next/image would
+                  produce a DPR/sizes-dependent srcset URL we can't predict, so
+                  the preload would miss and double-fetch. The source file is a
+                  72KB 834x834 webp — already well-optimised — so serving it raw
+                  costs nothing and makes the URL deterministic.
+                  See PERF-PLAN.md §3.1. */}
               <Image
                 className="avatar"
                 src={avatarUrl}
                 alt={`${name || 'User'} avatar`}
                 width={834}
                 height={834}
-                sizes="(max-width: 480px) 100vw, 480px"
+                unoptimized
                 onError={e => {
                   const t = e.target as HTMLImageElement;
                   t.style.display = 'none';
@@ -361,11 +373,15 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 <div className="pc-user-info">
                   <div className="pc-user-details">
                     <div className="pc-mini-avatar">
+                      {/* Also unoptimized so it reuses the exact URL the main
+                          avatar already preloaded and cached — zero extra bytes.
+                          Optimising it separately would cost a second request. */}
                       <Image
                         src={miniAvatarUrl || avatarUrl}
                         alt={`${name || 'User'} mini avatar`}
                         width={64}
                         height={64}
+                        unoptimized
                         onError={e => {
                           const t = e.target as HTMLImageElement;
                           t.style.opacity = '0.5';

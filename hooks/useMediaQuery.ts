@@ -26,3 +26,6 @@ export function useMediaQuery(query: string): boolean {
 export const PREFERS_REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 export const IS_TABLET_DOWN = "(max-width: 1023px)";
 export const IS_MOBILE = "(max-width: 767px)";
+/** True only where a real cursor exists. Correct gate for cursor-dependent UI —
+ *  more accurate than a width breakpoint, since it excludes large touchscreens. */
+export const HAS_FINE_POINTER = "(pointer: fine) and (hover: hover)";

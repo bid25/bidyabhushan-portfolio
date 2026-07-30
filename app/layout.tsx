@@ -3,7 +3,8 @@ import { JetBrains_Mono, Instrument_Sans } from "next/font/google";
 import { Nav } from "@/components/Nav";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
-import { LazyLiquidEther, LazyTargetCursor } from "@/components/LazyComponents";
+import { LazyLiquidEther } from "@/components/LazyComponents";
+import { PointerCursor } from "@/components/PointerCursor";
 import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
 import { AtmosphereFallback } from "@/components/AtmosphereFallback";
 import { VercelIntegrations } from "@/components/VercelIntegrations";
@@ -54,7 +55,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-        <LazyTargetCursor targetSelector="a, button, [role='button'], .cursor-target" />
+        <PointerCursor targetSelector="a, button, [role='button'], .cursor-target" />
         <div className="fixed inset-0 pointer-events-none -z-50 opacity-90 dark:opacity-50 saturate-[1.5] contrast-[1.2] dark:saturate-100 dark:contrast-100 mix-blend-multiply dark:mix-blend-screen">
           <HeavyComponentWrapper fallback={<AtmosphereFallback />}>
             <LazyLiquidEther 

@@ -25,6 +25,11 @@ function getMediaQuerySnapshot(query: string) {
 }
 
 function getServerSnapshot() {
+  // INVARIANT: SSR renders the `fallback` branch on every code path, because
+  // `inView` also starts false. That means the mobile-bypass branch and the
+  // viewport branch MUST render `fallback` at identical dimensions, or
+  // hydration produces a layout shift. Returning `false` here is only safe
+  // while that holds. See PERF-PLAN.md §1.5.
   return false;
 }
 

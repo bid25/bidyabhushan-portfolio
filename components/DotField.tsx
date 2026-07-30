@@ -130,12 +130,15 @@ const DotField = memo(({
       m.prevY = m.y;
     }
 
-    const speedInterval = setInterval(updateMouseSpeed, 20);
-
     let frameCount = 0;
 
     function tick() {
       if (!ctx) return;
+      // Mouse-speed smoothing runs frame-paced inside the rAF tick rather than
+      // on its own setInterval(20ms). The standalone 50Hz timer fired
+      // independently of frame pacing, so it competed with scroll and input
+      // handling and showed up as input delay. See PERF-PLAN.md §2.4.
+      updateMouseSpeed();
       frameCount++;
       const dots = dotsRef.current;
       const m = mouseRef.current;
@@ -254,7 +257,6 @@ const DotField = memo(({
 
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      clearInterval(speedInterval);
       clearTimeout(resizeTimer);
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMouseMove);
