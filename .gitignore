@@ -27,3 +27,14 @@ trace_dotfield.json
 home_dotfield.png
 .DS_Store
 test-results/
+
+# Extra markdown docs
+*.md
+!README.md
+
+# Tool/Agent folders
+.impeccable/
+
+# Misnamed gitignore folders
+gitignore/
+.gitignore/
