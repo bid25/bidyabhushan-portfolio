@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   title: "Bidya Bhushan Nanda — Full-Stack & AI/ML Engineer",
   description:
     "Portfolio of Bidya Bhushan Nanda. Full-stack engineering across frontend, backend, and infrastructure.",
+  other: {
+    google: "notranslate",
+  },
 };
 
 // viewportFit: "cover" is what makes env(safe-area-inset-*) resolve to real
