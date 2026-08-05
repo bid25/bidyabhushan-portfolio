@@ -21,3 +21,7 @@ test-results/
 # Misnamed gitignore folders
 gitignore/
 .gitignore/
+
+# Accidental backup/nested folders
+node_modules 16-57-38-063/
+bidyabhushan-portfolio/
