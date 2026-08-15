@@ -62,7 +62,10 @@ export function Nav() {
         <ul className="hidden items-center gap-6 md:flex">
           {links.map(({ href, label }) => {
             const isActive =
-              href === "/" ? pathname === "/" : pathname.startsWith(href);
+              // `usePathname()` is typed `string | null` — null during the brief
+              // window before the router mounts. Coerced rather than guarded so
+              // `isActive` stays a plain boolean for `aria-current`.
+              href === "/" ? pathname === "/" : !!pathname?.startsWith(href);
 
             return (
               <li key={href}>
@@ -105,7 +108,10 @@ export function Nav() {
           <ul className="mx-auto flex max-w-[1200px] flex-col px-4 py-2 sm:px-8">
             {links.map(({ href, label }) => {
               const isActive =
-                href === "/" ? pathname === "/" : pathname.startsWith(href);
+                // `usePathname()` is typed `string | null` — null during the brief
+              // window before the router mounts. Coerced rather than guarded so
+              // `isActive` stays a plain boolean for `aria-current`.
+              href === "/" ? pathname === "/" : !!pathname?.startsWith(href);
 
               return (
                 <li key={href}>

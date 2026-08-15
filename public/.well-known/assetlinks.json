@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bidyabhushan.mobile",
+      "sha256_cert_fingerprints": [
+        "D3:DD:E8:B8:27:A6:26:38:B0:03:E5:54:51:93:C8:0F:43:7A:6D:0B:39:79:65:B4:3B:6D:BB:CA:24:72:85:25",
+        "REPLACE_ME_PLAY_APP_SIGNING_SHA256"
+      ]
+    }
+  }
+]
