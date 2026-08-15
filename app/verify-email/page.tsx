@@ -19,6 +19,13 @@ export const metadata: Metadata = {
  * Server-rendered with no client JavaScript, and it never reads the ?token=
  * parameter — that is a live single-use credential and rendering it into HTML
  * would leak it into browser history and analytics referrers.
+ *
+ * The copy assumes Broccoli 4J semantics: registration writes to
+ * `pending_registrations` and the `users` row is created only when this link is
+ * opened. So there is no account to sign into, and no Settings → Account to
+ * reach, until confirmation happens — an earlier draft of this page said
+ * otherwise and sent expired users to a screen they could not open. If that
+ * ever changes on the API side, this page changes with it.
  */
 export default function VerifyEmailPage() {
   return (
@@ -51,7 +58,9 @@ export default function VerifyEmailPage() {
                 </li>
                 <li className="flex gap-4">
                   <span className="w-6 shrink-0 font-display text-sm text-cyan">02</span>
-                  <span>Tap the link there. The app confirms the address and you&apos;re done.</span>
+                  <span>
+                    Tap the link there. The app confirms the address and creates your account.
+                  </span>
                 </li>
               </ol>
             </div>
@@ -63,15 +72,16 @@ export default function VerifyEmailPage() {
               <ul className="space-y-3 font-body text-sm leading-[1.6] text-ash">
                 <li>Confirmation links work for 24 hours, and work once.</li>
                 <li>
-                  If yours has expired, open Broccoli and send a new one from Settings → Account.
+                  Your account isn&apos;t created until you tap the link. Until then there is
+                  nothing to sign in to.
                 </li>
                 <li>
-                  Confirming isn&apos;t required to use the app. It&apos;s what lets this address
-                  recover the account if the password is forgotten.
+                  If yours has expired, open Broccoli and sign up again with the same address.
+                  Nothing was created the first time.
                 </li>
                 <li>
-                  If you didn&apos;t create a Broccoli account, ignore this. An unconfirmed address
-                  can&apos;t be used for anything.
+                  If you didn&apos;t sign up for Broccoli, ignore this. No account exists, and none
+                  is created unless this link is opened.
                 </li>
               </ul>
             </div>
