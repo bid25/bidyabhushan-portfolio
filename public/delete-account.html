@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account and Data Deletion - Broccoli</title>
+  <style>
+    :root {
+      --bg: #FBFBFA;
+      --fg: #1F2417;
+      --muted: #6B7261;
+      --border: #E5E4D8;
+      --card-bg: #FFFFFF;
+      --primary: #4C6B1F;
+      --danger: #943A1E;
+      --danger-bg: #FDF3F0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141710;
+        --fg: #F5F5ED;
+        --muted: #9DA392;
+        --border: #2B3322;
+        --card-bg: #1B2115;
+        --primary: #95C93D;
+        --danger: #FFA185;
+        --danger-bg: #2B1812;
+      }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--fg);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--fg);
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .step-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .step-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--fg);
+    }
+    p, li {
+      font-size: 1rem;
+      color: var(--fg);
+    }
+    ol, ul {
+      padding-left: 24px;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Account and Data Deletion</h1>
+      <div class="meta">Broccoli &bull; Google Play Data Safety Compliance</div>
+    </header>
+
+    <p>
+      In accordance with Google Play Developer Policy and global privacy standards (including GDPR, CCPA, and DPDP Act), Broccoli users have the right to request permanent deletion of their account and all associated personal data.
+    </p>
+
+    <h2>How to Delete Your Account and Data</h2>
+
+    <div class="step-card">
+      <div class="step-title">Method 1: Instant In-App Deletion (Recommended)</div>
+      <p>You can instantly delete your account and all server data directly from the Broccoli mobile app:</p>
+      <ol>
+        <li>Open the Broccoli app on your device.</li>
+        <li>Tap the <strong>Settings</strong> icon.</li>
+        <li>Tap <strong>Account</strong>.</li>
+        <li>Scroll to the bottom and tap <strong>Delete account</strong>.</li>
+        <li>Enter your current account password to confirm.</li>
+      </ol>
+      <p>
+        <strong>Result:</strong> All server-side data is immediately and irreversibly purged from our database. Local session tokens are cleared, and the app drops back into guest mode. Your local on-device SQLite database is preserved on your phone unless you choose to uninstall the app.
+      </p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-title">Method 2: Web or Email Deletion Request</div>
+      <p>If you no longer have access to the mobile application or your device, you can submit a remote deletion request:</p>
+      <ol>
+        <li>Send an email to <a href="mailto:privacy@bidyabhushan.in?subject=Broccoli%20Account%20Deletion%20Request">privacy@bidyabhushan.in</a> with the subject <code>Broccoli Account Deletion Request</code>.</li>
+        <li>Send the request from the email address registered with your Broccoli account.</li>
+      </ol>
+      <p>
+        <strong>Processing Time:</strong> Our privacy team will verify ownership and permanently delete your account and associated database records within 48 hours of receipt. You will receive a final confirmation email once deletion is complete.
+      </p>
+    </div>
+
+    <h2>What Data Is Deleted</h2>
+    <p>When an account deletion is processed, the following information is permanently erased from our production servers:</p>
+    <ul>
+      <li>User authentication credentials and password hashes (Argon2id).</li>
+      <li>All synchronized food log entries, meal timestamps, and notes.</li>
+      <li>All synchronized body weight records and trend computations.</li>
+      <li>Custom foods and personal recipes created under the account.</li>
+      <li>Metabolic profile attributes, target snapshots, and historical TDEE reconciliation windows.</li>
+      <li>AI scan credits, top-up balances, and entitlement maps.</li>
+      <li>Referral codes and referral linkage records.</li>
+    </ul>
+
+    <h2>What Data Is Retained</h2>
+    <p>
+      No personal or diary data is retained on our servers after deletion. Financial transaction history for subscription purchases is managed directly by Google Play Billing and subject to Google's standard financial and tax retention policies.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      If you have questions about your data or the deletion process, please contact <a href="mailto:privacy@bidyabhushan.in">privacy@bidyabhushan.in</a>.
+    </p>
+
+    <footer>
+      &copy; 2026 Bidya Bhushan Nanda. Broccoli. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Disclaimer - Broccoli</title>
+  <style>
+    :root {
+      --bg: #FBFBFA;
+      --fg: #1F2417;
+      --muted: #6B7261;
+      --border: #E5E4D8;
+      --card-bg: #FFFFFF;
+      --primary: #4C6B1F;
+      --warn: #943A1E;
+      --warn-bg: #FDF3F0;
+      --warn-border: #F1CEC3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141710;
+        --fg: #F5F5ED;
+        --muted: #9DA392;
+        --border: #2B3322;
+        --card-bg: #1B2115;
+        --primary: #95C93D;
+        --warn: #FFA185;
+        --warn-bg: #2B1812;
+        --warn-border: #52271D;
+      }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--fg);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--fg);
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .warning-card {
+      background-color: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 24px 0;
+      color: var(--fg);
+    }
+    .warning-card strong {
+      color: var(--warn);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    p, li {
+      font-size: 1rem;
+      color: var(--fg);
+    }
+    ul {
+      padding-left: 24px;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Medical Disclaimer</h1>
+      <div class="meta">Effective date: 14 September 2026 &bull; Broccoli v1.0</div>
+    </header>
+
+    <div class="warning-card">
+      <strong>Not Medical Advice</strong>
+      Broccoli is an instrument for calorie and body composition tracking. It is not a medical device, and it does not provide medical, nutritional, diagnostic, or clinical advice. Always consult a qualified physician, registered dietitian, or certified medical provider before beginning or altering any diet, fasting regimen, caloric restriction, or physical exercise program.
+    </div>
+
+    <h2>1. General Informational Use Only</h2>
+    <p>
+      All content, calculations, estimates, ranges, trends, and projections provided within Broccoli (including Total Daily Energy Expenditure, recommended intake targets, macronutrient distributions, and body weight smoothing) are generated solely for informational and educational purposes.
+    </p>
+    <p>
+      The numbers displayed represent mathematical and statistical estimates based on user-entered data and established formulas (such as Mifflin-St Jeor and Katch-McArdle). They are not medical evaluations and must not be used as a substitute for professional clinical judgment.
+    </p>
+
+    <h2>2. No Doctor-Patient Relationship</h2>
+    <p>
+      Your use of Broccoli does not establish a doctor-patient, dietitian-client, or other healthcare professional relationship between you and Broccoli, its developers, or its affiliates.
+    </p>
+
+    <h2>3. Special Health Considerations and Eating Disorders</h2>
+    <p>
+      Caloric restriction, rapid weight loss, and intense dietary tracking may pose serious health risks for certain individuals, including:
+    </p>
+    <ul>
+      <li>Individuals with a current or prior history of eating disorders or disordered eating patterns.</li>
+      <li>Individuals who are pregnant, nursing, or planning to become pregnant.</li>
+      <li>Individuals under 18 years of age or individuals with underlying metabolic or endocrine conditions.</li>
+      <li>Individuals with chronic medical conditions (such as diabetes, cardiovascular disease, renal impairment, or gastrointestinal disorders).</li>
+    </ul>
+    <p>
+      Broccoli incorporates automatic safety floors (F0) designed to prevent unsafe target calculation, but software safety rules cannot evaluate individual medical conditions. If you experience dizziness, weakness, chronic fatigue, fainting, psychological distress, or physical pain while tracking, discontinue use immediately and seek medical attention.
+    </p>
+
+    <h2>4. Emergency Situations</h2>
+    <p>
+      If you believe you are experiencing a medical emergency, call your local emergency services (such as 911 in the United States, 112 in Europe, or 102/108 in India) or visit an emergency room immediately. Never disregard professional medical advice or delay seeking it because of information presented in Broccoli.
+    </p>
+
+    <h2>5. Contact</h2>
+    <p>
+      Questions regarding this disclaimer may be directed to: <a href="mailto:privacy@bidyabhushan.in">privacy@bidyabhushan.in</a>.
+    </p>
+
+    <footer>
+      &copy; 2026 Bidya Bhushan Nanda. Broccoli. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
