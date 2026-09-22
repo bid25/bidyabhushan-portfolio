@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.bidyabhushan.mobile",
       "sha256_cert_fingerprints": [
-        "D3:DD:E8:B8:27:A6:26:38:B0:03:E5:54:51:93:C8:0F:43:7A:6D:0B:39:79:65:B4:3B:6D:BB:CA:24:72:85:25"
+        "D3:DD:E8:B8:27:A6:26:38:B0:03:E5:54:51:93:C8:0F:43:7A:6D:0B:39:79:65:B4:3B:6D:BB:CA:24:72:85:25",
+        "AE:2F:88:CE:1C:45:74:EE:EA:07:8A:02:CF:66:2F:77:17:41:C1:B4:22:4E:21:F6:31:8E:3C:33:C0:23:45:22"
       ]
     }
   }
