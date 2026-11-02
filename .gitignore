@@ -23,6 +23,13 @@ next-env.d.ts
 
 
 
+# Temporary scratch directory
+scratch/
+
+# Local sensitive deployment keys / recovery codes
+vercel deployment recovery codes.txt
+*.recovery*.txt
+
 # Misnamed gitignore folders
 gitignore/
 .gitignore/
