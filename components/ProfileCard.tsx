@@ -38,6 +38,7 @@ interface ProfileCardProps {
   status?: string;
   contactText?: string;
   showUserInfo?: boolean;
+  showDetails?: boolean;
   onContactClick?: () => void;
 }
 
@@ -60,6 +61,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   status = 'Online',
   contactText = 'Contact',
   showUserInfo = true,
+  showDetails = true,
   onContactClick
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -363,54 +365,60 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 alt={`${name || 'User'} avatar`}
                 width={834}
                 height={834}
+                priority
                 unoptimized
                 onError={e => {
                   const t = e.target as HTMLImageElement;
                   t.style.display = 'none';
                 }}
               />
-              {showUserInfo && (
-                <div className="pc-user-info">
-                  <div className="pc-user-details">
-                    <div className="pc-mini-avatar">
-                      {/* Also unoptimized so it reuses the exact URL the main
-                          avatar already preloaded and cached — zero extra bytes.
-                          Optimising it separately would cost a second request. */}
-                      <Image
-                        src={miniAvatarUrl || avatarUrl}
-                        alt={`${name || 'User'} mini avatar`}
-                        width={64}
-                        height={64}
-                        unoptimized
-                        onError={e => {
-                          const t = e.target as HTMLImageElement;
-                          t.style.opacity = '0.5';
-                        }}
-                      />
-                    </div>
-                    <div className="pc-user-text">
-                      <div className="pc-handle">@{handle}</div>
-                      <div className="pc-status">{status}</div>
+            </div>
+            {showUserInfo && (
+              <div className="pc-user-info">
+                <div className="pc-user-details">
+                  <div className="pc-mini-avatar">
+                    {/* Also unoptimized so it reuses the exact URL the main
+                        avatar already preloaded and cached — zero extra bytes.
+                        Optimising it separately would cost a second request. */}
+                    <Image
+                      src={miniAvatarUrl || avatarUrl}
+                      alt={`${name || 'User'} mini avatar`}
+                      width={64}
+                      height={64}
+                      unoptimized
+                      onError={e => {
+                        const t = e.target as HTMLImageElement;
+                        t.style.opacity = '0.5';
+                      }}
+                    />
+                  </div>
+                  <div className="pc-user-text">
+                    <div className="pc-handle">@{handle}</div>
+                    <div className="pc-status">
+                      <span className="pc-status-dot" aria-hidden="true" />
+                      <span>{status}</span>
                     </div>
                   </div>
-                  <button
-                    className="pc-contact-btn"
-                    onClick={handleContactClick}
-                    style={{ pointerEvents: 'auto' }}
-                    type="button"
-                    aria-label={`Contact ${name || 'user'}`}
-                  >
-                    {contactText}
-                  </button>
                 </div>
-              )}
-            </div>
-            <div className="pc-content">
-              <div className="pc-details">
-                <h3 className="tracking-tight">{name}</h3>
-                <p className="font-mono text-xs uppercase tracking-wider">{title}</p>
+                <button
+                  className="pc-contact-btn"
+                  onClick={handleContactClick}
+                  style={{ pointerEvents: 'auto' }}
+                  type="button"
+                  aria-label={contactText || `Contact ${name || 'user'}`}
+                >
+                  {contactText}
+                </button>
               </div>
-            </div>
+            )}
+            {showDetails && (name || title) && (
+              <div className="pc-content">
+                <div className="pc-details">
+                  {name && <h3 className="tracking-tight">{name}</h3>}
+                  {title && <p className="font-mono text-xs uppercase tracking-wider">{title}</p>}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </div>
