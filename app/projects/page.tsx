@@ -1,93 +1,152 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import BlurText from "@/components/BlurText";
+import { PixelBroccoli } from "@/components/PixelBroccoli";
+import { PixelZucchini } from "@/components/PixelZucchini";
 
 export const metadata: Metadata = {
-  title: "Projects — Bidya Bhushan Nanda",
-  description: "Case studies from Bidya Bhushan Nanda's engineering work.",
+  title: "PROJECTS — Bidya Bhushan Nanda",
+  description:
+    "Things I’ve built, shipped and sometimes replaced. Case studies and technical postmortems.",
 };
 
-const allProjects = [
-  { 
-    slug: "hoshcare-mobile", 
-    title: "HOSHCARE — Mobile App",
-    description: "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Pre-pilot.",
-    status: "Active, pre-pilot"
+const projects = [
+  {
+    slug: "broccoli",
+    title: "BROCCOLI",
+    badge: "LIVE ON PLAY STORE",
+    badgeClass: "bg-[#0B3D2E] text-[#FFD93B]",
+    description:
+      "Caloric & body composition tracker built with precision. Shipped to Google Play worldwide.",
+    tags: ["REACT NATIVE", "REANIMATED", "SQLITE"],
+    cta: "VIEW PRODUCT →",
+    graphic: <PixelBroccoli width={90} height={90} />,
   },
-  { 
-    slug: "hoshcare-api", 
-    title: "HOSHCARE — Backend API",
-    description: "Node/Express/Prisma backend: auth, uploads, an extraction pipeline with retry and record locking. Superseded by a shared NestJS backend, July 2026.",
-    status: "Superseded"
+  {
+    slug: "zucchini-linux",
+    title: "ZUCCHINI-LINUX",
+    badge: "ACTIVE // HARDWARE",
+    badgeClass: "bg-[#FF5C8A] text-[#0B3D2E] border-3 border-[#0B3D2E]",
+    description:
+      "SM-T295 tablet reverse engineered for bare-metal dual-boot of Arch Linux and LineageOS.",
+    tags: ["ARM64", "ARCH LINUX", "LINEAGEOS"],
+    cta: "READ BRING-UP LOG →",
+    graphic: <PixelZucchini width={180} height={75} rotate={-6} />,
   },
-  { 
-    slug: "hoshcare-web", 
-    title: "HOSHCARE — Records Web App",
-    description: "The first working version of HOSHCARE in the browser, featuring row-level security for data isolation.",
-    status: "Archived"
+  {
+    slug: "hoshcare-client",
+    title: "HOSHCARE CLIENT (FRONTEND)",
+    badge: "ACTIVE // PRE-PILOT",
+    badgeClass: "bg-[#0B3D2E] text-[#FFD93B]",
+    description:
+      "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Merged browser prototype & design foundations.",
+    tags: ["REACT NATIVE", "GEMINI API", "EXPO"],
+    cta: "READ CASE STUDY →",
   },
-  { 
-    slug: "hoshcare-marketing", 
-    title: "HOSHCARE — Marketing Site",
-    description: "Eight pages with a WebGL homepage driven by scroll position. Established the design system used by the app.",
-    status: "Archived"
+  {
+    slug: "hoshcare-api",
+    title: "HOSHCARE API (BACKEND)",
+    badge: "SUPERSEDED JUL 2026",
+    badgeClass: "bg-[#FF5C8A] text-[#0B3D2E] border-3 border-[#0B3D2E]",
+    description:
+      "Node/Express/Prisma backend: auth, uploads, extraction pipeline with retry and record locking. Replaced by a shared NestJS backend.",
+    tags: ["NODE", "PRISMA", "POSTGRESQL", "NESTJS"],
+    cta: "READ CASE STUDY →",
   },
 ];
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen text-bone">
-      <div className="mx-auto max-w-[1200px] px-4 py-16 sm:px-8 lg:px-16">
-        <header className="mb-16">
-          <BlurText
-            text="Projects"
-            as="h1"
-            className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1]"
-            delay={120}
-            animateBy="words"
-            direction="top"
-            stepDuration={0.4}
+    <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 box-border pb-20">
+      {/* Header */}
+      <div className="relative pt-16 pb-6">
+        {/* Decorative Zigzag */}
+        <svg
+          aria-hidden="true"
+          width="120"
+          height="40"
+          viewBox="0 0 120 40"
+          className="absolute right-[10%] top-14 pointer-events-none hidden sm:block"
+        >
+          <path
+            d="M4 30 L20 8 L36 30 L52 8 L68 30 L84 8 L100 30 L116 8"
+            fill="none"
+            stroke="#FF5C8A"
+            strokeWidth="6"
           />
-          <BlurText
-            text="Case studies from confidential engineering work. Descriptions cover architecture, contribution, and the specific problems solved. Code isn't public — see each page for how to go deeper."
-            className="mt-4 max-w-[65ch] font-body text-base leading-relaxed text-ash"
-            delay={30}
-            animateBy="words"
-            direction="bottom"
-            stepDuration={0.3}
-          />
-        </header>
+        </svg>
 
-        <div className="mt-16 w-full max-w-[800px] border-t border-ash/30">
-          {allProjects.map((project, idx) => (
-            <article 
-              key={project.slug} 
-              className="group relative flex flex-col items-start justify-between border-b border-ash/30 py-10 sm:flex-row sm:items-center sm:gap-8"
-            >
-              <div className="flex flex-1 flex-col items-start gap-3">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h2 className="font-display text-xl font-bold tracking-tight text-bone sm:text-2xl">
-                    {project.title}
-                  </h2>
-                  <span className="font-body text-[10px] font-medium uppercase tracking-[0.05em] text-cyan border border-cyan/30 px-2 py-0.5 rounded-sm bg-cyan/5">
-                    {project.status}
-                  </span>
-                </div>
-                <p className="max-w-[65ch] font-body text-sm leading-relaxed text-ash">
-                  {project.description}
-                </p>
-              </div>
-              <div className="mt-6 shrink-0 sm:mt-0">
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="inline-block font-body text-sm font-medium tracking-wide text-amber transition-colors hover:text-amber/80"
+        {/* Decorative Triangle */}
+        <svg
+          aria-hidden="true"
+          width="56"
+          height="56"
+          viewBox="0 0 64 64"
+          className="absolute right-[2%] top-24 pointer-events-none hidden sm:block"
+        >
+          <polygon
+            points="32,4 60,58 4,58"
+            fill="#FFF6C2"
+            stroke="#0B3D2E"
+            strokeWidth="5"
+          />
+        </svg>
+
+        <h1 className="gl m-0 font-pixel text-2xl sm:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
+          PROJECTS
+        </h1>
+        <p className="mt-6 mb-0 text-base sm:text-lg max-w-[620px] border-l-8 border-[#0B3D2E] pl-4 text-[#0B3D2E] font-medium leading-relaxed font-mono">
+          Things I’ve built, shipped and sometimes replaced. Each one has a case
+          study.
+        </p>
+      </div>
+
+      {/* Grid of Projects (4 Projects) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-9 pt-10">
+        {projects.map((project, index) => (
+          <Link
+            key={project.slug}
+            href={`/projects/${project.slug}`}
+            className="card flex flex-col justify-between border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[10px_10px_0_#0B3D2E] p-6 sm:p-7 relative"
+            style={{ backgroundColor: "#FFF6C2", opacity: 1 }}
+          >
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <span
+                  className={`font-pixel text-[10px] px-2.5 py-1.5 inline-block ${project.badgeClass}`}
                 >
-                  Read case study <span aria-hidden="true">→</span>
-                </Link>
+                  {project.badge}
+                </span>
+                {project.graphic && (
+                  <div className="hidden sm:block shrink-0 -my-3">{project.graphic}</div>
+                )}
               </div>
-            </article>
-          ))}
-        </div>
+
+              <h2 className="font-pixel text-xl leading-snug my-3 text-[#0B3D2E]">
+                {project.title}
+              </h2>
+
+              <p className="m-0 mb-4 font-mono text-sm leading-relaxed text-[#0B3D2E]">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-pixel text-[10px] bg-[#FFF6C2] text-[#0B3D2E] px-2 py-1 border-3 border-[#0B3D2E]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="font-bold border-t-3 border-dashed border-[#0B3D2E] pt-3 text-sm flex items-center justify-between text-[#0B3D2E]">
+              <span>{project.cta}</span>
+              <span className="font-pixel text-xs">→</span>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

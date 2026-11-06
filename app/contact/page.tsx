@@ -1,94 +1,269 @@
-import type { Metadata } from "next";
-import BlurText from "@/components/BlurText";
-import { buttonVariants } from "@/components/ui/button";
-import { RetroGrid } from "@/components/ui/retro-grid";
-import AsciiArtDemo from "@/components/ascii-art-demo";
-import { Footer } from "@/components/Footer";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Contact — Bidya Bhushan Nanda",
-  description: "Ways to reach Bidya Bhushan Nanda.",
-};
+import { useState } from "react";
 
-const channels = [
-  { label: "Email", value: "bidyabhushannanda@gmail.com", href: "mailto:bidyabhushannanda@gmail.com" },
-  { label: "GitHub", value: "github.com/bid25", href: "https://github.com/bid25" },
-  { label: "LinkedIn", value: "linkedin.com/in/bidya-bhushan-nanda", href: "https://linkedin.com/in/bidya-bhushan-nanda" },
-  { label: "Resume", value: "View / Download", href: "/Resume.pdf" },
+const CHANNELS = [
+  {
+    id: "email",
+    label: "EMAIL → bidyabhushannanda@gmail.com",
+    href: "mailto:bidyabhushannanda@gmail.com",
+    channelClass: "contact-email",
+    color: "#EA4335",
+    external: false,
+  },
+  {
+    id: "github",
+    label: "GITHUB → github.com/bid25",
+    href: "https://github.com/bid25",
+    channelClass: "contact-github",
+    color: "#181717",
+    external: true,
+  },
+  {
+    id: "linkedin",
+    label: "LINKEDIN → bidya-bhushan-nanda",
+    href: "https://linkedin.com/in/bidya-bhushan-nanda",
+    channelClass: "contact-linkedin",
+    color: "#0A66C2",
+    external: true,
+  },
+  {
+    id: "instagram",
+    label: "INSTAGRAM → @bid_notfound",
+    href: "https://www.instagram.com/bid_notfound/",
+    channelClass: "contact-instagram",
+    color: "#E1306C",
+    external: true,
+  },
+  {
+    id: "resume",
+    label: "RESUME → View / Download PDF",
+    href: "/Resume.pdf",
+    channelClass: "contact-resume",
+    color: "#E5252A",
+    external: true,
+  },
 ];
 
 export default function ContactPage() {
+  const [selectedChannel, setSelectedChannel] = useState<string | null>(null);
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formState.name || !formState.email || !formState.message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    // Create mailto link with encoded parameters
+    const subject = encodeURIComponent(
+      `Portfolio Inquiry from ${formState.name}`
+    );
+    const body = encodeURIComponent(
+      `From: ${formState.name} (${formState.email})\n\nMessage:\n${formState.message}`
+    );
+    window.location.href = `mailto:bidyabhushannanda@gmail.com?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
   return (
-    <div className="text-bone">
-      {/* Section 1: Contact Details */}
-      <section className="relative min-h-screen pt-24 pb-16">
-        <div className="relative z-10 mx-auto max-w-[1200px] px-4 sm:px-8 lg:px-16">
-          <header className="mb-16">
-            <BlurText
-              text="Reach out"
-              as="p"
-              className="mb-3 font-body text-xs font-medium uppercase tracking-[0.05em] text-ash"
-              delay={80}
-              animateBy="letters"
-              direction="top"
-              stepDuration={0.3}
-            />
-            <BlurText
-              text="Contact"
-              as="h1"
-              className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1]"
-              delay={120}
-              animateBy="words"
-              direction="top"
-              stepDuration={0.4}
-            />
-          </header>
+    <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 box-border pb-20 font-mono text-[#0B3D2E]">
+      {/* Header */}
+      <div className="relative pt-16 pb-6">
+        {/* Decorative Zigzag */}
+        <svg
+          aria-hidden="true"
+          width="120"
+          height="40"
+          viewBox="0 0 120 40"
+          className="absolute right-[10%] top-14 pointer-events-none hidden sm:block"
+        >
+          <path
+            d="M4 30 L20 8 L36 30 L52 8 L68 30 L84 8 L100 30 L116 8"
+            fill="none"
+            stroke="#FF5C8A"
+            strokeWidth="6"
+          />
+        </svg>
 
-          <ul className="max-w-[65ch] space-y-6">
-            {channels.map((channel) => (
-              <li
-                key={channel.label}
-                className="flex items-baseline gap-4 border-b border-ash/20 pb-6 last:border-b-0"
+        {/* Decorative Dot Matrix */}
+        <svg
+          aria-hidden="true"
+          width="80"
+          height="80"
+          viewBox="0 0 80 80"
+          className="absolute right-[2%] top-24 pointer-events-none hidden sm:block"
+        >
+          <g fill="#0B3D2E">
+            <circle cx="10" cy="10" r="6" />
+            <circle cx="40" cy="10" r="6" />
+            <circle cx="70" cy="10" r="6" />
+            <circle cx="10" cy="40" r="6" />
+            <circle cx="40" cy="40" r="6" />
+            <circle cx="70" cy="40" r="6" />
+          </g>
+        </svg>
+
+        <h1 className="gl m-0 font-pixel text-2xl sm:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
+          CONTACT
+        </h1>
+        <p className="mt-6 mb-0 text-base sm:text-lg max-w-[620px] border-l-8 border-[#0B3D2E] pl-4 text-[#0B3D2E] font-medium leading-relaxed">
+          Got a project, an internship, or want to collaborate? Drop a line.
+        </p>
+      </div>
+
+      {/* Grid: Form & Channels */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-9 pt-10 items-start">
+        {/* Left Column: Contact Form */}
+        <div className="pop border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[10px_10px_0_#0B3D2E] p-6 sm:p-7 flex flex-col gap-5">
+          {sent ? (
+            <div className="bg-[#0B3D2E] text-[#FFD93B] p-6 border-3 border-[#0B3D2E] text-center font-mono">
+              <div className="font-pixel text-sm text-[#FF5C8A] mb-2">
+                TRANSMISSION READY [OK]
+              </div>
+              <p className="text-sm">
+                Your email client was opened. If it didn't open automatically, write directly to:
+              </p>
+              <a
+                href="mailto:bidyabhushannanda@gmail.com"
+                className="underline font-bold text-base text-[#FFD93B] block mt-2"
               >
-                <span className="w-24 shrink-0 font-body text-xs font-medium uppercase tracking-[0.05em] text-ash">
-                  {channel.label}
-                </span>
-                {channel.href ? (
-                  <a
-                    href={channel.href}
-                    target={channel.href.startsWith("http") ? "_blank" : undefined}
-                    rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className={buttonVariants({ variant: "outline", size: "sm" })}
+                bidyabhushannanda@gmail.com
+              </a>
+              <button
+                type="button"
+                onClick={() => setSent(false)}
+                className="btn mt-4 inline-block font-pixel text-xs bg-[#FFD93B] text-[#0B3D2E] px-4 py-2 border-2 border-[#0B3D2E]"
+              >
+                SEND ANOTHER
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="font-pixel text-[11px] block mb-2 text-[#0B3D2E]"
+                >
+                  NAME
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  required
+                  placeholder="Your Name"
+                  value={formState.name}
+                  onChange={(e) =>
+                    setFormState({ ...formState, name: e.target.value })
+                  }
+                  className="w-full min-h-[48px] px-3.5 py-2.5 border-4 border-[#0B3D2E] bg-[#FFF6C2] text-[#0B3D2E] placeholder:text-[#0B3D2E]/50 font-bold focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="font-pixel text-[11px] block mb-2 text-[#0B3D2E]"
+                >
+                  EMAIL
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  placeholder="your.email@domain.com"
+                  value={formState.email}
+                  onChange={(e) =>
+                    setFormState({ ...formState, email: e.target.value })
+                  }
+                  className="w-full min-h-[48px] px-3.5 py-2.5 border-4 border-[#0B3D2E] bg-[#FFF6C2] text-[#0B3D2E] placeholder:text-[#0B3D2E]/50 font-bold focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="font-pixel text-[11px] block mb-2 text-[#0B3D2E]"
+                >
+                  MESSAGE
+                </label>
+                <textarea
+                  id="message"
+                  rows={5}
+                  required
+                  placeholder="What are we building?"
+                  value={formState.message}
+                  onChange={(e) =>
+                    setFormState({ ...formState, message: e.target.value })
+                  }
+                  className="w-full px-3.5 py-2.5 border-4 border-[#0B3D2E] bg-[#FFF6C2] text-[#0B3D2E] placeholder:text-[#0B3D2E]/50 font-bold focus:outline-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn min-h-[48px] px-5 py-3 bg-[#0B3D2E] text-[#FFD93B] font-mono font-bold text-base border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A] cursor-pointer mt-2 text-center"
+              >
+                SEND MESSAGE →
+              </button>
+            </form>
+          )}
+        </div>
+
+        {/* Right Column: Status & Direct Channels */}
+        <div className="flex flex-col gap-6">
+          <div className="bg-[#0B3D2E] text-[#FFD93B] border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A] p-4 font-pixel text-xs leading-loose flex items-center gap-2">
+            <span className="bl text-[#FF5C8A]">●</span> OPEN TO OPPORTUNITIES
+          </div>
+
+          <span className="font-hand text-3xl -rotate-3 text-[#0B3D2E]">
+            say hi, i reply fast!
+          </span>
+
+          <div className="flex flex-col gap-3 font-bold font-mono">
+            {CHANNELS.map((ch) => {
+              const isSelected = selectedChannel === ch.id;
+              return (
+                <a
+                  key={ch.id}
+                  href={ch.href}
+                  target={ch.external ? "_blank" : undefined}
+                  rel={ch.external ? "noopener noreferrer" : undefined}
+                  onClick={() => setSelectedChannel(ch.id)}
+                  data-selected={isSelected ? "true" : undefined}
+                  className={`contact-channel ${ch.channelClass} group flex items-center justify-between border-4 border-[#0B3D2E] bg-[#FFF6C2] px-4 py-3 min-h-[48px] text-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] cursor-pointer outline-none`}
+                  style={
+                    isSelected
+                      ? {
+                          backgroundColor: ch.color,
+                          color: "#FFF6C2",
+                        }
+                      : undefined
+                  }
+                >
+                  <span
+                    style={isSelected ? { color: "#FFF6C2" } : undefined}
+                    className="transition-colors"
                   >
-                    {channel.value}
-                  </a>
-                ) : (
-                  <span className="font-body text-base text-bone">
-                    {channel.value}
+                    {ch.label}
                   </span>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-16 max-w-[65ch] font-body text-sm italic leading-relaxed text-ash">
-            Projects referenced on this site are confidential — happy to walk through architecture and code in a call.
-          </p>
+                  <span
+                    style={isSelected ? { color: "#FFF6C2" } : undefined}
+                    className="font-pixel text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  >
+                    ↗
+                  </span>
+                </a>
+              );
+            })}
+          </div>
         </div>
-      </section>
-
-      {/* Section 2: ASCII Art */}
-      <section className="relative flex min-h-screen items-center justify-center py-16">
-        <div className="w-full max-w-[1070px] px-4">
-          <AsciiArtDemo />
-        </div>
-      </section>
-
-      {/* Section 3: Retro Grid */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden py-16">
-        <RetroGrid className="absolute inset-0 z-0" />
-      </section>
-      <Footer />
+      </div>
     </div>
   );
 }

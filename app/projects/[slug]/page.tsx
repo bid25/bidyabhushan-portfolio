@@ -1,32 +1,90 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
-import BlurText from "@/components/BlurText";
-import ScrollFloat from "@/components/ScrollFloat";
+import { HoshcareClientCaseStudy } from "@/components/case-studies/HoshcareClientCaseStudy";
+import { HoshcareApiCaseStudy } from "@/components/case-studies/HoshcareApiCaseStudy";
+import { BroccoliCaseStudy } from "@/components/case-studies/BroccoliCaseStudy";
+import { ZucchiniLinuxCaseStudy } from "@/components/case-studies/ZucchiniLinuxCaseStudy";
 
-// Explicit lookup map for Turbopack/Webpack compatibility (as requested)
-const projectModules = {
-  "hoshcare-mobile": () => import("@/content/projects/hoshcare-mobile.mdx"),
-  "hoshcare-api": () => import("@/content/projects/hoshcare-api.mdx"),
-  "hoshcare-web": () => import("@/content/projects/hoshcare-web.mdx"),
-  "hoshcare-marketing": () => import("@/content/projects/hoshcare-marketing.mdx"),
-};
-
-type ProjectSlug = keyof typeof projectModules;
-
-interface MDXModule {
-  default: React.ComponentType<{ components?: Record<string, React.ComponentType<any>> }>;
-  metadata: {
+// Project metadata catalog (4 active featured projects + backward-compatible aliases)
+const projectCatalog: Record<
+  string,
+  {
     title: string;
-    slug: string;
     status: string;
     stack: string[];
-  };
-}
+    description: string;
+    prev?: { slug: string; title: string };
+    next?: { slug: string; title: string };
+  }
+> = {
+  broccoli: {
+    title: "Broccoli — Caloric & Composition Instrument",
+    status: "Live on Play Store",
+    stack: ["React Native", "Reanimated 3", "SQLite", "Expo EAS"],
+    description:
+      "Precision caloric and body composition tracker. Built, shipped and live on Google Play worldwide.",
+    next: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
+  },
+  "zucchini-linux": {
+    title: "Zucchini-Linux — Bare Metal SM-T295 Bring-Up",
+    status: "Active, hardware",
+    stack: ["ARM64", "Arch Linux", "LineageOS", "Qualcomm EDL"],
+    description:
+      "Samsung Galaxy Tab A 8.0 reverse engineered for bare metal dual-booting of Arch Linux and LineageOS.",
+    prev: { slug: "broccoli", title: "BROCCOLI" },
+    next: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
+  },
+  "hoshcare-client": {
+    title: "HOSHCARE CLIENT (FRONTEND) — Medical Vault Client",
+    status: "Active, pre-pilot",
+    stack: ["React Native", "Expo SDK 56", "TypeScript", "React Navigation v7"],
+    description:
+      "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Merged browser prototype & design foundations.",
+    prev: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
+    next: { slug: "hoshcare-api", title: "HOSHCARE API" },
+  },
+  "hoshcare-api": {
+    title: "HOSHCARE API (BACKEND) — Extraction Pipeline",
+    status: "Superseded",
+    stack: ["Node.js", "Express", "Prisma", "PostgreSQL", "NestJS"],
+    description:
+      "Node/Express/Prisma backend: auth, uploads, an extraction pipeline with retry and record locking. Superseded by NestJS in July 2026.",
+    prev: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
+    next: { slug: "broccoli", title: "BROCCOLI" },
+  },
+  // Aliases for historical / merged routes
+  "hoshcare-mobile": {
+    title: "HOSHCARE CLIENT (FRONTEND) — Medical Vault Client",
+    status: "Active, pre-pilot",
+    stack: ["React Native", "Expo SDK 56", "TypeScript", "React Navigation v7"],
+    description:
+      "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save.",
+    prev: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
+    next: { slug: "hoshcare-api", title: "HOSHCARE API" },
+  },
+  "hoshcare-web": {
+    title: "HOSHCARE CLIENT (FRONTEND) — Web Predecessor Merged",
+    status: "Merged into Client",
+    stack: ["React Native", "Supabase RLS", "PostgreSQL"],
+    description:
+      "The initial web MVP was merged into the HOSHCARE client case study.",
+    prev: { slug: "hoshcare-api", title: "HOSHCARE API" },
+    next: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
+  },
+  "hoshcare-marketing": {
+    title: "HOSHCARE CLIENT (FRONTEND) — Design Foundations Merged",
+    status: "Merged into Client",
+    stack: ["Three.js", "WebGL", "Design System"],
+    description:
+      "The marketing design foundations were merged into the HOSHCARE client case study.",
+    prev: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
+    next: { slug: "broccoli", title: "BROCCOLI" },
+  },
+};
 
 export function generateStaticParams() {
-  return Object.keys(projectModules).map((slug) => ({ slug }));
+  return Object.keys(projectCatalog).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -35,13 +93,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  if (!(slug in projectModules)) {
+  const project = projectCatalog[slug];
+  if (!project) {
     return { title: "Project Not Found" };
   }
-
-  const { metadata } = (await projectModules[slug as ProjectSlug]()) as unknown as MDXModule;
   return {
-    title: `${metadata.title} — Bidya Bhushan Nanda`,
+    title: `${project.title} — Bidya Bhushan Nanda`,
+    description: project.description,
   };
 }
 
@@ -51,68 +109,72 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  
-  if (!(slug in projectModules)) {
+  const project = projectCatalog[slug];
+
+  if (!project) {
     notFound();
   }
 
-  const { default: MDXContent, metadata } = (await projectModules[slug as ProjectSlug]()) as unknown as MDXModule;
+  // Render the dedicated case study component
+  let caseStudyComponent = null;
+  if (
+    slug === "hoshcare-client" ||
+    slug === "hoshcare-mobile" ||
+    slug === "hoshcare-web" ||
+    slug === "hoshcare-marketing"
+  ) {
+    caseStudyComponent = <HoshcareClientCaseStudy />;
+  } else if (slug === "broccoli") {
+    caseStudyComponent = <BroccoliCaseStudy />;
+  } else if (slug === "zucchini-linux") {
+    caseStudyComponent = <ZucchiniLinuxCaseStudy />;
+  } else if (slug === "hoshcare-api") {
+    caseStudyComponent = <HoshcareApiCaseStudy />;
+  } else {
+    notFound();
+  }
 
   return (
-    <div className="min-h-screen text-bone">
-      <div className="mx-auto max-w-[1200px] px-4 py-16 sm:px-8 lg:px-16">
-        <header className="mb-16">
-          <div className="mb-3 flex flex-wrap items-center gap-3">
-            <span className="font-body text-xs font-medium uppercase tracking-[0.05em] text-cyan">
-              {metadata.status}
-            </span>
-            <span className="font-body text-xs text-ash">—</span>
-            <div className="flex flex-wrap items-center gap-2">
-              {metadata.stack.map((tech: string) => (
-                <span
-                  key={tech}
-                  className="font-mono text-[10px] uppercase tracking-wider text-ash border border-ash/30 px-2 py-0.5"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="w-full max-w-[800px]">
-            <BlurText
-              text={metadata.title}
-              as="h1"
-              className="font-display text-[clamp(2.5rem,4vw,3.5rem)] font-bold leading-[1.1] text-bone"
-              delay={30}
-              animateBy="words"
-              direction="top"
-              stepDuration={0.4}
-            />
-          </div>
-        </header>
+    <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 py-10 font-mono text-[#0B3D2E]">
+      {/* Top back navigation */}
+      <div className="mb-8">
+        <Link
+          href="/projects"
+          className="btn inline-flex items-center gap-2 font-pixel text-xs px-4 py-2.5 bg-[#FFF6C2] text-[#0B3D2E] border-3 border-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E]"
+        >
+          ← ALL PROJECTS
+        </Link>
+      </div>
 
-        <div className="max-w-[65ch]">
-          <MDXContent components={{
-            p: ({ children }) => (
-              <div className="mb-6 font-body leading-relaxed text-ash">
-                <ScrollFloat
-                  animationDuration={0.8}
-                  stagger={0.015}
-                >
-                  {children}
-                </ScrollFloat>
-              </div>
-            )
-          }} />
+      {/* Case study view */}
+      {caseStudyComponent}
+
+      {/* Bottom Prev / Next pager */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mt-14 pt-8 border-t-3 border-dashed border-[#0B3D2E]/30">
+        <div>
+          {project.prev ? (
+            <Link
+              href={`/projects/${project.prev.slug}`}
+              style={{ backgroundColor: "#FFF6C2", color: "#0B3D2E" }}
+              className="btn inline-flex items-center gap-2 font-pixel text-[11px] px-4 py-3 border-3 border-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E]"
+            >
+              ← {project.prev.title}
+            </Link>
+          ) : (
+            <span />
+          )}
         </div>
 
-        <div className="mt-16 border-t border-ash/20 pt-10">
-          <Link
-            href="/projects"
-            className="inline-block font-body text-sm text-amber underline-offset-4 hover:underline"
-          >
-            ← All projects
-          </Link>
+        <div>
+          {project.next && (
+            <Link
+              href={`/projects/${project.next.slug}`}
+              style={{ backgroundColor: "#0B3D2E", color: "#FFD93B" }}
+              className="btn inline-flex items-center gap-2 font-pixel text-[11px] px-5 py-3 border-3 border-[#0B3D2E] shadow-[5px_5px_0_#FF5C8A]"
+            >
+              NEXT: {project.next.title} →
+            </Link>
+          )}
         </div>
       </div>
     </div>

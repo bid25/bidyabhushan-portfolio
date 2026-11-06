@@ -1,171 +1,614 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@source "../components/**/*.{js,ts,jsx,tsx}";
+@source "../app/**/*.{js,ts,jsx,tsx}";
+@source "../content/**/*.{md,mdx}";
 
 @theme inline {
-  /* ── Terminal Session palette ────────────────────────────── */
+  --font-pixel: var(--font-pixel), 'Press Start 2P', monospace;
+  --font-mono: var(--font-mono), 'Space Mono', monospace;
+  --font-hand: var(--font-hand), 'Caveat', cursive;
+  --font-sans: var(--font-mono);
 
-  /* Neutrals */
-  --color-void: var(--theme-void);
-  --color-ash: var(--theme-ash);
-  --color-bone: var(--theme-bone);
-
-  /* Accents — Two-Signal Rule: never combine on one element */
-  --color-amber: var(--theme-amber);
-  --color-cyan: var(--theme-cyan);
-
-  /* ── Typography ─────────────────────────────────────────── */
-  --font-display: var(--font-display), 'JetBrains Mono', ui-monospace, monospace;
-  --font-body: var(--font-body), 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-display);
-
-  /* ── shadcn semantic mappings ────────────────────────────── */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-destructive: var(--destructive);
-
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  /* ── Sharp Edge Rule: radius 0 everywhere ───────────────── */
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
+  --color-canvas: #FFD93B;
+  --color-ink: #0B3D2E;
+  --color-panel: #FFF6C2;
+  --color-pink: #FF5C8A;
+  --color-terminal: #06231A;
+  --color-blueprint: #FFF0B3;
 }
 
-/* ── Light Mode Base Variables ────────────────────────────── */
 :root {
-  --theme-void: #F4F4F5; /* Light background */
-  --theme-bone: #0A0B0D; /* Dark text */
-  --theme-ash: #6E7681;
-  --theme-amber: #F5A623;
-  --theme-cyan: #0284C7; /* Darker cyan for better contrast in light mode */
-  --dotfield-glow: #FFFFFF;
-  --dotfield-from: rgba(10, 11, 13, 0.4);
-  --dotfield-to: rgba(10, 11, 13, 0.2);
-
-  --background: var(--theme-void);
-  --foreground: var(--theme-bone);
-
-  --card: #FFFFFF;
-  --card-foreground: var(--theme-bone);
-  --popover: #FFFFFF;
-  --popover-foreground: var(--theme-bone);
-
-  --primary: var(--theme-amber);
-  --primary-foreground: #FFFFFF;
-
-  --secondary: #E4E4E7;
-  --secondary-foreground: var(--theme-bone);
-
-  --muted: #E4E4E7;
-  --muted-foreground: var(--theme-ash);
-
-  --accent: #E4E4E7;
-  --accent-foreground: var(--theme-bone);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --border: oklch(from var(--theme-ash) l c h / 30%);
-  --input: oklch(from var(--theme-ash) l c h / 40%);
-  --ring: var(--theme-amber);
-
-  --radius: 0px;
+  --canvas: #FFD93B;
+  --ink: #0B3D2E;
+  --panel: #FFF6C2;
+  --pink: #FF5C8A;
+  --terminal: #06231A;
+  --blueprint: #FFF0B3;
 }
 
-/* ── Dark Mode Variables ───────────────────────────────────── */
-.dark {
-  --theme-void: #0A0B0D;
-  --theme-bone: #EDEAE4;
-  --theme-ash: #6E7681;
-  --theme-amber: #F5A623;
-  --theme-cyan: #22D3EE;
-  --dotfield-glow: #120F17;
-  --dotfield-from: rgba(168, 85, 247, 0.35);
-  --dotfield-to: rgba(180, 151, 207, 0.25);
-
-  --background: var(--theme-void);
-  --foreground: var(--theme-bone);
-
-  --card: var(--theme-void);
-  --card-foreground: var(--theme-bone);
-  --popover: #12141A;
-  --popover-foreground: var(--theme-bone);
-
-  --primary: var(--theme-amber);
-  --primary-foreground: var(--theme-void);
-
-  --secondary: #3A3E47;
-  --secondary-foreground: var(--theme-bone);
-
-  --muted: #1A1D24;
-  --muted-foreground: var(--theme-ash);
-
-  --accent: #1A1D24;
-  --accent-foreground: var(--theme-bone);
-
-  --destructive: oklch(0.704 0.191 22.216);
-
-  --border: oklch(from var(--theme-ash) l c h / 30%);
-  --input: oklch(from var(--theme-ash) l c h / 40%);
-  --ring: var(--theme-amber);
-
-  --radius: 0px;
+* {
+  box-sizing: border-box;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFD93B;
+  color: #0B3D2E;
+  font-family: var(--font-mono), 'Space Mono', monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Direct Color Utility Fallbacks ───────────────────────── */
+.bg-canvas { background-color: #FFD93B !important; }
+.bg-ink { background-color: #0B3D2E !important; }
+.bg-panel { background-color: #FFF6C2 !important; }
+.bg-pink { background-color: #FF5C8A !important; }
+.bg-terminal { background-color: #06231A !important; }
+.bg-blueprint { background-color: #FFF0B3 !important; }
+
+.text-canvas { color: #FFD93B !important; }
+.text-ink { color: #0B3D2E !important; }
+.text-panel { color: #FFF6C2 !important; }
+.text-pink { color: #FF5C8A !important; }
+
+.border-ink { border-color: #0B3D2E !important; }
+.border-canvas { border-color: #FFD93B !important; }
+.border-pink { border-color: #FF5C8A !important; }
+
+/* ── Interactive Neo-Brutalist Tactile Controls ───────────── */
+.btn {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.btn:hover {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #0B3D2E !important;
+}
+.btn:active {
+  transform: translate(6px, 6px);
+}
+
+/* ── Navigation Link Hover States (Dev & Lens) ─────────────── */
+.nav-link-dev {
+  border: 3px solid #0B3D2E !important;
+  color: #0B3D2E !important;
+  background-color: transparent !important;
+  transition: all 0.1s ease;
+}
+.nav-link-dev:hover {
+  background-color: #0B3D2E !important;
+  color: #FFD93B !important;
+}
+.nav-link-dev.active {
+  background-color: #0B3D2E !important;
+  color: #FFD93B !important;
+}
+.nav-link-dev.contact {
+  background-color: #FF5C8A !important;
+  color: #0B3D2E !important;
+}
+.nav-link-dev.contact:hover {
+  background-color: #0B3D2E !important;
+  color: #FF5C8A !important;
+}
+
+.nav-link-dev.broccoli {
+  background-color: #1A1F14 !important;
+  color: #B9D94A !important;
+  border: 3px solid #B9D94A !important;
+}
+.nav-link-dev.broccoli:hover {
+  background-color: #B9D94A !important;
+  color: #1A1F14 !important;
+}
+
+.nav-link-lens {
+  border: 3px solid #0F1517 !important;
+  color: #0F1517 !important;
+  background-color: transparent !important;
+  transition: all 0.1s ease;
+}
+.nav-link-lens:hover {
+  background-color: #0F1517 !important;
+  color: #EDE6D8 !important;
+}
+.nav-link-lens.active {
+  background-color: #0F1517 !important;
+  color: #C99A55 !important;
+}
+.nav-link-lens.contact {
+  background-color: #FF5C8A !important;
+  color: #0F1517 !important;
+}
+.nav-link-lens.contact:hover {
+  background-color: #0F1517 !important;
+  color: #FF5C8A !important;
+}
+
+.card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover {
+  transform: translate(-3px, -3px) rotate(-0.6deg);
+}
+
+.ch {
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+.ch:hover {
+  transform: translate(-2px, -2px);
+}
+
+.bm {
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+.bm:hover {
+  transform: translate(3px, 3px);
+  background-color: #0B3D2E;
+}
+
+/* ── Form Inputs ─────────────────────────────────────────── */
+input, textarea {
+  font: inherit;
+}
+input:focus, textarea:focus {
+  outline: 4px solid #FF5C8A !important;
+}
+
+/* ── Keyframe Animations ─────────────────────────────────── */
+
+/* 1. Infinite Marquee */
+@keyframes mq {
+  to {
+    transform: translateX(-50%);
   }
-  body {
-    @apply bg-background text-foreground;
+}
+.mq {
+  display: flex;
+  width: max-content;
+  animation: mq 24s linear infinite;
+}
+
+/* 2. Stepped Float */
+@keyframes fl {
+  50% {
+    transform: translateY(-12px);
   }
-  html {
-    @apply font-sans;
+}
+.fl {
+  animation: fl 2.4s steps(6) infinite;
+}
+
+/* 3. Blinking Cursor */
+@keyframes bl {
+  50% {
+    opacity: 0;
   }
 }
-
-/* ── Lenis Smooth Scroll Recommended CSS ───────────────────── */
-html.lenis, html.lenis body {
-  height: auto;
+.bl {
+  animation: bl 1s steps(1) infinite;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+/* 4. Pixel Glitch Shadow */
+@keyframes gl {
+  0%, 88%, 100% {
+    text-shadow: none;
+  }
+  91% {
+    text-shadow: -5px 0 #FF5C8A, 5px 0 #FFD93B;
+  }
+  95% {
+    text-shadow: 5px 0 #FF5C8A, -5px 0 #FFD93B;
+  }
+}
+.gl {
+  animation: gl 3.2s infinite;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+/* ── Neo-Brutalist Pixel Glitch Logo Switcher ─────────────── */
+.glitch-mark {
+  position: relative;
+  display: inline-block;
+  user-select: none;
 }
 
-.lenis.lenis-stopped {
-  overflow: hidden;
+.glitch-mark .glitch-text {
+  position: relative;
+  display: inline-block;
 }
 
-.lenis.lenis-smooth iframe {
+.glitch-mark .glitch-text::before,
+.glitch-mark .glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(50% 0 50% 0);
   pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes mark-ambient-glitch {
+  0%, 88%, 100% {
+    transform: translate(0, 0);
+    text-shadow: none;
+  }
+  89% {
+    transform: translate(-2px, 1px);
+    text-shadow: -2px 0 #FF5C8A, 2px 0 #00FFCC;
+  }
+  91% {
+    transform: translate(2px, -1px);
+    text-shadow: 2px 0 #FF5C8A, -2px 0 #FFD93B;
+  }
+  93% {
+    transform: translate(-1px, 0);
+    text-shadow: -1px 0 #00FFCC, 1px 0 #FF5C8A;
+  }
+  95% {
+    transform: translate(1px, 1px);
+    text-shadow: 1px 0 #FFD93B, -1px 0 #00FFCC;
+  }
+  96% {
+    transform: translate(0, 0);
+    text-shadow: none;
+  }
+}
+
+.glitch-mark .glitch-text {
+  animation: mark-ambient-glitch 3.5s infinite;
+}
+
+@keyframes slice-top {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translate(-3px, -1px);
+    color: #FF5C8A;
+    text-shadow: -2px 0 #FF5C8A, 2px 0 #00FFCC;
+  }
+  25% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 55%, 0 55%);
+    transform: translate(3px, 1px);
+    color: #FFD93B;
+    text-shadow: 2px 0 #FFD93B, -2px 0 #FF5C8A;
+  }
+  50% {
+    clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    transform: translate(-2px, 0);
+    color: #00FFCC;
+    text-shadow: -2px 0 #00FFCC, 2px 0 #FF5C8A;
+  }
+  75% {
+    clip-path: polygon(0 5%, 100% 5%, 100% 40%, 0 40%);
+    transform: translate(2px, -1px);
+    color: #FF5C8A;
+    text-shadow: 2px 0 #FF5C8A, -2px 0 #FFD93B;
+  }
+  100% {
+    clip-path: polygon(0 20%, 100% 20%, 100% 48%, 0 48%);
+    transform: translate(-1px, 1px);
+    color: #00FFCC;
+    text-shadow: -1px 0 #00FFCC, 1px 0 #FF5C8A;
+  }
+}
+
+@keyframes slice-bottom {
+  0% {
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    transform: translate(3px, 1px);
+    color: #00FFCC;
+    text-shadow: 2px 0 #00FFCC, -2px 0 #FF5C8A;
+  }
+  25% {
+    clip-path: polygon(0 40%, 100% 40%, 100% 85%, 0 85%);
+    transform: translate(-3px, -1px);
+    color: #FF5C8A;
+    text-shadow: -2px 0 #FF5C8A, 2px 0 #FFD93B;
+  }
+  50% {
+    clip-path: polygon(0 60%, 100% 60%, 100% 95%, 0 95%);
+    transform: translate(2px, 0);
+    color: #FFD93B;
+    text-shadow: 2px 0 #FFD93B, -2px 0 #00FFCC;
+  }
+  75% {
+    clip-path: polygon(0 45%, 100% 45%, 100% 80%, 0 80%);
+    transform: translate(-2px, 1px);
+    color: #00FFCC;
+    text-shadow: -2px 0 #00FFCC, 2px 0 #FF5C8A;
+  }
+  100% {
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    transform: translate(1px, -1px);
+    color: #FF5C8A;
+    text-shadow: 1px 0 #FF5C8A, -1px 0 #FFD93B;
+  }
+}
+
+.glitch-mark:hover .glitch-text::before {
+  opacity: 1;
+  animation: slice-top 0.22s steps(2) infinite;
+}
+
+.glitch-mark:hover .glitch-text::after {
+  opacity: 1;
+  animation: slice-bottom 0.22s steps(2) infinite;
+}
+
+.glitch-mark.lens-glitch:hover .glitch-text::before {
+  color: #C99A55;
+  text-shadow: -2px 0 #C99A55, 2px 0 #FF5C8A;
+}
+
+.glitch-mark.lens-glitch:hover .glitch-text::after {
+  color: #FF5C8A;
+  text-shadow: 2px 0 #FF5C8A, -2px 0 #C99A55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-mark .glitch-text {
+    animation: none;
+  }
+  .glitch-mark:hover .glitch-text::before,
+  .glitch-mark:hover .glitch-text::after {
+    display: none;
+  }
+}
+
+/* 5. Moving Dot Grid Background */
+@keyframes dg {
+  to {
+    background-position: 24px 24px;
+  }
+}
+.dg {
+  animation: dg 3s linear infinite;
+  background-image: radial-gradient(#0B3D2E22 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* 6. Rotating Role Ticker */
+@keyframes rt {
+  0%, 28% {
+    transform: translateY(0);
+  }
+  33%, 61% {
+    transform: translateY(-1.7em);
+  }
+  66%, 94% {
+    transform: translateY(-3.4em);
+  }
+  100% {
+    transform: translateY(-5.1em);
+  }
+}
+.rt {
+  display: block;
+  animation: rt 8s steps(1, end) infinite;
+}
+
+/* 7. Stepped Loading Bar */
+@keyframes ld {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.ld {
+  animation: ld 3s steps(12) infinite;
+}
+
+/* 8. Pop in Scale */
+@keyframes pop {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.pop {
+  animation: pop 0.45s steps(5) both;
+}
+
+/* 9. Offset Path Traveler */
+@keyframes tr {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+.pk {
+  offset-rotate: 0deg;
+  animation: tr 9s steps(90) infinite;
+}
+
+/* 10. Stepped Pulse */
+@keyframes pls {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+.pls {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pls 1.6s steps(4) infinite;
+}
+
+/* 11. Marching Ants */
+@keyframes mr {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+.mr {
+  animation: mr 1.4s linear infinite;
+}
+
+/* 12. CRT Scanlines */
+@keyframes sc {
+  to {
+    background-position: 0 100%;
+  }
+}
+.sc {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%),
+              linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  animation: sc 8s linear infinite;
+}
+
+/* 13. Blueprint Line Drawing */
+@keyframes dw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.dw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dw 1.6s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+.dw-slow {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dw 2.2s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* 14. Fade Reveal */
+@keyframes wr {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.wr {
+  animation: wr 0.5s ease-out both;
+}
+
+/* 15. Blueprint Unroll & Handwriting */
+@keyframes un {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(-30px);
+  }
+}
+.un {
+  animation: un 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* 16. Schematic Text Fade In */
+@keyframes fi {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fi {
+  opacity: 0;
+  animation: fi 0.4s ease-out forwards;
+}
+
+.hw {
+  font-family: var(--font-hand), 'Caveat', cursive;
+  font-size: 26px;
+  line-height: 1.3;
+}
+.hw code {
+  font-family: var(--font-mono), 'Space Mono', monospace;
+  font-size: 14px;
+  background-color: #FFD93B;
+  border: 2px solid #0B3D2E;
+  padding: 0 4px;
+}
+
+/* ── Trajectory Interactive Timeline ─────────────────────── */
+.si {
+  transition: opacity 0.2s ease;
+}
+.tj:has(.sg:hover) .sg:not(:hover) .si {
+  opacity: 0.3;
+}
+
+/* ── Contact Channel Cards (App Brand Hover & Selected Off-White Text) ── */
+.contact-channel {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.contact-channel:hover,
+.contact-channel:focus-visible,
+.contact-channel[data-selected="true"] {
+  transform: translate(-3px, -3px) rotate(-0.5deg);
+  box-shadow: 7px 7px 0 #0B3D2E !important;
+}
+.contact-channel:hover *,
+.contact-channel:focus-visible *,
+.contact-channel[data-selected="true"] * {
+  color: #FFF6C2 !important;
+}
+
+.contact-email:hover, .contact-email:focus-visible, .contact-email[data-selected="true"] {
+  background-color: #EA4335 !important;
+  color: #FFF6C2 !important;
+}
+.contact-github:hover, .contact-github:focus-visible, .contact-github[data-selected="true"] {
+  background-color: #181717 !important;
+  color: #FFF6C2 !important;
+}
+.contact-linkedin:hover, .contact-linkedin:focus-visible, .contact-linkedin[data-selected="true"] {
+  background-color: #0A66C2 !important;
+  color: #FFF6C2 !important;
+}
+.contact-instagram:hover, .contact-instagram:focus-visible, .contact-instagram[data-selected="true"] {
+  background-color: #E1306C !important;
+  color: #FFF6C2 !important;
+}
+.contact-resume:hover, .contact-resume:focus-visible, .contact-resume[data-selected="true"] {
+  background-color: #E5252A !important;
+  color: #FFF6C2 !important;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
