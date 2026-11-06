@@ -57,7 +57,7 @@ const parseRgbTriplet = (colorStr: string): [number, number, number] => {
  * `colored` mode renders each character in the source image's own pixel
  * color, which looks great against a mid-tone page but silently disappears
  * wherever the source image is nearly as dark (dark mode) or as light (light
- * mode) as the flat background behind it — there's no per-theme contrast
+ * mode) as the flat background behind it - there's no per-theme contrast
  * compensation otherwise. Nudges a pixel's color toward white/black, away
  * from the background's own luminance, only as much as needed to clear
  * MIN_LUMINANCE_DIFF; colors already distinct from the background pass

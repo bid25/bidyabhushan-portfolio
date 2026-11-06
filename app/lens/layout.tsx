@@ -16,7 +16,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bidya Bhushan Nanda — Photography & Film Showcase",
+  title: "Bidya Bhushan Nanda - Photography & Film Showcase",
   description: "Visual portfolio, photography and cinematography by Bidya Bhushan Nanda.",
 };
 

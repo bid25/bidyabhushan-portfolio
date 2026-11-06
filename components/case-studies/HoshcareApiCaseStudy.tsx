@@ -212,7 +212,7 @@ export function HoshcareApiCaseStudy() {
                 <span className="inline-block border-3 sm:border-4 border-[#FF5C8A] rounded-full px-3 sm:px-5 -rotate-2">
                   HOSHCARE API
                 </span>{" "}
-                — Backend Data Pipeline
+                - Backend Data Pipeline
               </h1>
               <svg
                 viewBox="0 0 440 20"
@@ -253,7 +253,7 @@ export function HoshcareApiCaseStudy() {
               color: "#0B3D2E",
             }}
           >
-            The original backend for HOSHCARE: token verification on every request, four relational data models, encrypted document streaming, and an extraction pipeline that dispatched medical scans to Gemini Vision and returned structured fields for review. Extraction never wrote directly to primary storage — output was buffered in staging, awaiting human review. <span style={{ background: "#FF5C8A55", padding: "0 4px" }}>Query strings in download endpoints leak tokens into server logs and browser history — header-only auth is non-negotiable for medical documents.</span>
+            The original backend for HOSHCARE: token verification on every request, four relational data models, encrypted document streaming, and an extraction pipeline that dispatched medical scans to Gemini Vision and returned structured fields for review. Extraction never wrote directly to primary storage - output was buffered in staging, awaiting human review. <span style={{ background: "#FF5C8A55", padding: "0 4px" }}>Query strings in download endpoints leak tokens into server logs and browser history - header-only auth is non-negotiable for medical documents.</span>
           </p>
 
           {/* ── 4 BOXES SCHEMATIC CONTAINER WITH INTERACTIVE INSPECTOR ── */}

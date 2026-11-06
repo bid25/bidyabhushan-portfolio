@@ -52,7 +52,7 @@ function nodeAriaLabel(node: CareerNode): string {
 function revealVars(start: number, range: number): React.CSSProperties {
   const clampedRange = Math.max(range, 0.001);
   // A node whose arc fraction sits at/near 1 would otherwise get a reveal
-  // window like [1, 1.08] — entirely past the max achievable --progress, so
+  // window like [1, 1.08] - entirely past the max achievable --progress, so
   // its local progress could never leave 0. Clamp the window's start so
   // every node's reveal actually completes by the time scrubbing reaches 1.
   const clampedStart = Math.min(start, 1 - clampedRange);
@@ -99,7 +99,7 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
   const rootRef = useRef<HTMLElement | null>(null);
 
   // "end start" (section bottom clears viewport top) would need scroll room
-  // past the section's own bottom — this component sits last on the page
+  // past the section's own bottom - this component sits last on the page
   // with no trailing footer, so that endpoint is unreachable and progress
   // could never hit 1. "end end" completes as soon as the whole section has
   // scrolled into view, which stays reachable regardless of what follows it.
@@ -113,7 +113,7 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
   // spark / breathing ring / terminal rotation for a fixed number of cycles,
   // then hold static. Never an indefinite timer (Rules.md's no-ambient-motion
   // rule), never gated behind continued pointer activity either (per the
-  // owner's resolution superseding the earlier interaction-gated approach —
+  // owner's resolution superseding the earlier interaction-gated approach -
   // see Memory.md). Toggling a class imperatively keeps this off the React
   // render path entirely, so it never fires a re-render per scroll tick.
   const ambientTriggered = useRef(false);
@@ -226,7 +226,7 @@ export function Trajectory({ routing = "organic" }: TrajectoryProps) {
             <li key={node.id}>
               <h3>
                 {node.label}
-                {node.detail ? ` — ${node.detail}` : ""}
+                {node.detail ? ` - ${node.detail}` : ""}
               </h3>
               {node.org && <p>{node.org}</p>}
               <p>{dateRangeLabel(node)}</p>
@@ -488,7 +488,7 @@ function HorizontalGraph({
           ))}
         </svg>
 
-        {/* Traveling spark — bounded ambient loop, triggers once the trunk is fully revealed. */}
+        {/* Traveling spark - bounded ambient loop, triggers once the trunk is fully revealed. */}
         {fullTrunkD && !reduced && (
           <div
             aria-hidden="true"
@@ -506,7 +506,7 @@ function HorizontalGraph({
           const group = layout.branchGroups.find((g) => g.nodeIndex === i);
           const labelAbove = group ? group.direction === -1 : i % 2 === 1;
           const gap = LAYOUT.nodeRadius + LAYOUT.nodeLabelGap;
-          // The first/last node sit close to the section's horizontal edge —
+          // The first/last node sit close to the section's horizontal edge -
           // center-aligning their label would push half its width into the
           // edge-fade mask and clip it (the v1 bug on the MAIT node). Anchor
           // outward from the edge instead.

@@ -97,7 +97,7 @@ export function HoshcareWebCaseStudy() {
             >
               HOSHCARE WEB
             </span>{" "}
-            — Security Architecture
+            - Security Architecture
           </h1>
 
           <p

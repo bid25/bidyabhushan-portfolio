@@ -30,7 +30,7 @@ export function ProximityProvider({ children }: { children: React.ReactNode }) {
 // ── MDX component wrappers ───────────────────────────────────────────
 
 /**
- * Heading with VariableProximity — weight responds to cursor proximity.
+ * Heading with VariableProximity - weight responds to cursor proximity.
  * Falls back to plain text when no proximity context is available.
  */
 export function ProximityH2({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -94,7 +94,7 @@ export function ProximityH4({ children, className }: { children: React.ReactNode
 }
 
 /**
- * Paragraph with VariableProximity — subtle weight shift on hover.
+ * Paragraph with VariableProximity - subtle weight shift on hover.
  * Falls back to plain rendering for paragraphs containing complex
  * children (links, images, code blocks).
  */

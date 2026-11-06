@@ -209,7 +209,7 @@ export function HoshcareClientCaseStudy() {
                 <span className="inline-block border-3 sm:border-4 border-[#FF5C8A] rounded-full px-3 sm:px-5 -rotate-2">
                   HOSHCARE CLIENT
                 </span>{" "}
-                — Frontend Vault
+                - Frontend Vault
               </h1>
               <svg
                 viewBox="0 0 460 20"
@@ -250,7 +250,7 @@ export function HoshcareClientCaseStudy() {
               color: "#0B3D2E",
             }}
           >
-            HOSHCARE stores medical documents — prescriptions, lab reports, discharge summaries — and turns them into structured, searchable records. A photo of a prescription becomes doctor, date, diagnosis and medications: fields a user reviews before anything saves. Once saved, a record locks permanently. <span style={{ background: "#FF5C8A55", padding: "0 4px" }}>Health records that can be silently edited after the fact aren't records.</span>
+            HOSHCARE stores medical documents - prescriptions, lab reports, discharge summaries - and turns them into structured, searchable records. A photo of a prescription becomes doctor, date, diagnosis and medications: fields a user reviews before anything saves. Once saved, a record locks permanently. <span style={{ background: "#FF5C8A55", padding: "0 4px" }}>Health records that can be silently edited after the fact aren't records.</span>
           </p>
 
           {/* ── 4 BOXES SCHEMATIC CONTAINER WITH INTERACTIVE INSPECTOR ── */}

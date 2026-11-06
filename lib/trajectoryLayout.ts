@@ -2,7 +2,7 @@ import type { CareerNode } from "@/data/trajectory";
 
 export type Routing = "octilinear" | "organic";
 
-// Spacing constants — the only "magic numbers" in the layout. None of these
+// Spacing constants - the only "magic numbers" in the layout. None of these
 // are per-node; every coordinate below is a formula over node index / count.
 export const LAYOUT = {
   paddingX: 88,
@@ -27,7 +27,7 @@ export const LAYOUT = {
   nodeLabelGap: 14,
   mobileTrunkX: 30,
   // Horizontal reach of a branch stub off the mobile trunk, and the extra
-  // clearance before the text column starts — keeps the stub visually
+  // clearance before the text column starts - keeps the stub visually
   // touching the label instead of stopping short or overlapping it.
   leafColumnOffsetVertical: 30,
   contentGutter: 14,
@@ -54,7 +54,7 @@ export function columnsForLeafCount(count: number): number {
 
 /**
  * Gap to leave before the second leaf column, sized to the longest label
- * that actually lands in column 0 — not a fixed width, so a node with short
+ * that actually lands in column 0 - not a fixed width, so a node with short
  * column-0 labels sits tighter and one with long labels (e.g. "Embedded
  * engineering") never lets column 1 collide into it.
  */
@@ -66,7 +66,7 @@ function columnWidthFor(labels: string[], columns: number): number {
 }
 
 // ---------------------------------------------------------------------------
-// Seeded PRNG — deterministic per-id jitter, stable across reloads. Not
+// Seeded PRNG - deterministic per-id jitter, stable across reloads. Not
 // Math.random(): the layout must be identical on every render/screenshot.
 // ---------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-/** Deterministic PRNG seeded from a string — stable across reloads/screenshots. */
+/** Deterministic PRNG seeded from a string - stable across reloads/screenshots. */
 export function createSeededRandom(seed: string): () => number {
   return mulberry32(hashStringToSeed(seed));
 }
@@ -108,7 +108,7 @@ function clamp(v: number, min: number, max: number): number {
 }
 
 // ---------------------------------------------------------------------------
-// Organic path construction — Catmull-Rom through node anchors + seeded
+// Organic path construction - Catmull-Rom through node anchors + seeded
 // waypoints, converted to cubic beziers. Control-point handles are clamped to
 // each segment's own primary-axis span so the curve cannot double back
 // (the monotonicity constraint from §6).
@@ -148,7 +148,7 @@ function polylineLength(points: Point[]): number {
 /**
  * Build a single wandering path through `points` (Catmull-Rom → cubic bezier),
  * plus its sampled polyline (for arc-length lookups) and total length.
- * `axis` is the primary (monotonic) axis — 'x' for horizontal trunks, 'y' for
+ * `axis` is the primary (monotonic) axis - 'x' for horizontal trunks, 'y' for
  * vertical ones.
  */
 function organicPath(points: Point[], axis: "x" | "y", steps: number): PathResult & { samples: Point[] } {
@@ -168,7 +168,7 @@ function organicPath(points: Point[], axis: "x" | "y", steps: number): PathResul
     let c2: Point = { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 };
 
     // Clamp control points to this segment's own span on the primary axis so
-    // neighbor-driven tangents can never pull the curve backward — the
+    // neighbor-driven tangents can never pull the curve backward - the
     // monotonicity constraint holds regardless of jitter.
     const lo = Math.min(p1[axis], p2[axis]);
     const hi = Math.max(p1[axis], p2[axis]);
@@ -201,7 +201,7 @@ function assertMonotonic(samples: Point[], axis: "x" | "y", label: string) {
 /**
  * Seeded control-point sequence for one node-to-node span: the two anchors
  * plus 2 intermediate waypoints at the 1/3 and 2/3 marks, each with its own
- * smaller jitter — the "gentle wandering S-curve" from §6.
+ * smaller jitter - the "gentle wandering S-curve" from §6.
  */
 function spanControlPoints(
   a: Point,
@@ -256,7 +256,7 @@ export interface GraphLayout {
   nodeArcFractions: number[];
   /** The live (real-history) portion of the trunk, cyan wire. */
   trunkLive: TrunkPath;
-  /** The dead (unpowered, leads to the future node) portion — ash, dashed. */
+  /** The dead (unpowered, leads to the future node) portion - ash, dashed. */
   trunkDead: TrunkPath;
   /** trunkLive.length / (trunkLive.length + trunkDead.length) */
   liveFraction: number;
@@ -321,7 +321,7 @@ export function computeHorizontalLayout(
   const width = LAYOUT.paddingX + (nodes.length - 1) * opts.trunkGap + LAYOUT.paddingX;
 
   // Keep the wire clear of the first leaf row and the section bounds
-  // regardless of jitter direction — "clamp, don't hope" (§6.5).
+  // regardless of jitter direction - "clamp, don't hope" (§6.5).
   const perpLo = LAYOUT.paddingY - baselineY + LAYOUT.nodeRadius + 6;
   const perpHi = height - LAYOUT.paddingY - baselineY - LAYOUT.nodeRadius - 6;
 
@@ -342,7 +342,7 @@ export function computeHorizontalLayout(
 
   const futureIndex = nodes.findIndex((n) => n.kind === "future");
   // Index of the last LIVE node (one before the future node), not the future
-  // node's own index — off this by one and the "dead" segment leading into
+  // node's own index - off this by one and the "dead" segment leading into
   // the future node silently merges into the live cyan path instead of
   // rendering as the ash-dashed unpowered wire.
   const liveEnd = futureIndex > 0 ? futureIndex - 1 : nodes.length - 1;
@@ -425,7 +425,7 @@ export function computeHorizontalLayout(
   };
 }
 
-/** Octilinear fallback — kept as a one-line revert per §6. */
+/** Octilinear fallback - kept as a one-line revert per §6. */
 function computeHorizontalOctilinear(
   nodes: CareerNode[],
   opts: { trunkGap: number; bothSides: boolean; routing: Routing },
@@ -436,7 +436,7 @@ function computeHorizontalOctilinear(
   const nodeXs = nodes.map((_, i) => LAYOUT.paddingX + i * opts.trunkGap);
   const futureIndex = nodes.findIndex((n) => n.kind === "future");
   // Index of the last LIVE node (one before the future node), not the future
-  // node's own index — off this by one and the "dead" segment leading into
+  // node's own index - off this by one and the "dead" segment leading into
   // the future node silently merges into the live cyan path instead of
   // rendering as the ash-dashed unpowered wire.
   const liveEnd = futureIndex > 0 ? futureIndex - 1 : nodes.length - 1;
@@ -527,7 +527,7 @@ export function computeVerticalLayout(nodes: CareerNode[], routing: Routing = "o
 
   const futureIndex = nodes.findIndex((n) => n.kind === "future");
   // Index of the last LIVE node (one before the future node), not the future
-  // node's own index — off this by one and the "dead" segment leading into
+  // node's own index - off this by one and the "dead" segment leading into
   // the future node silently merges into the live cyan path instead of
   // rendering as the ash-dashed unpowered wire.
   const liveEnd = futureIndex > 0 ? futureIndex - 1 : nodes.length - 1;

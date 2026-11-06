@@ -213,7 +213,7 @@ export function ZucchiniLinuxCaseStudy() {
                 <span className="inline-block border-3 sm:border-4 border-[#FF5C8A] rounded-full px-3 sm:px-5 -rotate-2">
                   ZUCCHINI-LINUX
                 </span>{" "}
-                — Bare-Metal Bring-Up
+                - Bare-Metal Bring-Up
               </h1>
               <svg
                 viewBox="0 0 480 20"

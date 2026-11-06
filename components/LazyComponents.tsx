@@ -10,7 +10,7 @@ export const LazyDotGrid = dynamic(() => import("./DotGrid").then((mod) => mod.d
 // `loading` is REQUIRED here, not optional. Without it, next/dynamic renders
 // nothing between the moment this component mounts and the moment its chunk
 // finishes downloading. On the home page that collapsed the card column to 0px
-// and then popped it back — two ~260px shifts, worth 0.24 CLS EACH on mobile,
+// and then popped it back - two ~260px shifts, worth 0.24 CLS EACH on mobile,
 // where this column sits above all the copy. See PERF-PLAN.md §1.3b.
 export const LazyProfileCard = dynamic(
   () => import("./ProfileCard").then((mod) => mod.default || mod),
@@ -22,7 +22,7 @@ export const LazyLiquidEther = dynamic(() => import("./LiquidEther").then((mod) 
 export const LazyTargetCursor = dynamic(() => import("./TargetCursor").then((mod) => mod.default || mod), { ssr: false });
 // SSR is deliberately ON here. With `ssr: false` this component serialised as a
 // BAILOUT_TO_CLIENT_SIDE_RENDERING template, so any <h1> built out of it shipped
-// empty (height 0px) and jumped ~158px on hydration — the dominant CLS source on
+// empty (height 0px) and jumped ~158px on hydration - the dominant CLS source on
 // mobile (0.33). DecryptedText's initial state is the plain text, so the server
 // output is already the correct final text with no hydration diff.
 //

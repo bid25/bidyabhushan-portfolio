@@ -34,7 +34,7 @@ const MagnetLines: React.FC<MagnetLinesProps> = ({
     const items = Array.from(container.querySelectorAll<HTMLSpanElement>('span'));
     if (!items.length) return;
 
-    // Centers are cached and only recomputed on resize — reading
+    // Centers are cached and only recomputed on resize - reading
     // getBoundingClientRect() per item on every pointermove forces a
     // synchronous layout on every mouse tick, which gets very expensive
     // once the grid has hundreds/thousands of items.

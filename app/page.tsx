@@ -33,7 +33,7 @@ export default function Home() {
           {/* Left Column: Hero Copy (order-2 on mobile so Profile Card sits on top) */}
           <div className="flex flex-col items-start z-10 order-2 lg:order-1">
             <div className="font-hand text-3xl sm:text-4xl text-[#0B3D2E] -rotate-3 inline-block border-b-3 border-dashed border-[#0B3D2E] mb-5">
-              hello, world — it's me!
+              hello, world - it's me!
             </div>
 
             <h1 className="m-0">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "RESEARCH & BLOG DOSSIERS — Bidya Bhushan Nanda",
+  title: "RESEARCH & BLOG DOSSIERS - Bidya Bhushan Nanda",
   description:
     "Working papers, field notes, and technical postmortems on AI, systems, and hardware.",
 };
@@ -18,7 +18,7 @@ const posts = [
     description:
       "AI will not make engineers obsolete, but it removes the rung of the ladder they used to climb. A rigorous synthesis of labour-market data, capability benchmarks, and production economics.",
     readingTime: "24 MIN READ",
-    handwrittenNote: "flagship paper — read this first!",
+    handwrittenNote: "flagship paper - read this first!",
     topics: ["AI", "LABOUR MARKETS", "SOFTWARE ENGINEERING"],
     status: "PREPRINT DRAFT",
     statusBg: "#FF5C8A",

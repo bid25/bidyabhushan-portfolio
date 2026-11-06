@@ -28,7 +28,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Bidya Bhushan Nanda — Portfolio",
+  title: "Bidya Bhushan Nanda - Portfolio",
   description:
     "Full-Stack & AI/ML Engineer. React Native, Node, and the infrastructure behind them. B.Tech Electronics, MAIT, class of 2029.",
   other: {

@@ -1,4 +1,4 @@
-/* <Trajectory /> — ambient loops and starfield twinkle live here because
+/* <Trajectory /> - ambient loops and starfield twinkle live here because
    @keyframes can't be inlined. Scroll-scrub reveal is done via CSS custom
    properties + calc/clamp driven by a single Motion value (see
    revealVars()/--progress in Trajectory.tsx); only the truly ambient, fixed
@@ -64,7 +64,7 @@
   transform-origin: center;
 }
 
-/* Bounded ambient loop — triggers once the trunk has fully scroll-revealed
+/* Bounded ambient loop - triggers once the trunk has fully scroll-revealed
    (Trajectory.tsx toggles this class), runs a FIXED number of cycles, then
    holds its final frame. Not a bare timer: the trigger is scroll-position
    completion, and it terminates rather than looping forever, per the

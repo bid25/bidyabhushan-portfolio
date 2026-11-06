@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Confirm your email — Broccoli",
+  title: "Confirm your email - Broccoli",
   description: "Open your Broccoli confirmation link on the phone where the app is installed.",
   robots: { index: false, follow: false },
 };
@@ -10,20 +10,20 @@ export const metadata: Metadata = {
 /**
  * Fallback for Broccoli email-confirmation links.
  *
- * Mirrors `app/reset-password/page.tsx` exactly — same structure, same reason.
+ * Mirrors `app/reset-password/page.tsx` exactly - same structure, same reason.
  * Confirmation emails link to https://www.bidyabhushan.in/verify-email?token=…
  * as a verified App Link, so on a phone with Broccoli installed the app catches
  * it and this page never renders. It appears only on a laptop, or a phone
  * without the app.
  *
  * Server-rendered with no client JavaScript, and it never reads the ?token=
- * parameter — that is a live single-use credential and rendering it into HTML
+ * parameter - that is a live single-use credential and rendering it into HTML
  * would leak it into browser history and analytics referrers.
  *
  * The copy assumes Broccoli 4J semantics: registration writes to
  * `pending_registrations` and the `users` row is created only when this link is
  * opened. So there is no account to sign into, and no Settings → Account to
- * reach, until confirmation happens — an earlier draft of this page said
+ * reach, until confirmation happens - an earlier draft of this page said
  * otherwise and sent expired users to a screen they could not open. If that
  * ever changes on the API side, this page changes with it.
  */
@@ -44,7 +44,7 @@ export default function VerifyEmailPage() {
           <div className="max-w-[65ch] space-y-6">
             <p className="font-body text-base leading-[1.6]">
               This link opens in the Broccoli app. You&apos;re seeing this page because it was
-              opened somewhere the app isn&apos;t installed — a computer, or a different phone.
+              opened somewhere the app isn&apos;t installed - a computer, or a different phone.
             </p>
 
             <div className="border-t border-ash/20 pt-6">

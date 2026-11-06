@@ -19,7 +19,7 @@ const projectCatalog: Record<
   }
 > = {
   broccoli: {
-    title: "Broccoli — Caloric & Composition Instrument",
+    title: "Broccoli - Caloric & Composition Instrument",
     status: "Live on Play Store",
     stack: ["React Native", "Reanimated 3", "SQLite", "Expo EAS"],
     description:
@@ -27,7 +27,7 @@ const projectCatalog: Record<
     next: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
   },
   "zucchini-linux": {
-    title: "Zucchini-Linux — Bare Metal SM-T295 Bring-Up",
+    title: "Zucchini-Linux - Bare Metal SM-T295 Bring-Up",
     status: "Active, hardware",
     stack: ["ARM64", "Arch Linux", "LineageOS", "Qualcomm EDL"],
     description:
@@ -36,7 +36,7 @@ const projectCatalog: Record<
     next: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
   },
   "hoshcare-client": {
-    title: "HOSHCARE CLIENT (FRONTEND) — Medical Vault Client",
+    title: "HOSHCARE CLIENT (FRONTEND) - Medical Vault Client",
     status: "Active, pre-pilot",
     stack: ["React Native", "Expo SDK 56", "TypeScript", "React Navigation v7"],
     description:
@@ -45,7 +45,7 @@ const projectCatalog: Record<
     next: { slug: "hoshcare-api", title: "HOSHCARE API" },
   },
   "hoshcare-api": {
-    title: "HOSHCARE API (BACKEND) — Extraction Pipeline",
+    title: "HOSHCARE API (BACKEND) - Extraction Pipeline",
     status: "Superseded",
     stack: ["Node.js", "Express", "Prisma", "PostgreSQL", "NestJS"],
     description:
@@ -55,7 +55,7 @@ const projectCatalog: Record<
   },
   // Aliases for historical / merged routes
   "hoshcare-mobile": {
-    title: "HOSHCARE CLIENT (FRONTEND) — Medical Vault Client",
+    title: "HOSHCARE CLIENT (FRONTEND) - Medical Vault Client",
     status: "Active, pre-pilot",
     stack: ["React Native", "Expo SDK 56", "TypeScript", "React Navigation v7"],
     description:
@@ -64,7 +64,7 @@ const projectCatalog: Record<
     next: { slug: "hoshcare-api", title: "HOSHCARE API" },
   },
   "hoshcare-web": {
-    title: "HOSHCARE CLIENT (FRONTEND) — Web Predecessor Merged",
+    title: "HOSHCARE CLIENT (FRONTEND) - Web Predecessor Merged",
     status: "Merged into Client",
     stack: ["React Native", "Supabase RLS", "PostgreSQL"],
     description:
@@ -73,7 +73,7 @@ const projectCatalog: Record<
     next: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
   },
   "hoshcare-marketing": {
-    title: "HOSHCARE CLIENT (FRONTEND) — Design Foundations Merged",
+    title: "HOSHCARE CLIENT (FRONTEND) - Design Foundations Merged",
     status: "Merged into Client",
     stack: ["Three.js", "WebGL", "Design System"],
     description:
@@ -98,7 +98,7 @@ export async function generateMetadata({
     return { title: "Project Not Found" };
   }
   return {
-    title: `${project.title} — Bidya Bhushan Nanda`,
+    title: `${project.title} - Bidya Bhushan Nanda`,
     description: project.description,
   };
 }

@@ -1,6 +1,6 @@
 // Data model + seed content for <Trajectory />, rendered at components/Trajectory.tsx.
 //
-// EXTENSION PROTOCOL — read this before touching this file
+// EXTENSION PROTOCOL - read this before touching this file
 // Adding a new role/milestone is a single append to `nodes`, inserted
 // immediately BEFORE the node with `kind: 'future'`. Nothing else in this
 // project should need to change: no coordinate, no layout constant, no CSS,
@@ -8,7 +8,7 @@
 // branch parity (even index = fan below, odd index = fan above), and SVG
 // path geometry entirely from `nodes.length` and each node's index. If you
 // ever find yourself editing a pixel value to make a new node "fit," the
-// layout math has regressed — fix the formula, don't hand-tune the result.
+// layout math has regressed - fix the formula, don't hand-tune the result.
 //
 // Exactly one node must carry `kind: 'future'`, and it must stay last. The
 // component asserts this in dev and warns loudly if it's ever zero or more
@@ -29,7 +29,7 @@ export interface CareerNode {
   label: string;
   org?: string;
   detail?: string; // role title or qualifier
-  start: string; // 'YYYY' or 'YYYY-MM' — ignored for kind: 'future'
+  start: string; // 'YYYY' or 'YYYY-MM' - ignored for kind: 'future'
   end?: string | null; // null = ongoing; omit = point event
   summary?: string;
   branches?: SkillLeaf[];
@@ -55,7 +55,7 @@ export const careerGraph: CareerGraph = {
       detail: "B.Tech Electronics Engineering",
       start: "2025-08",
       summary:
-        "Started B.Tech in Electronics Engineering — the hardware and signals background everything after this is built on.",
+        "Started B.Tech in Electronics Engineering - the hardware and signals background everything after this is built on.",
     },
     {
       id: "aerostars",
@@ -77,7 +77,7 @@ export const careerGraph: CareerGraph = {
       id: "abconnectz-intern",
       kind: "role",
       status: "complete",
-      label: "AB Connectz — Intern",
+      label: "AB Connectz - Intern",
       detail: "Full-Stack Engineering Intern",
       start: "2026-06",
       end: "2026-07",
@@ -91,7 +91,7 @@ export const careerGraph: CareerGraph = {
       id: "abconnectz-fulltime",
       kind: "role",
       status: "active",
-      label: "AB Connectz — Full-Time",
+      label: "AB Connectz - Full-Time",
       detail: "Full-Stack Engineer, Remote",
       start: "2026-07",
       end: null,
@@ -105,7 +105,7 @@ export const careerGraph: CareerGraph = {
       id: "broccoli",
       kind: "milestone",
       status: "active",
-      label: "Broccoli — Solo Flagship",
+      label: "Broccoli - Solo Flagship",
       org: "Google Play Store / Solo Build",
       detail: "Calorie & Body-Comp Platform (Published)",
       start: "2026-08",
@@ -169,7 +169,7 @@ if (process.env.NODE_ENV !== "production") {
   if (futureCount !== 1) {
     console.warn(
       `[Trajectory] careerGraph must contain exactly one node with kind: "future" (found ${futureCount}). ` +
-        `The terminal "unwritten" node is the point of the component — fix data/trajectory.ts.`
+        `The terminal "unwritten" node is the point of the component - fix data/trajectory.ts.`
     );
   }
 }

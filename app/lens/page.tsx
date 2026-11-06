@@ -365,7 +365,7 @@ export default function LensPage() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-              {/* Photo & Video Handle Card — @unfocused.nerd */}
+              {/* Photo & Video Handle Card - @unfocused.nerd */}
               <div className="cd bg-[#EDE6D8] border-5 border-[#0F1517] shadow-[8px_8px_0_#0F1517] p-6 sm:p-8 flex flex-col justify-between gap-6">
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -396,7 +396,7 @@ export default function LensPage() {
                 </a>
               </div>
 
-              {/* Personal Blog & Enquiry Handle Card — @bid_notfound */}
+              {/* Personal Blog & Enquiry Handle Card - @bid_notfound */}
               <div className="cd bg-[#EDE6D8] border-5 border-[#0F1517] shadow-[8px_8px_0_#0F1517] p-6 sm:p-8 flex flex-col justify-between gap-6">
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -426,7 +426,7 @@ export default function LensPage() {
               </div>
             </div>
 
-            {/* Featured Instagram Posts — Exact Dispatches */}
+            {/* Featured Instagram Posts - Exact Dispatches */}
             <div className="mt-12 border-5 border-[#0F1517] bg-[#EDE6D8] p-5 sm:p-7 shadow-[10px_10px_0_#0F1517]">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b-4 border-[#0F1517]">
                 <div>
@@ -507,7 +507,7 @@ export default function LensPage() {
             </div>
           </div>
 
-          {/* Work / Photo Gallery — 8 Featured Stacks */}
+          {/* Work / Photo Gallery - 8 Featured Stacks */}
           <div id="work" className="pt-24">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
               <div>

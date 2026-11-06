@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Style Guide — Bidya Bhushan Nanda",
+  title: "Style Guide - Bidya Bhushan Nanda",
   description: "Design system reference for the Terminal Session direction.",
 };
 
@@ -11,7 +11,7 @@ const colors = [
     name: "Void",
     token: "--color-void",
     hex: "#0A0B0D",
-    role: "Background. Near-black, intentional — not default #000.",
+    role: "Background. Near-black, intentional - not default #000.",
     class: "bg-void",
   },
   {
@@ -105,7 +105,7 @@ export default function StyleGuidePage() {
             >
               <span className="font-body text-base font-normal leading-relaxed">
                 Body text is set in Instrument Sans at 1rem with a generous 1.6
-                line-height. It carries prose — project descriptions, blog
+                line-height. It carries prose - project descriptions, blog
                 content, about sections. The max-width constraint at 65
                 characters keeps lines comfortable to read without requiring
                 explicit column breaks.
@@ -188,19 +188,19 @@ export default function StyleGuidePage() {
             </p>
             <ul className="mt-2 space-y-1 font-body text-sm leading-relaxed text-ash">
               <li>
-                <span className="text-bone">Sharp Edge</span> — border-radius: 0
+                <span className="text-bone">Sharp Edge</span> - border-radius: 0
                 on all variants
               </li>
               <li>
-                <span className="text-bone">Zero-Shadow</span> — no box-shadow
+                <span className="text-bone">Zero-Shadow</span> - no box-shadow
                 anywhere
               </li>
               <li>
-                <span className="text-bone">No-Gradient</span> — flat solid
+                <span className="text-bone">No-Gradient</span> - flat solid
                 backgrounds only
               </li>
               <li>
-                <span className="text-bone">Focus</span> — 1px ring in Signal
+                <span className="text-bone">Focus</span> - 1px ring in Signal
                 Amber (tab to preview)
               </li>
             </ul>

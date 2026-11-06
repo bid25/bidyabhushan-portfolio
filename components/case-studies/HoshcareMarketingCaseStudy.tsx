@@ -97,7 +97,7 @@ export function HoshcareMarketingCaseStudy() {
             >
               HOSHCARE MARKETING
             </span>{" "}
-            — 3D WebGL Pipeline
+            - 3D WebGL Pipeline
           </h1>
 
           <p

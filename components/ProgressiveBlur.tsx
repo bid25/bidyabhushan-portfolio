@@ -19,14 +19,14 @@ interface ProgressiveBlurProps {
 /**
  * A fixed "progressive glass" band: several stacked backdrop-filter layers,
  * each masked to a different slice of the band, so blur ramps smoothly from
- * strong at the edge to zero in the reading area — rather than the hard cutoff
+ * strong at the edge to zero in the reading area - rather than the hard cutoff
  * a single backdrop-filter produces.
  *
  * Sits at z-40, below the sticky Nav (z-50), so the Nav's solid background
  * still reads as solid and this only affects content below it.
  *
  * Opacity is driven directly from scrollY on rAF rather than through React
- * state — this runs on every scroll frame and must not re-render the tree.
+ * state - this runs on every scroll frame and must not re-render the tree.
  */
 export function ProgressiveBlur({
   height = 170,

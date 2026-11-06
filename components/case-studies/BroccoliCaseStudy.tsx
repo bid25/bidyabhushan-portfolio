@@ -39,7 +39,7 @@ const broccoliStages: StageInfo[] = [
     title: "Statistical Uncertainty Corridor",
     subtitle: "Biological Variance & Habit Modeling",
     role: "Calculates realistic standard error corridors (±10% to ±15%) over macronutrient estimates rather than displaying false single-integer certainty.",
-    code: `Logged Daily Intake: 2,240 kcal\nConfidence Interval (95% CI): [ 1,980 kcal — 2,500 kcal ] (±11.6% biological band)\nProtein Floor: 165g verified · Macro Ratio: 32% P / 42% C / 26% F\nHabit Corridor Compliance: 94.2% (In-range stability)`,
+    code: `Logged Daily Intake: 2,240 kcal\nConfidence Interval (95% CI): [ 1,980 kcal - 2,500 kcal ] (±11.6% biological band)\nProtein Floor: 165g verified · Macro Ratio: 32% P / 42% C / 26% F\nHabit Corridor Compliance: 94.2% (In-range stability)`,
     invariant: "Exposes honest biological variance to eliminate anxiety over meaningless decimal-point noise.",
     failureGuard: "Prevents eating disorder trigger patterns caused by hyper-rigid single-integer targets."
   },
@@ -222,7 +222,7 @@ export function BroccoliCaseStudy() {
                 <span className="inline-block border-3 sm:border-4 border-[#FF5C8A] rounded-full px-3 sm:px-5 -rotate-2">
                   BROCCOLI
                 </span>{" "}
-                — Nutrition Instrument
+                - Nutrition Instrument
               </h1>
               <svg
                 viewBox="0 0 460 20"

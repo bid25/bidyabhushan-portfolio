@@ -28,7 +28,7 @@ declare module '@react-three/fiber' {
   }
 }
 
-// 1x1 transparent pixel — lets useTexture be called unconditionally when a
+// 1x1 transparent pixel - lets useTexture be called unconditionally when a
 // front/back image isn't supplied.
 const BLANK_PIXEL =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
@@ -347,7 +347,7 @@ function Band({
       </group>
       <mesh ref={band} frustumCulled={false}>
         <meshLineGeometry />
-        {/* @ts-expect-error — meshline's R3F type bindings are incomplete; props work at runtime */}
+        {/* @ts-expect-error - meshline's R3F type bindings are incomplete; props work at runtime */}
         <meshLineMaterial
           color={stringColor || "white"}
           depthTest={false}

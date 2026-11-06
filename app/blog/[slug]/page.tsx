@@ -48,7 +48,7 @@ export async function generateMetadata({
 
   const { metadata } = (await postModules[slug as PostSlug]()) as unknown as MDXModule;
   return {
-    title: `${metadata.title} — Bidya Bhushan Nanda`,
+    title: `${metadata.title} - Bidya Bhushan Nanda`,
     description: metadata.summary,
     authors: [{ name: "Bidya Bhushan Nanda" }],
     openGraph: {

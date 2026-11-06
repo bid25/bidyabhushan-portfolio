@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Reset your password — Broccoli",
+  title: "Reset your password - Broccoli",
   description: "Open your Broccoli password reset link on the phone where the app is installed.",
   // This page exists only as a fallback for a link meant to open an app.
   // There is nothing here worth indexing, and a stray search result for
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
  * verified Android App Link / iOS Universal Link. When verification is working,
  * the phone hands the link straight to the Broccoli app and this page is never
  * rendered. It only appears when the link is opened somewhere the app can't
- * handle it — a laptop, or a phone without Broccoli installed.
+ * handle it - a laptop, or a phone without Broccoli installed.
  *
  * Without this page those cases hit a 404, which reads as "the reset flow is
  * broken" rather than "you opened it on the wrong device."
  *
  * Deliberately server-rendered with no client JavaScript: it must work when
  * everything else fails, per DESIGN.md's progressive-enhancement rule. It also
- * never reads the ?token= parameter — the token is single-use and belongs to the
+ * never reads the ?token= parameter - the token is single-use and belongs to the
  * app. Rendering it into HTML would leak it into browser history, analytics
  * referrers and any extension on the page, which is precisely the class of leak
  * the App Links work exists to prevent.
@@ -46,7 +46,7 @@ export default function ResetPasswordPage() {
           <div className="max-w-[65ch] space-y-6">
             <p className="font-body text-base leading-[1.6]">
               This link opens in the Broccoli app. You&apos;re seeing this page because it was
-              opened somewhere the app isn&apos;t installed — a computer, or a different phone.
+              opened somewhere the app isn&apos;t installed - a computer, or a different phone.
             </p>
 
             <div className="border-t border-ash/20 pt-6">

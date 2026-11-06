@@ -47,7 +47,7 @@ export function Nav() {
 
           <Link
             href="/broccoli"
-            title="Broccoli — Caloric & Body Composition Instrument (/broccoli)"
+            title="Broccoli - Caloric & Body Composition Instrument (/broccoli)"
             className="hidden md:inline-flex group items-center text-decoration-none"
           >
             <span className="bg-[#1A1F14] group-hover:bg-[#B9D94A] border-3 border-[#B9D94A] group-hover:border-[#1A1F14] px-3.5 shadow-[3px_3px_0_#0A0A0A] flex items-center justify-center min-h-[44px] h-[44px] group-hover:scale-105 group-hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all select-none cursor-pointer">

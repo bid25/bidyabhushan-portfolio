@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Confirm your new email — Broccoli",
+  title: "Confirm your new email - Broccoli",
   description: "Open your Broccoli email-change link on the phone where the app is installed.",
   robots: { index: false, follow: false },
 };
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
  *
  * Distinct from `/verify-email`, which finishes a signup. This one finishes a
  * change of address on an account that already exists, and the wording has to
- * make that difference obvious — someone who lands here from the wrong email
+ * make that difference obvious - someone who lands here from the wrong email
  * should be able to tell immediately which flow they are in.
  *
  * Same constraints as the others: server-rendered, no client JavaScript, and it
@@ -35,7 +35,7 @@ export default function ConfirmEmailPage() {
           <div className="max-w-[65ch] space-y-6">
             <p className="font-body text-base leading-[1.6]">
               This link opens in the Broccoli app. You&apos;re seeing this page because it was
-              opened somewhere the app isn&apos;t installed — a computer, or a different phone.
+              opened somewhere the app isn&apos;t installed - a computer, or a different phone.
             </p>
 
             <div className="border-t border-ash/20 pt-6">
@@ -61,7 +61,7 @@ export default function ConfirmEmailPage() {
               <ul className="space-y-3 font-body text-sm leading-[1.6] text-ash">
                 <li>The link works for 24 hours, and works once.</li>
                 <li>
-                  Until you open it, your account keeps its previous address — nothing has
+                  Until you open it, your account keeps its previous address - nothing has
                   changed yet.
                 </li>
                 <li>
@@ -70,7 +70,7 @@ export default function ConfirmEmailPage() {
                 </li>
                 <li>
                   If you didn&apos;t ask to change a Broccoli account&apos;s email to this
-                  address, ignore this — nothing will happen. The account&apos;s current address
+                  address, ignore this - nothing will happen. The account&apos;s current address
                   has also been told a change was requested.
                 </li>
               </ul>

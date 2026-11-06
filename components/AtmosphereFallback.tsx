@@ -6,7 +6,7 @@ import { createSeededRandom } from "@/lib/trajectoryLayout";
 const STAR_COUNT = 90;
 
 /**
- * Static (no animation — Rules.md's no-ambient-motion rule) starfield used as
+ * Static (no animation - Rules.md's no-ambient-motion rule) starfield used as
  * the mobile fallback for LiquidEther. Same seeded-dot vocabulary as
  * Trajectory's Starfield, so mobile reads as "the same design system, lighter
  * weight" rather than an empty box behind an omitted WebGL effect.

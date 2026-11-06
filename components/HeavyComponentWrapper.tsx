@@ -8,7 +8,7 @@ interface Props {
   fallback?: React.ReactNode;
   /** Custom rootMargin for intersection observer. Default: "200px 0px" */
   rootMargin?: string;
-  /** Skip the mobile viewport bypass — for children that aren't GPU/WebGL heavy. Default: true */
+  /** Skip the mobile viewport bypass - for children that aren't GPU/WebGL heavy. Default: true */
   mobileBypass?: boolean;
 }
 

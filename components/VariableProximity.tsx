@@ -55,7 +55,7 @@ function calcFalloff(distance: number, radius: number, falloff: Falloff) {
  * Text whose variable-font axes respond to pointer proximity, per character.
  *
  * Requires a variable font. This site loads JetBrains Mono via next/font/google,
- * which ships the `wght` axis (100–800) — so `'wght' N` works out of the box.
+ * which ships the `wght` axis (100–800) - so `'wght' N` works out of the box.
  * Axes the loaded font does not expose are silently ignored by the browser.
  *
  * Degrades safely: with no pointer (touch devices, keyboard-only) every
@@ -106,7 +106,7 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>(
     );
 
     useEffect(() => {
-      // Pointer tracking is a progressive enhancement — skip it entirely for
+      // Pointer tracking is a progressive enhancement - skip it entirely for
       // users who prefer reduced motion or have no fine pointer.
       const fine = window.matchMedia("(pointer: fine)").matches;
       const reduced = window.matchMedia(
@@ -136,7 +136,7 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>(
 
       const { x, y } = mousePositionRef.current;
 
-      // Nothing moved and nothing to reset — skip the layout reads entirely.
+      // Nothing moved and nothing to reset - skip the layout reads entirely.
       if (
         lastPositionRef.current.x === x &&
         lastPositionRef.current.y === y &&
