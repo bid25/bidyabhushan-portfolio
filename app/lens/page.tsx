@@ -9,7 +9,7 @@ import { PhotoStackModal } from "@/components/lens/PhotoStackModal";
 import { HERO_PHOTO, LENS_STACKS, LensStack } from "@/data/lensPhotos";
 import { FEATURED_INSTAGRAM_POSTS } from "@/data/lensInstagram";
 import { AdaptiveVideoPlayer } from "@/components/lens/AdaptiveVideoPlayer";
-import { Menu, X, Play, Camera, RotateCcw } from "lucide-react";
+import { Menu, X, Play, Camera, RotateCcw, ArrowUpRight } from "lucide-react";
 
 export default function LensPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -363,65 +363,106 @@ export default function LensPage() {
               Instagram
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mt-6 sm:mt-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-7 mt-5 sm:mt-8">
               {/* Photo & Video Handle Card - @unfocused.nerd */}
-              <div className="cd bg-[#EDE6D8] border-3 sm:border-5 border-[#0F1517] shadow-[5px_5px_0_#0F1517] sm:shadow-[8px_8px_0_#0F1517] p-4 sm:p-8 flex flex-col justify-between gap-5 sm:gap-6">
+              <div className="cd group bg-[#EDE6D8] border-3 sm:border-5 border-[#0F1517] shadow-[4px_4px_0_#0F1517] sm:shadow-[8px_8px_0_#0F1517] p-3.5 sm:p-7 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <span
-                      className="font-pixel text-[10px] sm:text-xs bg-[#0F1517] !text-[#EDE6D8] px-2 py-1 sm:px-2.5 sm:py-1.5 uppercase"
-                      style={{ color: "#EDE6D8" }}
-                    >
-                      Photography & Film
-                    </span>
-                    <span className="font-mono text-xs font-bold text-[#0F1517]">
-                      @unfocused.nerd
+                  {/* Top Header Strip with Non-wrapping Badges */}
+                  <div className="flex items-center justify-between gap-2 pb-2.5 sm:pb-3 mb-2.5 sm:mb-3 border-b-2 border-[#0F1517]/15">
+                    <div className="flex items-center gap-1.5 flex-nowrap">
+                      <span className="font-pixel text-[9px] sm:text-xs bg-[#0F1517] !text-[#EDE6D8] px-1.5 sm:px-2 py-0.5 border border-[#0F1517] uppercase tracking-wider shrink-0" style={{ color: "#EDE6D8" }}>
+                        CH.01
+                      </span>
+                      <span className="font-mono font-bold text-[9px] sm:text-xs text-[#0F1517] bg-[#C99A55] px-1.5 sm:px-2 py-0.5 border border-[#0F1517] uppercase tracking-wider shrink-0">
+                        STILLS & CINE
+                      </span>
+                    </div>
+                    <span className="font-mono font-bold text-[9px] sm:text-xs text-[#0F1517]/70 flex items-center gap-1 shrink-0">
+                      <Camera size={12} className="shrink-0" />
+                      <span>IG FEED</span>
                     </span>
                   </div>
-                  <h3 className="font-pixel text-xl sm:text-2xl text-[#0F1517] m-0">
+
+                  {/* Single Clean Main Handle Title */}
+                  <h3 className="font-pixel text-lg sm:text-2xl text-[#0F1517] group-hover:text-[#FF5C8A] transition-colors leading-tight m-0">
                     @unfocused.nerd
                   </h3>
-                  <p className="font-mono text-xs sm:text-base text-[#0F1517]/85 mt-2 sm:mt-3 leading-relaxed">
+                  <div className="font-mono text-[9px] sm:text-xs font-bold text-[#C99A55] uppercase tracking-wider mt-1">
+                    Stills · DaVinci Resolve · Cine Reel
+                  </div>
+
+                  {/* Body Content */}
+                  <p className="font-mono text-xs sm:text-sm text-[#0F1517]/85 mt-2 sm:mt-3 leading-relaxed m-0">
                     Stills, live concerts, celestial captures, wildlife portraits, and cinematic color grading in DaVinci Resolve.
                   </p>
                 </div>
-                <a
-                  href="https://www.instagram.com/unfocused.nerd/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bt inline-flex items-center justify-center gap-2 min-h-[44px] sm:min-h-[46px] px-4 sm:px-5 bg-[#C99A55] text-[#0F1517] font-mono font-bold text-xs tracking-wider border-3 sm:border-4 border-[#0F1517] shadow-[4px_4px_0_#070B0C] sm:shadow-[5px_5px_0_#070B0C] self-stretch sm:self-start text-decoration-none cursor-pointer"
-                >
-                  <Camera size={15} /> VISIT @unfocused.nerd ↗
-                </a>
+
+                {/* Tactile Bottom Action Button */}
+                <div className="mt-4 pt-3 border-t-2 border-[#0F1517]/15">
+                  <a
+                    href="https://www.instagram.com/unfocused.nerd/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bt w-full min-h-[42px] sm:min-h-[48px] px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#C99A55] hover:bg-[#0F1517] text-[#0F1517] hover:!text-[#EDE6D8] font-mono font-bold text-xs tracking-wider border-2 sm:border-3 border-[#0F1517] shadow-[3px_3px_0_#070B0C] sm:shadow-[5px_5px_0_#070B0C] flex items-center justify-between text-decoration-none cursor-pointer transition-all active:translate-x-0.5 active:translate-y-0.5"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Camera size={14} />
+                      <span>OPEN @unfocused.nerd</span>
+                    </span>
+                    <ArrowUpRight size={15} />
+                  </a>
+                </div>
               </div>
 
               {/* Personal Blog & Enquiry Handle Card - @bid_notfound */}
-              <div className="cd bg-[#EDE6D8] border-3 sm:border-5 border-[#0F1517] shadow-[5px_5px_0_#0F1517] sm:shadow-[8px_8px_0_#0F1517] p-4 sm:p-8 flex flex-col justify-between gap-5 sm:gap-6">
+              <div className="cd group bg-[#EDE6D8] border-3 sm:border-5 border-[#0F1517] shadow-[4px_4px_0_#0F1517] sm:shadow-[8px_8px_0_#0F1517] p-3.5 sm:p-7 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <span className="font-pixel text-[10px] sm:text-xs bg-[#C99A55] text-[#0F1517] px-2 py-1 sm:px-2.5 sm:py-1.5 uppercase">
-                      Personal Blog & Enquiries
-                    </span>
-                    <span className="font-mono text-xs font-bold text-[#0F1517]">
-                      @bid_notfound
+                  {/* Top Header Strip with Non-wrapping Badges */}
+                  <div className="flex items-center justify-between gap-2 pb-2.5 sm:pb-3 mb-2.5 sm:mb-3 border-b-2 border-[#0F1517]/15">
+                    <div className="flex items-center gap-1.5 flex-nowrap">
+                      <span className="font-pixel text-[9px] sm:text-xs bg-[#0F1517] !text-[#EDE6D8] px-1.5 sm:px-2 py-0.5 border border-[#0F1517] uppercase tracking-wider shrink-0" style={{ color: "#EDE6D8" }}>
+                        CH.02
+                      </span>
+                      <span className="font-mono font-bold text-[9px] sm:text-xs !text-[#EDE6D8] bg-[#1F4A4F] px-1.5 sm:px-2 py-0.5 border border-[#0F1517] uppercase tracking-wider shrink-0" style={{ color: "#EDE6D8" }}>
+                        DEV & LOGS
+                      </span>
+                    </div>
+                    <span className="font-mono font-bold text-[9px] sm:text-xs text-[#0F1517]/70 flex items-center gap-1 shrink-0">
+                      <Camera size={12} className="shrink-0" />
+                      <span>IG FEED</span>
                     </span>
                   </div>
-                  <h3 className="font-pixel text-xl sm:text-2xl text-[#0F1517] m-0">
+
+                  {/* Single Clean Main Handle Title */}
+                  <h3 className="font-pixel text-lg sm:text-2xl text-[#0F1517] group-hover:text-[#FF5C8A] transition-colors leading-tight m-0">
                     @bid_notfound
                   </h3>
-                  <p className="font-mono text-xs sm:text-base text-[#0F1517]/85 mt-2 sm:mt-3 leading-relaxed">
+                  <div className="font-mono text-[9px] sm:text-xs font-bold text-[#1F4A4F] uppercase tracking-wider mt-1">
+                    Engineering Logs · Tech Discourse · DMs
+                  </div>
+
+                  {/* Body Content */}
+                  <p className="font-mono text-xs sm:text-sm text-[#0F1517]/85 mt-2 sm:mt-3 leading-relaxed m-0">
                     Engineering thoughts, behind-the-scenes project logs, tech discourse, and direct personal enquiries.
                   </p>
                 </div>
-                <a
-                  href="https://www.instagram.com/bid_notfound/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bt inline-flex items-center justify-center gap-2 min-h-[44px] sm:min-h-[46px] px-4 sm:px-5 bg-[#1F4A4F] !text-[#EDE6D8] font-mono font-bold text-xs tracking-wider border-3 sm:border-4 border-[#0F1517] shadow-[4px_4px_0_#070B0C] sm:shadow-[5px_5px_0_#070B0C] self-stretch sm:self-start text-decoration-none cursor-pointer"
-                  style={{ color: "#EDE6D8" }}
-                >
-                  <Camera size={15} /> VISIT @bid_notfound ↗
-                </a>
+
+                {/* Tactile Bottom Action Button */}
+                <div className="mt-4 pt-3 border-t-2 border-[#0F1517]/15">
+                  <a
+                    href="https://www.instagram.com/bid_notfound/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bt w-full min-h-[42px] sm:min-h-[48px] px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#1F4A4F] hover:bg-[#0F1517] !text-[#EDE6D8] font-mono font-bold text-xs tracking-wider border-2 sm:border-3 border-[#0F1517] shadow-[3px_3px_0_#070B0C] sm:shadow-[5px_5px_0_#070B0C] flex items-center justify-between text-decoration-none cursor-pointer transition-all active:translate-x-0.5 active:translate-y-0.5"
+                    style={{ color: "#EDE6D8" }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Camera size={14} />
+                      <span>OPEN @bid_notfound</span>
+                    </span>
+                    <ArrowUpRight size={15} />
+                  </a>
+                </div>
               </div>
             </div>
 
