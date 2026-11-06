@@ -157,7 +157,7 @@ export default function BlogPage() {
             return (
               <div
                 key={post.slug}
-                className="card pop border-4 border-[#0B3D2E] bg-[#FFF6C2]/85 shadow-[8px_8px_0_#0B3D2E] p-6 relative flex flex-col justify-between"
+                className="card pop border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2]/85 shadow-[5px_5px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] p-4 sm:p-6 relative flex flex-col justify-between"
                 style={{ animationDelay: `${index * 120}ms` }}
               >
                 {cardInner}
@@ -169,7 +169,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="card pop block border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[10px_10px_0_#0B3D2E] p-6 relative flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[14px_14px_0_#0B3D2E] transition-all"
+              className="card pop block border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-4 sm:p-6 relative flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[14px_14px_0_#0B3D2E] transition-all"
               style={{ animationDelay: `${index * 120}ms` }}
             >
               {cardInner}

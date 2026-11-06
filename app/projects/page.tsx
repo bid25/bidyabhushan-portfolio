@@ -106,7 +106,7 @@ export default function ProjectsPage() {
           <Link
             key={project.slug}
             href={`/projects/${project.slug}`}
-            className="card flex flex-col justify-between border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[10px_10px_0_#0B3D2E] p-6 sm:p-7 relative"
+            className="card flex flex-col justify-between border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-4 sm:p-7 relative"
             style={{ backgroundColor: "#FFF6C2", opacity: 1 }}
           >
             <div>

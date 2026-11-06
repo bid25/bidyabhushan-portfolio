@@ -74,8 +74,8 @@ export default function AboutPage() {
       {/* Main Grid */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-9 pt-10 items-start">
         {/* Left Column: Portrait Card */}
-        <div className="pop border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[10px_10px_0_#0B3D2E] p-5 relative">
-          <div className="border-4 border-dashed border-[#0B3D2E] h-[360px] relative overflow-hidden flex items-center justify-center bg-[#FFF0B3]">
+        <div className="pop border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-3.5 sm:p-5 relative">
+          <div className="border-3 sm:border-4 border-dashed border-[#0B3D2E] h-[280px] sm:h-[360px] relative overflow-hidden flex items-center justify-center bg-[#FFF0B3]">
             <Image
               src="/images/about-wallpaper.png"
               alt="Bidya Bhushan Nanda"

@@ -115,25 +115,8 @@ export function TrajectorySketchBox() {
     setTimeout(() => setIsTransitioning(false), 380);
   }, []);
 
-  // Center on mount and on resize
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fitToView();
-    }, 60);
-
-    const handleResize = () => {
-      fitToView();
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [fitToView]);
-
   // Jump to specific milestone node
-  const jumpToMilestone = (m: Milestone) => {
+  const jumpToMilestone = useCallback((m: Milestone) => {
     const container = containerRef.current;
     if (!container) return;
     const W = container.clientWidth;
@@ -149,7 +132,37 @@ export function TrajectorySketchBox() {
     setActiveMilestone(m.id);
 
     setTimeout(() => setIsTransitioning(false), 380);
-  };
+  }, []);
+
+  // Center on mount and on resize
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const container = containerRef.current;
+      if (container && container.clientWidth < 640) {
+        // On mobile, focus on the first milestone at readable scale
+        jumpToMilestone(MILESTONES[0]);
+      } else {
+        fitToView();
+      }
+    }, 60);
+
+    const handleResize = () => {
+      const container = containerRef.current;
+      if (container && container.clientWidth < 640) {
+        // Keep active milestone centered on mobile resize
+        const current = MILESTONES.find((m) => m.id === activeMilestone) || MILESTONES[0];
+        jumpToMilestone(current);
+      } else {
+        fitToView();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [fitToView, jumpToMilestone, activeMilestone]);
 
   // Zoom controls (+ / -)
   const handleZoom = (direction: "in" | "out") => {
@@ -211,7 +224,7 @@ export function TrajectorySketchBox() {
   const handleTouchEnd = () => setIsDragging(false);
 
   return (
-    <div className="w-full flex flex-col border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[8px_8px_0_#0B3D2E] select-none overflow-hidden font-mono">
+    <div className="w-full flex flex-col border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] select-none overflow-hidden font-mono">
       {/* ── SKETCH BOX CAD HEADER BAR ─────────────────────── */}
       <div className="flex flex-wrap items-center justify-between gap-2 bg-[#0B3D2E] text-[#FFD93B] px-3 sm:px-4 py-2 border-b-3 border-[#0B3D2E]">
         <div className="flex items-center gap-2.5">
@@ -311,7 +324,7 @@ export function TrajectorySketchBox() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`relative w-full h-[540px] sm:h-[620px] bg-[#FFF6C2] overflow-hidden ${
+        className={`relative w-full h-[400px] sm:h-[620px] bg-[#FFF6C2] overflow-hidden ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{
@@ -1937,7 +1950,7 @@ export function TrajectorySketchBox() {
 
       {/* ── CAD FOOTER RAIL & QUICK JUMP DOCK ────────────── */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#0B3D2E] text-[#FFF6C2] px-3 sm:px-4 py-3 border-t-3 border-[#0B3D2E]">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-full pb-1 sm:pb-0 flex-nowrap sm:flex-wrap w-full sm:w-auto">
           <span className="font-pixel text-[10px] text-[#FFD93B] mr-1 hidden lg:inline">
             MILESTONES:
           </span>

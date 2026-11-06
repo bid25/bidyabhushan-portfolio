@@ -251,40 +251,40 @@ export default function LensPage() {
           </nav>
 
           {/* Hero Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch mt-6 sm:mt-10">
             {/* Left Column: Hero Card */}
-            <div className="bg-[#0F1517] text-[#EDE6D8] border-6 border-[#0F1517] shadow-[12px_12px_0_#C99A55] p-8 sm:p-10 flex flex-col justify-between gap-6">
-              <div className="font-mono font-bold text-xs sm:text-sm tracking-widest border-3 border-[#EDE6D8] self-start py-1.5 px-3">
+            <div className="bg-[#0F1517] text-[#EDE6D8] border-3 sm:border-6 border-[#0F1517] shadow-[6px_6px_0_#C99A55] sm:shadow-[12px_12px_0_#C99A55] p-5 sm:p-8 md:p-10 flex flex-col justify-between gap-6">
+              <div className="font-mono font-bold text-xs sm:text-sm tracking-widest border-2 sm:border-3 border-[#EDE6D8] self-start py-1 px-2.5 sm:py-1.5 sm:px-3">
                 NIGHT SHIFT // BID.LENS
               </div>
 
               <div>
                 <h1
-                  className="gl font-pixel text-6xl sm:text-8xl md:text-9xl !text-[#EDE6D8] leading-none m-0 tracking-tight"
+                  className="gl font-pixel text-5xl sm:text-7xl md:text-8xl lg:text-9xl !text-[#EDE6D8] leading-none m-0 tracking-tight"
                   style={{ color: "#EDE6D8" }}
                 >
                   LENS
                 </h1>
                 <p
-                  className="font-mono mt-4 mb-0 text-base sm:text-lg leading-relaxed !text-[#EDE6D8] text-[#EDE6D8]/90 max-w-lg"
+                  className="font-mono mt-3 sm:mt-4 mb-0 text-sm sm:text-base md:text-lg leading-relaxed !text-[#EDE6D8] text-[#EDE6D8]/90 max-w-lg"
                   style={{ color: "#EDE6D8" }}
                 >
                   Photographer and videographer by passion, with the editing skills to finish what I shoot. The other half of the engineer.
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-4 pt-2">
+              <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
                 <a
                   href="https://www.instagram.com/unfocused.nerd/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bt inline-flex items-center min-h-[52px] px-6 bg-[#C99A55] text-[#0F1517] font-mono font-bold tracking-widest text-sm border-5 border-[#EDE6D8] shadow-[7px_7px_0_#070B0C] text-decoration-none cursor-pointer"
+                  className="bt inline-flex items-center min-h-[46px] sm:min-h-[52px] px-4 sm:px-6 bg-[#C99A55] text-[#0F1517] font-mono font-bold tracking-widest text-xs sm:text-sm border-3 sm:border-5 border-[#EDE6D8] shadow-[4px_4px_0_#070B0C] sm:shadow-[7px_7px_0_#070B0C] text-decoration-none cursor-pointer"
                 >
                   FOLLOW @unfocused.nerd ↗
                 </a>
                 <a
                   href="#work"
-                  className="bt inline-flex items-center min-h-[52px] px-6 bg-[#0F1517] !text-[#EDE6D8] font-mono font-bold tracking-widest text-sm border-5 border-[#EDE6D8] shadow-[7px_7px_0_#070B0C] text-decoration-none cursor-pointer"
+                  className="bt inline-flex items-center min-h-[46px] sm:min-h-[52px] px-4 sm:px-6 bg-[#0F1517] !text-[#EDE6D8] font-mono font-bold tracking-widest text-xs sm:text-sm border-3 sm:border-5 border-[#EDE6D8] shadow-[4px_4px_0_#070B0C] sm:shadow-[7px_7px_0_#070B0C] text-decoration-none cursor-pointer"
                   style={{ color: "#EDE6D8" }}
                 >
                   SEE THE WORK ↓
@@ -293,8 +293,8 @@ export default function LensPage() {
             </div>
 
             {/* Right Column: Hero Photo Frame (FIG. 01) */}
-            <div className="relative border-6 border-[#0F1517] shadow-[12px_12px_0_#C99A55] bg-[#070B0C] p-3 sm:p-4 overflow-hidden group">
-              <div className="relative w-full aspect-[4/3] border-4 border-[#0F1517] overflow-hidden bg-[#070B0C]">
+            <div className="relative border-3 sm:border-6 border-[#0F1517] shadow-[6px_6px_0_#C99A55] sm:shadow-[12px_12px_0_#C99A55] bg-[#070B0C] p-2.5 sm:p-4 overflow-hidden group">
+              <div className="relative w-full aspect-[4/3] border-2 sm:border-4 border-[#0F1517] overflow-hidden bg-[#070B0C]">
                 <Image
                   src={HERO_PHOTO.src}
                   alt={HERO_PHOTO.title}
@@ -627,25 +627,25 @@ export default function LensPage() {
 
           {/* Closing Call to Action Banner */}
           <div
-            className="mt-24 bg-[#0F1517] !text-[#EDE6D8] border-6 border-[#0F1517] shadow-[12px_12px_0_#C99A55] p-8 sm:p-14 text-center"
+            className="mt-16 sm:mt-24 bg-[#0F1517] !text-[#EDE6D8] border-3 sm:border-6 border-[#0F1517] shadow-[6px_6px_0_#C99A55] sm:shadow-[12px_12px_0_#C99A55] p-5 sm:p-14 text-center"
             style={{ color: "#EDE6D8", backgroundColor: "#0F1517" }}
           >
             <div
-              className="font-pixel text-4xl sm:text-6xl md:text-7xl uppercase mb-6 leading-tight !text-[#EDE6D8]"
+              className="font-pixel text-3xl sm:text-6xl md:text-7xl uppercase mb-5 sm:mb-6 leading-tight !text-[#EDE6D8]"
               style={{ color: "#EDE6D8" }}
             >
               Let’s shoot something.
             </div>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
               <Link
                 href="/contact"
-                className="bt inline-flex items-center min-h-[52px] px-7 bg-[#C99A55] text-[#0F1517] font-mono font-bold tracking-widest text-sm border-5 border-[#EDE6D8] shadow-[7px_7px_0_#070B0C]"
+                className="bt inline-flex items-center min-h-[46px] sm:min-h-[52px] px-5 sm:px-7 bg-[#C99A55] text-[#0F1517] font-mono font-bold tracking-widest text-xs sm:text-sm border-3 sm:border-5 border-[#EDE6D8] shadow-[4px_4px_0_#070B0C] sm:shadow-[7px_7px_0_#070B0C]"
               >
                 CONTACT →
               </Link>
               <Link
                 href="/"
-                className="bt inline-flex items-center min-h-[52px] px-7 bg-[#0F1517] !text-[#EDE6D8] font-mono font-bold tracking-widest text-sm border-5 border-[#EDE6D8] shadow-[7px_7px_0_#070B0C]"
+                className="bt inline-flex items-center min-h-[46px] sm:min-h-[52px] px-5 sm:px-7 bg-[#0F1517] !text-[#EDE6D8] font-mono font-bold tracking-widest text-xs sm:text-sm border-3 sm:border-5 border-[#EDE6D8] shadow-[4px_4px_0_#070B0C] sm:shadow-[7px_7px_0_#070B0C]"
                 style={{ color: "#EDE6D8" }}
               >
                 ← BACK TO THE CODE

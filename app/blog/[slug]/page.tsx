@@ -105,7 +105,7 @@ export default async function BlogPostPage({
       </div>
 
       {/* Main Archival Research Dossier Card */}
-      <div className="un border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[12px_12px_0_#0B3D2E] p-6 sm:p-12 relative">
+      <div className="un border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] p-4 sm:p-8 md:p-12 relative overflow-x-clip max-w-full">
         {/* Archival Manuscript Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b-3 border-[#0B3D2E] pb-4 mb-8">
           <div className="font-pixel text-[10px] text-[#0B3D2E] flex items-center gap-2">

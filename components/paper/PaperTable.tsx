@@ -17,23 +17,23 @@ export function PaperTable({
   source,
 }: PaperTableProps) {
   return (
-    <figure className="my-10 sm:my-14 border-3 border-[#0B3D2E] bg-[#FFF8D6] p-5 sm:p-7 shadow-[8px_8px_0_#0B3D2E]">
+    <figure className="my-8 sm:my-14 border-3 border-[#0B3D2E] bg-[#FFF8D6] p-3.5 sm:p-7 shadow-[4px_4px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] max-w-full overflow-hidden">
       <figcaption className="mb-4 border-b-2 border-dashed border-[#0B3D2E]/40 pb-3">
         <div className="flex items-center justify-between gap-2 mb-2">
-          <span className="font-pixel text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-3 py-1 font-bold">
+          <span className="font-pixel text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-2.5 sm:px-3 py-1 font-bold">
             {number.toUpperCase()}
           </span>
-          <span className="font-pixel text-[9px] text-[#0B3D2E]/60">
+          <span className="font-pixel text-[8px] sm:text-[9px] text-[#0B3D2E]/60">
             [ DATA MATRIX ]
           </span>
         </div>
-        <span className="block font-mono text-base font-bold text-[#0B3D2E]">
+        <span className="block font-mono text-sm sm:text-base font-bold text-[#0B3D2E] break-words">
           {caption}
         </span>
       </figcaption>
 
-      <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-        <table className="w-full min-w-[540px] border-collapse border-3 border-[#0B3D2E] text-left font-mono">
+      <div className="w-full overflow-x-auto max-w-full pb-1">
+        <table className="w-full min-w-[460px] sm:min-w-[540px] border-collapse border-3 border-[#0B3D2E] text-left font-mono text-xs sm:text-sm">
           <thead>
             <tr className="bg-[#0B3D2E] text-[#FFD93B]">
               {head.map((h, idx) => (

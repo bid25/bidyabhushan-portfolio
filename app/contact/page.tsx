@@ -120,7 +120,7 @@ export default function ContactPage() {
       {/* Grid: Form & Channels */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-9 pt-10 items-start">
         {/* Left Column: Contact Form */}
-        <div className="pop border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[10px_10px_0_#0B3D2E] p-6 sm:p-7 flex flex-col gap-5">
+        <div className="pop border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-4 sm:p-7 flex flex-col gap-5">
           {sent ? (
             <div className="bg-[#0B3D2E] text-[#FFD93B] p-6 border-3 border-[#0B3D2E] text-center font-mono">
               <div className="font-pixel text-sm text-[#FF5C8A] mb-2">
@@ -236,7 +236,7 @@ export default function ContactPage() {
                   rel={ch.external ? "noopener noreferrer" : undefined}
                   onClick={() => setSelectedChannel(ch.id)}
                   data-selected={isSelected ? "true" : undefined}
-                  className={`contact-channel ${ch.channelClass} group flex items-center justify-between border-4 border-[#0B3D2E] bg-[#FFF6C2] px-4 py-3 min-h-[48px] text-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] cursor-pointer outline-none`}
+                  className={`contact-channel ${ch.channelClass} group flex items-center justify-between gap-2 border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2] px-3.5 sm:px-4 py-2.5 sm:py-3 min-h-[46px] sm:min-h-[48px] text-[#0B3D2E] shadow-[3px_3px_0_#0B3D2E] sm:shadow-[4px_4px_0_#0B3D2E] cursor-pointer outline-none text-xs sm:text-sm`}
                   style={
                     isSelected
                       ? {
@@ -248,13 +248,13 @@ export default function ContactPage() {
                 >
                   <span
                     style={isSelected ? { color: "#FFF6C2" } : undefined}
-                    className="transition-colors"
+                    className="transition-colors truncate"
                   >
                     {ch.label}
                   </span>
                   <span
                     style={isSelected ? { color: "#FFF6C2" } : undefined}
-                    className="font-pixel text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    className="font-pixel text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0"
                   >
                     ↗
                   </span>

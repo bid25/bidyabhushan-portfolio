@@ -64,22 +64,22 @@ export function FeaturedProjectsInteractive() {
   return (
     <section className="pt-20 pb-16 relative">
       {/* Section Header */}
-      <div className="flex flex-wrap items-end justify-between gap-5 mb-8">
-        <div className="flex flex-wrap items-end gap-4">
-          <h2 className="m-0 font-pixel text-xl sm:text-2xl bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] text-[#0B3D2E]">
+      <div className="flex flex-wrap items-end justify-between gap-3 sm:gap-5 mb-6 sm:mb-8">
+        <div className="flex flex-wrap items-end gap-3 sm:gap-4">
+          <h2 className="m-0 font-pixel text-lg sm:text-2xl bg-[#FFF6C2] border-3 sm:border-4 border-[#0B3D2E] px-3.5 sm:px-4 py-2.5 sm:py-3 shadow-[4px_4px_0_#0B3D2E] sm:shadow-[6px_6px_0_#0B3D2E] text-[#0B3D2E]">
             FEATURED PROJECTS
           </h2>
-          <span className="font-hand text-2xl sm:text-3xl -rotate-2 text-[#0B3D2E]">
+          <span className="font-hand text-xl sm:text-3xl -rotate-2 text-[#0B3D2E]">
             ← click card to preview · click details to read case study
           </span>
         </div>
-        <div className="font-pixel text-[11px] bg-[#0B3D2E] text-[#FFD93B] px-3 py-2 border-2 border-[#0B3D2E]">
+        <div className="font-pixel text-[9px] sm:text-[11px] bg-[#0B3D2E] text-[#FFD93B] px-2.5 sm:px-3 py-1.5 sm:py-2 border-2 border-[#0B3D2E]">
           MODE: INTERACTIVE_RUNNER
         </div>
       </div>
 
       {/* ── 3-CARD PROJECT SELECTOR (AT TOP) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Card 1: Broccoli */}
         <div
           role="button"
@@ -91,10 +91,10 @@ export function FeaturedProjectsInteractive() {
               setActiveTab("broccoli");
             }
           }}
-          className={`group block border-4 border-[#0B3D2E] p-5 cursor-pointer transition-all relative ${
+          className={`group block border-3 sm:border-4 border-[#0B3D2E] p-4 sm:p-5 cursor-pointer transition-all relative ${
             activeTab === "broccoli"
-              ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[8px_8px_0_#FF5C8A] -translate-y-1"
-              : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[5px_5px_0_#0B3D2E] hover:bg-[#2F9E5E] hover:text-[#FFFDF0]"
+              ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[5px_5px_0_#FF5C8A] sm:shadow-[8px_8px_0_#FF5C8A] -translate-y-0.5 sm:-translate-y-1"
+              : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[5px_5px_0_#0B3D2E] hover:bg-[#2F9E5E] hover:text-[#FFFDF0]"
           }`}
         >
           <span
@@ -164,10 +164,10 @@ export function FeaturedProjectsInteractive() {
               setActiveTab("zucchini-linux");
             }
           }}
-          className={`group block border-4 border-[#0B3D2E] p-5 cursor-pointer transition-all relative ${
+          className={`group block border-3 sm:border-4 border-[#0B3D2E] p-4 sm:p-5 cursor-pointer transition-all relative ${
             activeTab === "zucchini-linux"
-              ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[8px_8px_0_#FF5C8A] -translate-y-1"
-              : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[5px_5px_0_#0B3D2E] hover:bg-[#FF5C8A] hover:text-[#0B3D2E]"
+              ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[5px_5px_0_#FF5C8A] sm:shadow-[8px_8px_0_#FF5C8A] -translate-y-0.5 sm:-translate-y-1"
+              : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[5px_5px_0_#0B3D2E] hover:bg-[#FF5C8A] hover:text-[#0B3D2E]"
           }`}
         >
           <span className="absolute -top-3.5 right-4 bg-[#FF5C8A] text-[#0B3D2E] font-pixel text-[9px] px-2 py-1 border border-[#0B3D2E] font-bold">
@@ -231,10 +231,10 @@ export function FeaturedProjectsInteractive() {
               setActiveTab("hoshcare-client");
             }
           }}
-          className={`group block border-4 border-[#0B3D2E] p-5 cursor-pointer transition-all relative ${
+          className={`group block border-3 sm:border-4 border-[#0B3D2E] p-4 sm:p-5 cursor-pointer transition-all relative ${
             activeTab === "hoshcare-client"
-              ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[8px_8px_0_#FF5C8A] -translate-y-1"
-              : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[5px_5px_0_#0B3D2E] hover:bg-[#FFD93B] hover:text-[#0B3D2E]"
+              ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[5px_5px_0_#FF5C8A] sm:shadow-[8px_8px_0_#FF5C8A] -translate-y-0.5 sm:-translate-y-1"
+              : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[5px_5px_0_#0B3D2E] hover:bg-[#FFD93B] hover:text-[#0B3D2E]"
           }`}
         >
           <span
@@ -298,7 +298,7 @@ export function FeaturedProjectsInteractive() {
       <div className="relative">
         {/* 1. BROCCOLI STAGE */}
         {activeTab === "broccoli" && (
-          <div className="card border-4 border-[#0B3D2E] bg-[#0B3D2E] text-[#FFD93B] shadow-[12px_12px_0_#FF5C8A] p-6 sm:p-9 relative">
+          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#0B3D2E] text-[#FFD93B] shadow-[6px_6px_0_#FF5C8A] sm:shadow-[12px_12px_0_#FF5C8A] p-4 sm:p-7 md:p-9 relative">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b-3 border-[#FFD93B]/30 pb-4 mb-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-pixel text-[10px] bg-[#FFD93B] text-[#0B3D2E] px-2 py-1">
@@ -459,7 +459,7 @@ export function FeaturedProjectsInteractive() {
 
         {/* 2. ZUCCHINI-LINUX STAGE */}
         {activeTab === "zucchini-linux" && (
-          <div className="card border-4 border-[#0B3D2E] bg-[#06231A] text-[#FFD93B] shadow-[12px_12px_0_#FFD93B] p-6 sm:p-9 relative overflow-hidden">
+          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#06231A] text-[#FFD93B] shadow-[6px_6px_0_#FFD93B] sm:shadow-[12px_12px_0_#FFD93B] p-4 sm:p-7 md:p-9 relative overflow-hidden">
             {/* Window bar */}
             <div className="flex justify-between items-center bg-[#FFD93B] text-[#06231A] font-pixel text-[10px] px-4 py-2 border-2 border-[#0B3D2E] mb-6">
               <span>ZUCCHINI-LINUX // TTY1 CONSOLE · SM-T295 DUAL-BOOT</span>
@@ -594,7 +594,7 @@ export function FeaturedProjectsInteractive() {
 
         {/* 3. HOSHCARE CLIENT STAGE */}
         {activeTab === "hoshcare-client" && (
-          <div className="card border-4 border-[#0B3D2E] bg-[#FFF8D6] text-[#0B3D2E] shadow-[12px_12px_0_#0B3D2E] p-6 sm:p-9 relative">
+          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF8D6] text-[#0B3D2E] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] p-4 sm:p-7 md:p-9 relative">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b-3 border-[#0B3D2E]/20 pb-4 mb-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-pixel text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-2 py-1">

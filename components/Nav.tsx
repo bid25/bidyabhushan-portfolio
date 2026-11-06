@@ -26,8 +26,8 @@ export function Nav() {
   }
 
   return (
-    <nav className="w-full max-w-[1240px] mx-auto pt-6 px-4 sm:px-8 box-border relative z-50">
-      <div className="flex flex-wrap items-center justify-between gap-4 border-4 border-ink bg-panel p-3 sm:px-4 shadow-[8px_8px_0_#0B3D2E]">
+    <nav className="w-full max-w-[1240px] mx-auto pt-4 sm:pt-6 px-3.5 sm:px-8 box-border relative z-50">
+      <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 border-3 sm:border-4 border-ink bg-panel p-2.5 sm:p-3 sm:px-4 shadow-[4px_4px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E]">
         {/* Brand Logo Switchers: DEV (Lens switch) + BROCCOLI Flagship Pill */}
         <div className="flex items-center gap-2.5">
           <Link
@@ -102,7 +102,7 @@ export function Nav() {
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="md:hidden mt-2 border-4 border-ink bg-panel p-4 shadow-[8px_8px_0_#0B3D2E] flex flex-col gap-2 font-bold font-mono">
+        <div className="md:hidden mt-2 border-3 sm:border-4 border-ink bg-panel p-3.5 sm:p-4 shadow-[4px_4px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] flex flex-col gap-2 font-bold font-mono">
           {navLinks.map((link) => {
             const isActive =
               link.href === "/"

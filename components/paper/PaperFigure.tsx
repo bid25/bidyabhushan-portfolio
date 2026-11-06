@@ -81,7 +81,7 @@ export function PaperFigure({
   return (
     <figure
       ref={ref}
-      className="my-10 sm:my-14 border-3 border-[#0B3D2E] bg-[#FFF8D6] p-6 sm:p-8 shadow-[8px_8px_0_#0B3D2E] relative"
+      className="my-8 sm:my-14 border-3 border-[#0B3D2E] bg-[#FFF8D6] p-3.5 sm:p-8 shadow-[4px_4px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] max-w-full overflow-hidden relative"
       aria-label={`${figure}. ${title}. ${summary}`}
     >
       {/* Top Exhibit Banner */}

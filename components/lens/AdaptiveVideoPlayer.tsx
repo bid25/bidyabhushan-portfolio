@@ -142,29 +142,29 @@ export function AdaptiveVideoPlayer() {
       {/* Outer Theater Stage */}
       <div
         ref={playerContainerRef}
-        className="relative bg-[#070B0C] border-6 border-[#0F1517] shadow-[12px_12px_0_#1F4A4F] p-3 sm:p-6 overflow-hidden flex flex-col justify-between"
+        className="relative bg-[#070B0C] border-3 sm:border-6 border-[#0F1517] shadow-[5px_5px_0_#1F4A4F] sm:shadow-[12px_12px_0_#1F4A4F] p-2.5 sm:p-6 overflow-hidden flex flex-col justify-between"
       >
         {/* Top Telemetry Bar */}
-        <div className="w-full flex flex-wrap items-center justify-between gap-3 pb-3 sm:pb-4 border-b-3 border-[#EDE6D8]/20 select-none">
-          <div className="flex items-center gap-2.5">
+        <div className="w-full flex flex-wrap items-center justify-between gap-2 pb-2.5 sm:pb-4 border-b-2 sm:border-b-3 border-[#EDE6D8]/20 select-none">
+          <div className="flex items-center gap-2">
             <span
-              className="font-pixel text-[11px] sm:text-xs bg-[#FF5C8A] !text-[#0F1517] px-2.5 py-1 uppercase font-bold"
+              className="font-pixel text-[10px] sm:text-xs bg-[#FF5C8A] !text-[#0F1517] px-2 sm:px-2.5 py-0.5 sm:py-1 uppercase font-bold"
               style={{ color: "#0F1517" }}
             >
               CINE PLAYER
             </span>
             <span
-              className="font-mono text-xs sm:text-sm font-bold tracking-wider !text-[#EDE6D8] truncate max-w-[200px] sm:max-w-md"
+              className="font-mono text-[11px] sm:text-sm font-bold tracking-wider !text-[#EDE6D8] truncate max-w-[170px] sm:max-w-md"
               style={{ color: "#EDE6D8" }}
             >
               {activeVideo.title}
             </span>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[11px] sm:text-xs">
+          <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs">
             {/* Dynamic Aspect Ratio Telemetry Badge */}
             <span
-              className="px-2.5 py-0.5 border-2 border-[#C99A55] bg-[#0F1517] !text-[#C99A55] font-bold tracking-widest uppercase"
+              className="px-2 py-0.5 border border-[#C99A55] sm:border-2 bg-[#0F1517] !text-[#C99A55] font-bold tracking-widest uppercase text-[9px] sm:text-[11px]"
               style={{ color: "#C99A55" }}
             >
               {activeVideo.aspectLabel} {activeVideo.isVertical ? "VERTICAL" : "LANDSCAPE"}
@@ -395,7 +395,7 @@ export function AdaptiveVideoPlayer() {
         </div>
 
         {/* Sprocket-punched Filmstrip Horizontal Tray */}
-        <div className="relative border-4 border-[#0F1517] bg-[#070B0C] p-3 sm:p-4 shadow-[8px_8px_0_#C99A55] overflow-x-auto">
+        <div className="relative border-3 sm:border-4 border-[#0F1517] bg-[#070B0C] p-2.5 sm:p-4 shadow-[4px_4px_0_#C99A55] sm:shadow-[8px_8px_0_#C99A55] overflow-x-auto">
           {/* Upper Sprocket Holes */}
           <div
             className="h-2.5 mb-3 opacity-60"
