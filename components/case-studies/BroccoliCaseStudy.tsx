@@ -103,10 +103,7 @@ const broccoliProblems = [
 export function BroccoliCaseStudy() {
   const [replayKey, setReplayKey] = useState<number>(1);
   const [selectedStage, setSelectedStage] = useState<number>(0);
-  const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>({
-    0: true, 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true
-  });
-  const [expandedProblem, setExpandedProblem] = useState<number | null>(0);
+  const [expandedProblem, setExpandedProblem] = useState<number | null>(null);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
   const schematicRef = useRef<HTMLDivElement>(null);
 
@@ -129,25 +126,15 @@ export function BroccoliCaseStudy() {
     setReplayKey((k) => k + 1);
   };
 
-  const toggleCheck = (idx: number) => {
-    setCheckedItems((prev) => ({ ...prev, [idx]: !prev[idx] }));
-  };
-
-  const allChecked = Object.values(checkedItems).filter(Boolean).length;
-
   return (
     <div className="w-full">
-      <div className="un" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+      <div className="un w-full max-w-[1000px] mx-auto">
         <div
+          className="relative bg-[#FFF0B3] border-3 sm:border-4 border-[#0B3D2E] p-4 sm:p-8 md:p-12 shadow-[6px_6px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] overflow-hidden"
           style={{
-            position: "relative",
-            background: "#FFF0B3",
-            border: "4px solid #0B3D2E",
-            padding: "44px 48px 32px",
             backgroundImage:
               "linear-gradient(#0B3D2E14 1.5px,transparent 1.5px),linear-gradient(90deg,#0B3D2E14 1.5px,transparent 1.5px)",
             backgroundSize: "28px 28px",
-            boxShadow: "12px 12px 0 #0B3D2E",
           }}
         >
 
@@ -229,45 +216,18 @@ export function BroccoliCaseStudy() {
           </div>
 
           {/* Title with circled BROCCOLI, pink swoosh, and official logo stamp */}
-          <div
-            style={{
-              margin: "22px 0 6px",
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              gap: "20px",
-            }}
-          >
-            <div>
-              <h1
-                style={{
-                  margin: 0,
-                  fontFamily: "'Caveat', cursive",
-                  fontWeight: "600",
-                  fontSize: "60px",
-                  lineHeight: "1.1",
-                  color: "#0B3D2E",
-                }}
-              >
-                <span
-                  style={{
-                    border: "4px solid #FF5C8A",
-                    borderRadius: "50%",
-                    padding: "0 20px",
-                    display: "inline-block",
-                    transform: "rotate(-2deg)",
-                  }}
-                >
+          <div className="my-5 flex flex-col-reverse sm:flex-row sm:items-start justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <h1 className="m-0 font-hand font-semibold text-3xl sm:text-5xl md:text-6xl leading-[1.15] text-[#0B3D2E] break-words">
+                <span className="inline-block border-3 sm:border-4 border-[#FF5C8A] rounded-full px-3 sm:px-5 -rotate-2">
                   BROCCOLI
                 </span>{" "}
                 — Nutrition Instrument
               </h1>
               <svg
-                width="460"
-                height="20"
                 viewBox="0 0 460 20"
                 fill="none"
-                style={{ display: "block", marginTop: "4px" }}
+                className="w-full max-w-[460px] h-auto block mt-1"
               >
                 <path
                   className="dw"
@@ -281,23 +241,15 @@ export function BroccoliCaseStudy() {
               </svg>
             </div>
 
-            <div style={{ flexShrink: 0 }}>
+            <div className="flex sm:flex-col items-center gap-2 self-start shrink-0">
               <Image
                 src="/images/broccoli-icon-dark.png"
                 alt="Broccoli official logo"
                 width={76}
                 height={76}
-                style={{ display: "block" }}
+                className="w-14 h-14 sm:w-[76px] sm:h-[76px] block object-contain"
               />
-              <div
-                style={{
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: "7px",
-                  textAlign: "center",
-                  marginTop: "6px",
-                  color: "#0B3D2E",
-                }}
-              >
+              <div className="font-pixel text-[7px] text-center text-[#0B3D2E]">
                 APP ICON
               </div>
             </div>
@@ -877,294 +829,98 @@ export function BroccoliCaseStudy() {
             </div>
           </div>
 
-          {/* ── SECTION 2: WHAT I BUILT (INTERACTIVE CHECKLIST) ── */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-              margin: "36px 0 10px",
-            }}
-          >
-            <h2
-              style={{
-                margin: 0,
-                fontFamily: "'Caveat', cursive",
-                fontSize: "38px",
-                fontWeight: "700",
-                color: "#0B3D2E",
-              }}
-            >
+          {/* ── SECTION 2: WHAT I BUILT ── */}
+          <div className="mt-8 mb-2 flex items-baseline justify-between">
+            <h2 className="m-0 font-hand text-2xl sm:text-4xl font-bold text-[#0B3D2E]">
               2. what i built
             </h2>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  background: allChecked === broccoliChecklist.length ? "#0B3D2E" : "#FF5C8A",
-                  color: allChecked === broccoliChecklist.length ? "#FFD93B" : "#0B3D2E",
-                  padding: "2px 8px",
-                  border: "2px solid #0B3D2E",
-                }}
-              >
-                {allChecked} / {broccoliChecklist.length} VERIFIED
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  const nextState = allChecked !== broccoliChecklist.length;
-                  const upd: Record<number, boolean> = {};
-                  broccoliChecklist.forEach((_, i) => (upd[i] = nextState));
-                  setCheckedItems(upd);
-                }}
-                style={{
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: "8px",
-                  padding: "4px 8px",
-                  background: "#FFF8D6",
-                  color: "#0B3D2E",
-                  border: "2px solid #0B3D2E",
-                  cursor: "pointer",
-                }}
-              >
-                {allChecked === broccoliChecklist.length ? "UNCHECK ALL" : "CHECK ALL"}
-              </button>
-            </div>
           </div>
-          <p
-            style={{
-              margin: "0 0 18px",
-              fontFamily: "'Caveat', cursive",
-              fontSize: "22px",
-              color: "#0B3D2E",
-            }}
-          >
-            Caloric and body composition tracking engineered as an honest physical instrument (tap item to toggle check):
+          <p className="m-0 mb-4 font-hand text-lg sm:text-2xl text-[#0B3D2E]">
+            Caloric and body composition tracking engineered as an honest physical instrument:
           </p>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: "14px 20px",
-              marginBottom: "36px",
-            }}
-          >
-            {broccoliChecklist.map((item, idx) => {
-              const isChecked = !!checkedItems[idx];
-              return (
-                <div
-                  key={idx}
-                  onClick={() => toggleCheck(idx)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    fontFamily: "'Caveat', cursive",
-                    fontSize: "21px",
-                    color: isChecked ? "#0B3D2E" : "#8A948E",
-                    cursor: "pointer",
-                    userSelect: "none",
-                    padding: "4px 8px",
-                    background: isChecked ? "transparent" : "#0B3D2E08",
-                    border: isChecked ? "1px solid transparent" : "1px dashed #0B3D2E33",
-                  }}
-                  className="hover:translate-x-[2px] transition-transform"
-                >
-                  <span
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "22px",
-                      height: "22px",
-                      border: "2px solid #0B3D2E",
-                      background: isChecked ? "#FFF8D6" : "#E5DCB0",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {isChecked ? (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path
-                          d="M4 12 L9 18 L20 6"
-                          stroke="#FF5C8A"
-                          strokeWidth="3.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    ) : null}
-                  </span>
-                  <span style={{ textDecoration: isChecked ? "none" : "line-through" }}>
-                    {item}
-                  </span>
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3.5 mb-8">
+            {broccoliChecklist.map((item, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-2.5 font-hand text-lg sm:text-xl text-[#0B3D2E] py-1 px-1.5"
+              >
+                <span className="inline-flex items-center justify-center w-5 h-5 border-2 border-[#0B3D2E] bg-[#FFF8D6] shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M4 12 L9 18 L20 6"
+                      stroke="#FF5C8A"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span className="break-words">{item}</span>
+              </div>
+            ))}
           </div>
 
-          {/* ── SECTION 3: PROBLEMS I HAD TO CRACK (INTERACTIVE EXPANDABLE CARDS) ── */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-              margin: "36px 0 10px",
-            }}
-          >
-            <h2
-              style={{
-                margin: 0,
-                fontFamily: "'Caveat', cursive",
-                fontSize: "38px",
-                fontWeight: "700",
-                color: "#0B3D2E",
-              }}
-            >
+          {/* ── SECTION 3: PROBLEMS I HAD TO CRACK ── */}
+          <div className="mt-8 mb-2 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+            <h2 className="m-0 font-hand text-2xl sm:text-4xl font-bold text-[#0B3D2E]">
               3. problems i had to crack
             </h2>
-            <span
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: "11px",
-                color: "#0B3D2E",
-                fontWeight: "700",
-              }}
-            >
-              Click card to view root cause & code diff
+            <span className="font-mono text-[10px] sm:text-xs text-[#0B3D2E] font-bold">
+              Click card to view root cause &amp; code diff
             </span>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-              gap: "20px",
-              marginBottom: "40px",
-            }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-10">
             {broccoliProblems.map((prob, i) => {
               const isExpanded = expandedProblem === i;
               return (
                 <div
                   key={prob.tag}
                   onClick={() => setExpandedProblem(isExpanded ? null : i)}
-                  style={{
-                    border: isExpanded ? "3px solid #FF5C8A" : "2px dashed #0B3D2E",
-                    background: isExpanded ? "#FFFDF0" : "#FFF8D6",
-                    padding: "20px 22px",
-                    cursor: "pointer",
-                    boxShadow: isExpanded ? "6px 6px 0 #0B3D2E" : "3px 3px 0 #0B3D2E22",
-                    transform: isExpanded ? "translate(-2px, -2px)" : "none",
-                    transition: "all 0.15s ease",
-                  }}
+                  className={`p-4 sm:p-5 cursor-pointer transition-all ${
+                    isExpanded
+                      ? "border-3 border-[#FF5C8A] bg-[#FFFDF0] shadow-[4px_4px_0_#FF5C8A]"
+                      : "border-2 border-dashed border-[#0B3D2E] bg-[#FFF8D6] hover:bg-[#FFFDF0] hover:border-solid shadow-[2px_2px_0_#0B3D2E]"
+                  }`}
                 >
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          width: "28px",
-                          height: "28px",
-                          background: "#FF5C8A",
-                          color: "#0B3D2E",
-                          fontFamily: "'Space Mono', monospace",
-                          fontWeight: "bold",
-                          fontSize: "16px",
-                          border: "2px solid #0B3D2E",
-                        }}
-                      >
+                  <div className="flex items-center justify-between gap-2 mb-2.5">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="inline-flex items-center justify-center w-6 h-6 font-mono text-xs font-bold bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] shrink-0">
                         {prob.tag}
                       </span>
-                      <span
-                        style={{
-                          fontFamily: "'Caveat', cursive",
-                          fontSize: "24px",
-                          fontWeight: "700",
-                          color: "#0B3D2E",
-                        }}
-                      >
+                      <span className="font-hand text-xl sm:text-2xl font-bold text-[#0B3D2E] truncate">
                         {prob.title}
                       </span>
                     </div>
                     <span
+                      className="font-pixel text-[8px] sm:text-[9px] px-2 py-1 shrink-0 border border-[#0B3D2E]"
                       style={{
-                        fontFamily: "'Press Start 2P', monospace",
-                        fontSize: "8px",
                         background: isExpanded ? "#FF5C8A" : "#0B3D2E",
                         color: isExpanded ? "#0B3D2E" : "#FFD93B",
-                        padding: "3px 6px",
                       }}
                     >
                       {isExpanded ? "▲ HIDE" : "▼ DIFF"}
                     </span>
                   </div>
 
-                  <p
-                    style={{
-                      margin: "0 0 10px",
-                      fontFamily: "'Caveat', cursive",
-                      fontSize: "20px",
-                      lineHeight: "1.4",
-                      color: "#0B3D2E",
-                    }}
-                  >
+                  <p className="m-0 mb-2 font-hand text-lg sm:text-xl leading-snug text-[#0B3D2E]">
                     {prob.summary}
                   </p>
 
                   {/* Expandable Engineering Code Diff Drawer */}
                   {isExpanded && (
-                    <div
-                      style={{
-                        marginTop: "12px",
-                        paddingTop: "12px",
-                        borderTop: "2px dashed #0B3D2E44",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "block",
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: "10px",
-                          fontWeight: "700",
-                          color: "#0B3D2E",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        FIX DIFF & PERFORMANCE PROFILE:
+                    <div className="mt-3 pt-3 border-t-2 border-dashed border-[#0B3D2E]/25">
+                      <span className="block font-mono text-[10px] font-bold text-[#0B3D2E] mb-1.5">
+                        FIX DIFF &amp; PERFORMANCE PROFILE:
                       </span>
-                      <pre
-                        style={{
-                          margin: 0,
-                          padding: "10px 12px",
-                          background: "#06231A",
-                          color: "#A7F3D0",
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: "11px",
-                          lineHeight: "1.5",
-                          border: "1px solid #0B3D2E",
-                          overflowX: "auto",
-                          whiteSpace: "pre-wrap",
-                        }}
-                      >
-                        {prob.codeDiff}
-                      </pre>
-                      <p
-                        style={{
-                          margin: "8px 0 0",
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: "10px",
-                          color: "#0B3D2E",
-                          fontWeight: "700",
-                        }}
-                      >
-                        <span style={{ color: "#FF5C8A" }}>TAKEAWAY:</span> {prob.takeaway}
+                      <div className="border-2 border-[#0B3D2E] bg-[#07241A] p-2.5 sm:p-3 text-[#A7F3D0] font-mono text-[10px] sm:text-xs overflow-x-auto max-w-full">
+                        <pre className="m-0 leading-relaxed font-mono whitespace-pre">
+                          {prob.codeDiff}
+                        </pre>
+                      </div>
+                      <p className="mt-2.5 mb-0 font-mono text-[10px] sm:text-xs text-[#0B3D2E] font-bold leading-normal">
+                        <span className="text-[#FF5C8A]">TAKEAWAY:</span> {prob.takeaway}
                       </p>
                     </div>
                   )}
@@ -1174,93 +930,54 @@ export function BroccoliCaseStudy() {
           </div>
 
           {/* ── FOOTER: TILTED STICKY NOTE & METADATA TABLE ── */}
-          <div
-            style={{
-              marginTop: "44px",
-              paddingTop: "24px",
-              borderTop: "3px solid #0B3D2E",
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-              gap: "24px",
-            }}
-          >
+          <div className="mt-10 pt-6 border-t-3 border-[#0B3D2E] flex flex-col md:flex-row md:items-end justify-between gap-6">
             {/* Interactive Sticky note */}
             <div
-              style={{
-                background: "#FFF8D6",
-                border: "3px solid #FF5C8A",
-                padding: "14px 22px",
-                maxWidth: "460px",
-                transform: "rotate(-2deg)",
-                boxShadow: "6px 6px 0 #0B3D2E",
-                cursor: "pointer",
-                transition: "transform 0.15s ease",
-              }}
-              className="hover:rotate-0 hover:scale-[1.02]"
+              className="w-full max-w-[460px] p-4 sm:p-5 bg-[#FFF8D6] border-3 border-[#FF5C8A] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[6px_6px_0_#0B3D2E] -rotate-1 sm:-rotate-2 hover:rotate-0 transition-transform cursor-pointer"
               title="Click to view shipping notes"
             >
-              <p
-                style={{
-                  margin: 0,
-                  fontFamily: "'Caveat', cursive",
-                  fontSize: "22px",
-                  lineHeight: "1.3",
-                  color: "#0B3D2E",
-                }}
-              >
+              <p className="m-0 font-hand text-xl sm:text-2xl leading-snug text-[#0B3D2E]">
                 <strong>SHIPPED PRODUCT.</strong> Available worldwide on{" "}
                 <a
                   href="https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "#0B3D2E", textDecoration: "underline" }}
+                  className="text-[#0B3D2E] underline font-bold hover:text-[#FF5C8A]"
                 >
                   Google Play ↗
                 </a>
-                . Built with React Native & SQLite.
+                . Built with React Native &amp; SQLite.
               </p>
             </div>
 
             {/* Metadata Table */}
-            <table
-              style={{
-                borderCollapse: "collapse",
-                fontFamily: "'Space Mono', monospace",
-                fontSize: "12px",
-                border: "2px solid #0B3D2E",
-                background: "#FFF8D6",
-              }}
-            >
-              <tbody>
-                <tr>
-                  <td style={{ border: "2px solid #0B3D2E", padding: "6px 12px", fontWeight: "700" }}>PROJECT</td>
-                  <td style={{ border: "2px solid #0B3D2E", padding: "6px 12px", fontWeight: "700" }}>
-                    BROCCOLI
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "2px solid #0B3D2E", padding: "6px 12px", fontWeight: "700" }}>DRAWN BY</td>
-                  <td style={{ border: "2px solid #0B3D2E", padding: "6px 12px", fontWeight: "700" }}>
-                    BIDYA B. NANDA
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "2px solid #0B3D2E", padding: "6px 12px", fontWeight: "700" }}>STATUS</td>
-                  <td style={{ border: "2px solid #0B3D2E", padding: "6px 12px", fontWeight: "700" }}>
-                    <a
-                      href="https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "#0B3D2E", textDecoration: "underline" }}
-                    >
-                      LIVE ON PLAY STORE ↗
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="w-full md:w-auto overflow-x-auto">
+              <table className="w-full border-collapse font-mono text-xs border-2 border-[#0B3D2E] bg-[#FFF8D6]">
+                <tbody>
+                  <tr>
+                    <td className="border-2 border-[#0B3D2E] px-3 py-1.5 font-bold">PROJECT</td>
+                    <td className="border-2 border-[#0B3D2E] px-3 py-1.5 font-bold">BROCCOLI</td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-[#0B3D2E] px-3 py-1.5 font-bold">DRAWN BY</td>
+                    <td className="border-2 border-[#0B3D2E] px-3 py-1.5 font-bold">BIDYA B. NANDA</td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-[#0B3D2E] px-3 py-1.5 font-bold">STATUS</td>
+                    <td className="border-2 border-[#0B3D2E] px-3 py-1.5 font-bold">
+                      <a
+                        href="https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0B3D2E] underline"
+                      >
+                        LIVE ON PLAY STORE ↗
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
