@@ -11,11 +11,6 @@ interface PaperHeroProps {
   pdf?: string;
 }
 
-/**
- * Paper title block. The h1 and the subtitle use VariableProximity, which needs
- * a container to measure pointer distance against — hence the ref and the
- * client boundary. Everything below the hero stays a server component.
- */
 export function PaperHero({
   kicker,
   title,
@@ -27,22 +22,50 @@ export function PaperHero({
 
   return (
     <div ref={containerRef} className="relative">
-      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-cyan">
-        <span className="text-amber">▍</span> {kicker}
-      </p>
+      {/* Document Series Kicker */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] bg-[#0B3D2E] text-[#FFD93B] px-3 py-1 border-2 border-[#0B3D2E]">
+          <span>▍</span>
+          <span>{kicker}</span>
+        </div>
 
-      <h1 className="font-display text-[clamp(1.5rem,5vw,3.25rem)] font-extrabold leading-[1.1] tracking-[-0.06em] text-bone lg:whitespace-nowrap">
+        <div className="font-pixel text-[10px] text-[#0B3D2E]/70">
+          DOC. REF: WP-2026-07 // NBER RECOMPOSITION
+        </div>
+      </div>
+
+      {/* Main Title with Variable Proximity */}
+      <h1 className="font-mono text-[clamp(1.75rem,4.5vw,3.25rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#0B3D2E]">
         <VariableProximity
           label={title}
           fromFontVariationSettings="'wght' 800"
-          toFontVariationSettings="'wght' 300"
+          toFontVariationSettings="'wght' 400"
           containerRef={containerRef}
           radius={130}
           falloff="gaussian"
         />
       </h1>
 
-      <p className="mt-3 sm:mt-4 max-w-full sm:max-w-[46ch] font-body text-[clamp(0.9375rem,2vw,1.375rem)] leading-[1.4] text-ash">
+      {/* Wavy Underline SVG */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 600 12"
+        className="w-full max-w-[480px] my-4 block"
+      >
+        <path
+          className="dw"
+          pathLength="1"
+          d="M2 6 C40 0 80 12 120 6 C160 0 200 12 240 6 C280 0 320 12 360 6 C400 0 440 12 480 6 C520 0 560 12 598 6"
+          fill="none"
+          stroke="#FF5C8A"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      {/* Subtitle */}
+      <p className="mt-3 max-w-[54ch] font-mono text-[clamp(0.95rem,2vw,1.3rem)] leading-[1.5] text-[#0B3D2E]/90 font-medium">
         <VariableProximity
           label={subtitle}
           fromFontVariationSettings="'wght' 400"
@@ -53,23 +76,46 @@ export function PaperHero({
         />
       </p>
 
-      <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-x-3 sm:gap-x-5 gap-y-2 font-mono text-[10px] sm:text-[11px] text-ash">
+      {/* Author & Document Metadata */}
+      <div className="mt-6 flex flex-wrap items-center gap-3 font-mono text-xs text-[#0B3D2E]/80">
+        <div className="border-2 border-[#0B3D2E] bg-[#FFF8D6] px-3 py-1 font-bold">
+          AUTHOR: BIDYA BHUSHAN NANDA
+        </div>
         {meta.map((m, i) => (
-          <span key={m} className="flex items-center gap-5">
-            {i > 0 && <span className="text-ash/40">/</span>}
+          <span
+            key={m}
+            className="border-2 border-[#0B3D2E]/40 bg-[#FFFDF0] px-2.5 py-1"
+          >
             {m}
           </span>
         ))}
       </div>
 
+      {/* Download PDF button with neo-brutalist styling */}
       {pdf && (
-        <a
-          href={pdf}
-          download
-          className="cursor-target mt-5 sm:mt-6 inline-flex items-center gap-2.5 border border-amber px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.09em] text-amber transition-colors hover:bg-amber hover:text-void focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber"
-        >
-          ↓ Download PDF
-        </a>
+        <div className="mt-7">
+          <a
+            href={pdf}
+            download
+            className="btn inline-flex items-center gap-2.5 bg-[#FF5C8A] text-[#0B3D2E] font-pixel text-xs px-4 py-3 border-3 border-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] font-bold"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            DOWNLOAD FULL PREPRINT PDF (24 PAGES)
+          </a>
+        </div>
       )}
     </div>
   );
