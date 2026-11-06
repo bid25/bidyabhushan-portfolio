@@ -10,6 +10,7 @@ interface Milestone {
   year: string;
   role: string;
   desc: string;
+  tags?: string[];
 }
 
 const CANVAS_W = 2850;
@@ -24,6 +25,7 @@ const MILESTONES: Milestone[] = [
     year: "AUG 2025",
     role: "DAY ONE",
     desc: "B.Tech Electronics, Maharaja Agrasen Institute of Technology",
+    tags: ["Electronics", "Circuits", "Signals", "Hardware Foundations"],
   },
   {
     id: "aerostars",
@@ -33,6 +35,7 @@ const MILESTONES: Milestone[] = [
     year: "SEP 2025 – PRESENT",
     role: "CORE MEMBER",
     desc: "IoT, Embedded Systems, AI/ML Scope & Hardware Assembly",
+    tags: ["IoT Development", "Embedded Systems", "Hardware Assembly", "ML Training"],
   },
   {
     id: "intern",
@@ -42,6 +45,7 @@ const MILESTONES: Milestone[] = [
     year: "JUN 2026 – JUL 2026",
     role: "BACKEND INTERN",
     desc: "AB Connectz: Node.js, NestJS, PostgreSQL, Redis, REST APIs",
+    tags: ["Node.js", "NestJS", "PostgreSQL", "Redis", "REST APIs", "Prisma"],
   },
   {
     id: "fulltime",
@@ -51,6 +55,7 @@ const MILESTONES: Milestone[] = [
     year: "JUL 2026 – PRESENT",
     role: "FULL-STACK ENG",
     desc: "AB Connectz: Three.js, React Native, Supabase RLS, Gemini API",
+    tags: ["React Native", "Three.js", "Gemini API", "Supabase RLS", "Expo EAS"],
   },
   {
     id: "broccoli",
@@ -60,6 +65,7 @@ const MILESTONES: Milestone[] = [
     year: "AUG 2026 – PRESENT",
     role: "SOLO FLAGSHIP",
     desc: "Broccoli: Calorie & Body-Comp Platform on Play Store · Offline SQLite, NestJS, Skia, Gemini Vision",
+    tags: ["SQLite FTS5", "Offline-First", "Reanimated 3", "Skia Canvas", "NestJS"],
   },
   {
     id: "zucchini",
@@ -69,6 +75,7 @@ const MILESTONES: Milestone[] = [
     year: "OCT 2026 – PRESENT",
     role: "BARE-METAL BRINGUP",
     desc: "Zucchini Linux: Bare-Metal Bringup on Samsung Tab A · Reverse Eng sboot, Mainline Arch ARM64 + LineageOS",
+    tags: ["Samsung sboot", "EDL 9008", "ARM64 Kernel", "AVB 2.0 Bypass", "Device Tree"],
   },
   {
     id: "next",
@@ -78,11 +85,15 @@ const MILESTONES: Milestone[] = [
     year: "FUTURE",
     role: "UNWRITTEN",
     desc: "Next chapter: Systems architecture, frontier AI/ML & embedded engineering.",
+    tags: ["Systems Architecture", "Frontier AI/ML", "Kernel Bringup", "Open Systems"],
   },
 ];
 
 export function TrajectorySketchBox() {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // View mode: interactive CAD canvas vs mobile-friendly structured list
+  const [viewMode, setViewMode] = useState<"cad" | "list">("cad");
 
   // Pan & Zoom state
   const [scale, setScale] = useState(1);
@@ -91,29 +102,6 @@ export function TrajectorySketchBox() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [activeMilestone, setActiveMilestone] = useState<string>("mait");
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  // Fit whole schematic into view
-  const fitToView = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const W = container.clientWidth;
-    const H = container.clientHeight;
-    const padding = 20;
-
-    const scaleX = (W - padding * 2) / CANVAS_W;
-    const scaleY = (H - padding * 2) / CANVAS_H;
-    const targetScale = Math.min(scaleX, scaleY, 1);
-
-    const targetX = (W - CANVAS_W * targetScale) / 2;
-    const targetY = (H - CANVAS_H * targetScale) / 2;
-
-    setIsTransitioning(true);
-    setScale(targetScale);
-    setPan({ x: targetX, y: targetY });
-    setActiveMilestone("overview");
-
-    setTimeout(() => setIsTransitioning(false), 380);
-  }, []);
 
   // Jump to specific milestone node
   const jumpToMilestone = useCallback((m: Milestone) => {
@@ -134,6 +122,51 @@ export function TrajectorySketchBox() {
     setTimeout(() => setIsTransitioning(false), 380);
   }, []);
 
+  // Fit whole schematic into view (or current milestone on mobile)
+  const fitToView = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const W = container.clientWidth;
+    const H = container.clientHeight;
+
+    if (W < 640) {
+      // On small phone screens, don't shrink to 0.1x! Center the active milestone at legible scale
+      const current = MILESTONES.find((m) => m.id === activeMilestone) || MILESTONES[0];
+      jumpToMilestone(current);
+      return;
+    }
+
+    const padding = 20;
+    const scaleX = (W - padding * 2) / CANVAS_W;
+    const scaleY = (H - padding * 2) / CANVAS_H;
+    const targetScale = Math.min(scaleX, scaleY, 1);
+
+    const targetX = (W - CANVAS_W * targetScale) / 2;
+    const targetY = (H - CANVAS_H * targetScale) / 2;
+
+    setIsTransitioning(true);
+    setScale(targetScale);
+    setPan({ x: targetX, y: targetY });
+    setActiveMilestone("overview");
+
+    setTimeout(() => setIsTransitioning(false), 380);
+  }, [activeMilestone, jumpToMilestone]);
+
+  // Stepper helpers
+  const currentIndex = MILESTONES.findIndex((m) => m.id === activeMilestone);
+  const activeIdx = currentIndex >= 0 ? currentIndex : 0;
+  const currentMilestone = MILESTONES[activeIdx];
+
+  const handlePrevMilestone = useCallback(() => {
+    const prevIdx = (activeIdx - 1 + MILESTONES.length) % MILESTONES.length;
+    jumpToMilestone(MILESTONES[prevIdx]);
+  }, [activeIdx, jumpToMilestone]);
+
+  const handleNextMilestone = useCallback(() => {
+    const nextIdx = (activeIdx + 1) % MILESTONES.length;
+    jumpToMilestone(MILESTONES[nextIdx]);
+  }, [activeIdx, jumpToMilestone]);
+
   // Center on mount and on resize
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -149,9 +182,12 @@ export function TrajectorySketchBox() {
     const handleResize = () => {
       const container = containerRef.current;
       if (container && container.clientWidth < 640) {
-        // Keep active milestone centered on mobile resize
-        const current = MILESTONES.find((m) => m.id === activeMilestone) || MILESTONES[0];
-        jumpToMilestone(current);
+        // Keep active milestone centered on mobile resize without resetting
+        setActiveMilestone((curr) => {
+          const current = MILESTONES.find((m) => m.id === curr) || MILESTONES[0];
+          jumpToMilestone(current);
+          return curr;
+        });
       } else {
         fitToView();
       }
@@ -162,7 +198,8 @@ export function TrajectorySketchBox() {
       clearTimeout(timer);
       window.removeEventListener("resize", handleResize);
     };
-  }, [fitToView, jumpToMilestone, activeMilestone]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Zoom controls (+ / -)
   const handleZoom = (direction: "in" | "out") => {
@@ -227,9 +264,9 @@ export function TrajectorySketchBox() {
     <div className="w-full flex flex-col border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] select-none overflow-hidden font-mono">
       {/* ── SKETCH BOX CAD HEADER BAR ─────────────────────── */}
       <div className="flex flex-wrap items-center justify-between gap-2 bg-[#0B3D2E] text-[#FFD93B] px-3 sm:px-4 py-2 border-b-3 border-[#0B3D2E]">
-        <div className="flex items-center gap-2.5">
-          <span className="w-2.5 h-2.5 bg-[#2F9E5E] animate-pulse rounded-none" />
-          <span className="font-pixel text-[11px] sm:text-xs tracking-wider">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <span className="w-2.5 h-2.5 bg-[#2F9E5E] animate-pulse rounded-none shrink-0" />
+          <span className="font-pixel text-[10px] sm:text-xs tracking-wider">
             SKETCH_BOX // SIGNAL_TRAJECTORY.CAD
           </span>
           <span className="hidden md:inline font-mono text-[10px] bg-[#FFD93B]/20 text-[#FFD93B] px-2 py-0.5 border border-[#FFD93B]/40">
@@ -237,82 +274,113 @@ export function TrajectorySketchBox() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono">
-          <span className="hidden sm:inline text-[#FFF6C2]/60 text-[10px]">
-            {CANVAS_W}×{CANVAS_H}px · 7 NODES
-          </span>
-          <div className="flex items-center gap-1">
-            <span className="w-5 h-5 flex items-center justify-center border border-[#FFD93B]/40 bg-[#0B3D2E] text-[#FFD93B] text-[10px]">
-              _
+        {/* View Mode Toggle: CAD SCHEMATIC vs TIMELINE LIST */}
+        <div className="flex items-center gap-1.5 text-xs font-mono">
+          <button
+            type="button"
+            onClick={() => setViewMode("cad")}
+            className={`px-2.5 py-1 font-pixel text-[9px] sm:text-[10px] border transition-colors cursor-pointer ${
+              viewMode === "cad"
+                ? "bg-[#FFD93B] text-[#0B3D2E] border-[#FFD93B] font-bold"
+                : "bg-[#06231A] text-[#FFF6C2] border-[#0B3D2E] hover:bg-[#FFD93B] hover:text-[#0B3D2E]"
+            }`}
+          >
+            📐 CAD CANVAS
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode("list")}
+            className={`px-2.5 py-1 font-pixel text-[9px] sm:text-[10px] border transition-colors cursor-pointer ${
+              viewMode === "list"
+                ? "bg-[#FF5C8A] text-[#0B3D2E] border-[#FFD93B] font-bold"
+                : "bg-[#06231A] text-[#FFF6C2] border-[#0B3D2E] hover:bg-[#FFD93B] hover:text-[#0B3D2E]"
+            }`}
+          >
+            📜 TIMELINE LIST
+          </button>
+        </div>
+      </div>
+
+      {/* ── INTERACTION / TOOLBAR TAPE (CAD MODE) ─────────── */}
+      {viewMode === "cad" && (
+        <div className="flex flex-wrap items-center justify-between gap-2 bg-[#FFD93B] text-[#0B3D2E] px-3 sm:px-4 py-1.5 border-b-3 border-[#0B3D2E] text-xs">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="inline-flex items-center gap-1.5 font-pixel text-[9px] sm:text-[10px] bg-[#0B3D2E] text-[#FFF6C2] px-2 py-0.5 border border-[#0B3D2E]">
+              <span className="w-1.5 h-3 bg-[#FF5C8A] inline-block" />
+              DRAG TO PAN
             </span>
-            <span className="w-5 h-5 flex items-center justify-center border border-[#FFD93B]/40 bg-[#0B3D2E] text-[#FFD93B] text-[10px]">
-              □
-            </span>
-            <span className="w-5 h-5 flex items-center justify-center border border-[#FFD93B]/40 bg-[#FF5C8A] text-[#0B3D2E] text-[10px] font-bold">
-              ×
+            <span className="hidden sm:inline font-mono text-[10px] sm:text-[11px] text-[#0B3D2E]/80">
+              ZOOM: <strong>{Math.round(scale * 100)}%</strong>
             </span>
           </div>
-        </div>
-      </div>
 
-      {/* ── INTERACTION / TOOLBAR TAPE ───────────────────── */}
-      <div className="flex flex-wrap items-center justify-between gap-2 bg-[#FFD93B] text-[#0B3D2E] px-3 sm:px-4 py-1.5 border-b-3 border-[#0B3D2E] text-xs">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 font-pixel text-[10px] bg-[#0B3D2E] text-[#FFF6C2] px-2 py-0.5 border border-[#0B3D2E]">
-            <span className="w-1.5 h-3 bg-[#FF5C8A] inline-block" />
-            DRAG TO PAN
-          </span>
-          <span className="hidden sm:inline font-mono text-[11px] text-[#0B3D2E]/80">
-            ZOOM: <strong>{Math.round(scale * 100)}%</strong>
-          </span>
-        </div>
+          {/* Viewport Control Buttons + Mobile Stepper */}
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <button
+              type="button"
+              onClick={handlePrevMilestone}
+              className="pop px-2 py-0.5 bg-[#0B3D2E] hover:bg-[#FF5C8A] text-[#FFD93B] hover:text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[9px] cursor-pointer"
+              title="Previous Milestone"
+            >
+              ◀ PREV
+            </button>
+            <button
+              type="button"
+              onClick={handleNextMilestone}
+              className="pop px-2 py-0.5 bg-[#0B3D2E] hover:bg-[#FF5C8A] text-[#FFD93B] hover:text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[9px] cursor-pointer"
+              title="Next Milestone"
+            >
+              NEXT ▶
+            </button>
 
-        {/* Viewport Control Buttons */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => handleZoom("out")}
-            className="pop px-2 py-0.5 bg-[#FFF6C2] hover:bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer"
-            title="Zoom Out"
-          >
-            －
-          </button>
-          <button
-            type="button"
-            onClick={fitToView}
-            className="pop px-2.5 py-0.5 bg-[#FFF6C2] hover:bg-[#2F9E5E] hover:text-[#FFF6C2] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer"
-            title="Fit to View"
-          >
-            FIT
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const container = containerRef.current;
-              if (!container) return;
-              setIsTransitioning(true);
-              setScale(1);
-              setPan({
-                x: (container.clientWidth - CANVAS_W) / 2,
-                y: (container.clientHeight - CANVAS_H) / 2,
-              });
-              setTimeout(() => setIsTransitioning(false), 200);
-            }}
-            className="pop px-2.5 py-0.5 bg-[#FFF6C2] hover:bg-[#FFD93B] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer"
-            title="Reset 100%"
-          >
-            100%
-          </button>
-          <button
-            type="button"
-            onClick={() => handleZoom("in")}
-            className="pop px-2 py-0.5 bg-[#FFF6C2] hover:bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer"
-            title="Zoom In"
-          >
-            ＋
-          </button>
+            <span className="text-[#0B3D2E]/40 mx-0.5 hidden sm:inline">|</span>
+
+            <button
+              type="button"
+              onClick={() => handleZoom("out")}
+              className="pop px-2 py-0.5 bg-[#FFF6C2] hover:bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[9px] sm:text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer hidden sm:inline-block"
+              title="Zoom Out"
+            >
+              －
+            </button>
+            <button
+              type="button"
+              onClick={fitToView}
+              className="pop px-2.5 py-0.5 bg-[#FFF6C2] hover:bg-[#2F9E5E] hover:text-[#FFF6C2] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[9px] sm:text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer"
+              title="Fit to View"
+            >
+              FIT
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const container = containerRef.current;
+                if (!container) return;
+                setIsTransitioning(true);
+                const targetS = container.clientWidth < 640 ? 0.68 : 1;
+                setScale(targetS);
+                setPan({
+                  x: (container.clientWidth - CANVAS_W * targetS) / 2,
+                  y: (container.clientHeight - CANVAS_H * targetS) / 2,
+                });
+                setTimeout(() => setIsTransitioning(false), 200);
+              }}
+              className="pop px-2.5 py-0.5 bg-[#FFF6C2] hover:bg-[#FFD93B] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[9px] sm:text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer hidden sm:inline-block"
+              title="Reset 100%"
+            >
+              100%
+            </button>
+            <button
+              type="button"
+              onClick={() => handleZoom("in")}
+              className="pop px-2 py-0.5 bg-[#FFF6C2] hover:bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] font-pixel text-[9px] sm:text-[10px] shadow-[2px_2px_0_#0B3D2E] cursor-pointer hidden sm:inline-block"
+              title="Zoom In"
+            >
+              ＋
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── INTERACTIVE CANVAS VIEWPORT ──────────────────── */}
       <div
@@ -324,10 +392,11 @@ export function TrajectorySketchBox() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`relative w-full h-[400px] sm:h-[620px] bg-[#FFF6C2] overflow-hidden ${
+        className={`relative w-full h-[380px] sm:h-[620px] bg-[#FFF6C2] overflow-hidden touch-pan-y ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{
+          display: viewMode === "cad" ? "block" : "none",
           backgroundImage: `
             radial-gradient(#0B3D2E 1.2px, transparent 1.2px),
             linear-gradient(to right, rgba(11, 61, 46, 0.05) 1px, transparent 1px),
@@ -1948,65 +2017,159 @@ export function TrajectorySketchBox() {
         </div>
       </div>
 
-      {/* ── CAD FOOTER RAIL & QUICK JUMP DOCK ────────────── */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#0B3D2E] text-[#FFF6C2] px-3 sm:px-4 py-3 border-t-3 border-[#0B3D2E]">
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-full pb-1 sm:pb-0 flex-nowrap sm:flex-wrap w-full sm:w-auto">
-          <span className="font-pixel text-[10px] text-[#FFD93B] mr-1 hidden lg:inline">
-            MILESTONES:
-          </span>
-          {MILESTONES.map((m) => {
-            const isActive = activeMilestone === m.id;
-            return (
+      {/* ── CAD FOOTER RAIL & QUICK JUMP DOCK (CAD MODE) ──── */}
+      {viewMode === "cad" && (
+        <>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3 bg-[#0B3D2E] text-[#FFF6C2] px-3 sm:px-4 py-2.5 sm:py-3 border-t-3 border-[#0B3D2E]">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-full pb-1 sm:pb-0 flex-nowrap sm:flex-wrap w-full sm:w-auto">
+              <span className="font-pixel text-[10px] text-[#FFD93B] mr-1 hidden lg:inline">
+                MILESTONES:
+              </span>
+              {MILESTONES.map((m) => {
+                const isActive = activeMilestone === m.id;
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => jumpToMilestone(m)}
+                    className={`pop px-2 sm:px-2.5 py-1 font-pixel text-[9px] sm:text-[10px] border-2 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+                      isActive
+                        ? "bg-[#FF5C8A] text-[#0B3D2E] border-[#FFD93B] shadow-[2px_2px_0_#FFD93B] font-bold"
+                        : "bg-[#FFF6C2] text-[#0B3D2E] border-[#0B3D2E] hover:bg-[#FFD93B] shadow-[2px_2px_0_#0B3D2E]"
+                    }`}
+                  >
+                    {m.label}
+                  </button>
+                );
+              })}
               <button
-                key={m.id}
                 type="button"
-                onClick={() => jumpToMilestone(m)}
-                className={`pop px-2.5 py-1 font-pixel text-[9px] sm:text-[10px] border-2 transition-all cursor-pointer ${
-                  isActive
-                    ? "bg-[#FF5C8A] text-[#0B3D2E] border-[#FFD93B] shadow-[2px_2px_0_#FFD93B] font-bold"
-                    : "bg-[#FFF6C2] text-[#0B3D2E] border-[#0B3D2E] hover:bg-[#FFD93B] shadow-[2px_2px_0_#0B3D2E]"
+                onClick={fitToView}
+                className={`pop px-2 sm:px-2.5 py-1 font-pixel text-[9px] sm:text-[10px] border-2 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+                  activeMilestone === "overview"
+                    ? "bg-[#2F9E5E] text-[#FFF6C2] border-[#FFF6C2] shadow-[2px_2px_0_#FFF6C2] font-bold"
+                    : "bg-[#0B3D2E] text-[#FFD93B] border-[#FFD93B] hover:bg-[#FFD93B] hover:text-[#0B3D2E] shadow-[2px_2px_0_#FFD93B]"
                 }`}
               >
-                {m.label}
+                👁 OVERVIEW
               </button>
+            </div>
+          </div>
+
+          {/* ── ACTIVE MILESTONE TELEMETRY DRAWER ── */}
+          <div
+            data-testid="telemetry-drawer"
+            className="bg-[#06231A] text-[#FFF6C2] border-t-2 border-[#0B3D2E] p-3 sm:p-4 font-mono"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#0B3D2E]/60">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-pixel text-[9px] sm:text-[10px] bg-[#FF5C8A] text-[#0B3D2E] px-2 py-0.5 font-bold">
+                  NODE 0{activeIdx + 1} / 07
+                </span>
+                <span className="font-mono text-xs sm:text-sm font-bold text-[#FFD93B]">
+                  {currentMilestone.label}
+                </span>
+                <span className="font-mono text-[10px] sm:text-xs text-[#FFF6C2]/70">
+                  ({currentMilestone.year})
+                </span>
+              </div>
+
+              <span className="font-mono text-[#A7F3D0] text-[10px] uppercase tracking-wider border border-[#A7F3D0]/40 px-1.5 py-0.5 font-bold">
+                {currentMilestone.role}
+              </span>
+            </div>
+
+            <p className="m-0 font-mono text-xs sm:text-[13px] text-[#FFFDF0] leading-relaxed mb-2.5">
+              {currentMilestone.desc}
+            </p>
+
+            {currentMilestone.tags && (
+              <div className="flex flex-wrap gap-1.5">
+                {currentMilestone.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-mono text-[10px] bg-[#03140F] border border-[#0B3D2E] text-[#A7F3D0] px-1.5 py-0.5"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
+      {/* ── TIMELINE LIST VIEW (MOBILE-OPTIMIZED ROADMAP) ── */}
+      {viewMode === "list" && (
+        <div className="bg-[#FFF6C2] p-3.5 sm:p-7 space-y-3.5 sm:space-y-4 max-h-[560px] sm:max-h-[640px] overflow-y-auto">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-1 border-b-2 border-dashed border-[#0B3D2E]/30">
+            <span className="font-pixel text-[9px] sm:text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-2 py-1 font-bold">
+              CHRONOLOGICAL SIGNAL LOG
+            </span>
+            <span className="font-mono text-[10px] sm:text-[11px] text-[#0B3D2E] font-bold">
+              7 ARCHITECTURAL NODES
+            </span>
+          </div>
+
+          {MILESTONES.map((m, idx) => {
+            const isActive = activeMilestone === m.id;
+            return (
+              <div
+                key={m.id}
+                className={`p-3.5 sm:p-5 border-3 transition-all ${
+                  isActive
+                    ? "border-[#FF5C8A] bg-[#FFFDF0] shadow-[3px_3px_0_#FF5C8A] sm:shadow-[4px_4px_0_#FF5C8A]"
+                    : "border-[#0B3D2E] bg-[#FFF8D6] shadow-[2px_2px_0_#0B3D2E] sm:shadow-[3px_3px_0_#0B3D2E] hover:bg-[#FFFDF0]"
+                }`}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-pixel text-[9px] sm:text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-2 py-0.5 font-bold">
+                      0{idx + 1}
+                    </span>
+                    <span className="font-pixel text-xs sm:text-sm text-[#0B3D2E] font-bold">
+                      {m.label.replace(/^0\d · /, "")}
+                    </span>
+                    <span className="font-mono text-[10px] sm:text-xs bg-[#FF5C8A] text-[#0B3D2E] px-1.5 py-0.5 font-bold">
+                      {m.year}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setViewMode("cad");
+                      jumpToMilestone(m);
+                    }}
+                    className="font-pixel text-[9px] bg-[#0B3D2E] text-[#FFD93B] hover:bg-[#FFD93B] hover:text-[#0B3D2E] px-2.5 py-1 border border-[#0B3D2E] cursor-pointer shrink-0"
+                  >
+                    INSPECT CAD ↗
+                  </button>
+                </div>
+
+                <div className="font-mono text-[11px] sm:text-xs text-[#0B3D2E] font-bold mb-1.5">
+                  ROLE: <span className="text-[#FF5C8A]">{m.role}</span>
+                </div>
+                <p className="m-0 font-mono text-xs sm:text-[13px] text-[#0B3D2E] leading-relaxed mb-2.5">
+                  {m.desc}
+                </p>
+
+                {m.tags && (
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#0B3D2E]/20">
+                    {m.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="font-mono text-[10px] bg-[#FFF0B3] border border-[#0B3D2E]/40 text-[#0B3D2E] px-1.5 py-0.5 font-bold"
+                      >
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             );
           })}
-          <button
-            type="button"
-            onClick={fitToView}
-            className={`pop px-2.5 py-1 font-pixel text-[9px] sm:text-[10px] border-2 transition-all cursor-pointer ${
-              activeMilestone === "overview"
-                ? "bg-[#2F9E5E] text-[#FFF6C2] border-[#FFF6C2] shadow-[2px_2px_0_#FFF6C2] font-bold"
-                : "bg-[#0B3D2E] text-[#FFD93B] border-[#FFD93B] hover:bg-[#FFD93B] hover:text-[#0B3D2E] shadow-[2px_2px_0_#FFD93B]"
-            }`}
-          >
-            👁 OVERVIEW
-          </button>
         </div>
-      </div>
-
-      {/* Dynamic Caption Bar */}
-      <div className="bg-[#0B3D2E] border-t border-[#FFD93B]/20 px-4 py-1.5 text-[11px] font-mono text-[#FFD93B]">
-        {activeMilestone === "overview" && (
-          <span>CLICK ANY MILESTONE OR DRAG CANVAS TO EXPLORE</span>
-        )}
-        {MILESTONES.map((m) => {
-          if (activeMilestone === m.id) {
-            return (
-              <span key={m.id}>
-                <strong>{m.desc.split(" · ")[0]}</strong>
-                {m.desc.includes(" · ") && (
-                  <span className="text-[#FFF6C2]/80">
-                    {" "}
-                    · {m.desc.split(" · ")[1]}
-                  </span>
-                )}
-              </span>
-            );
-          }
-          return null;
-        })}
-      </div>
+      )}
     </div>
   );
 }

@@ -135,16 +135,16 @@ export default function Home() {
         <FeaturedProjectsInteractive />
 
         {/* ── TRAJECTORY SECTION ──────────────────────────── */}
-        <section className="pt-10 pb-16">
-          <div className="flex flex-wrap items-center gap-4 sm:gap-5 mb-8">
-            <h2 className="m-0 font-pixel text-xl sm:text-2xl bg-[#0B3D2E] text-[#FFD93B] px-4 py-3 shadow-[6px_6px_0_#FF5C8A]">
+        <section className="pt-8 sm:pt-10 pb-12 sm:pb-16">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-5 mb-6 sm:mb-8">
+            <h2 className="m-0 font-pixel text-lg sm:text-2xl bg-[#0B3D2E] text-[#FFD93B] px-3.5 sm:px-4 py-2.5 sm:py-3 shadow-[4px_4px_0_#FF5C8A] sm:shadow-[6px_6px_0_#FF5C8A]">
               TRAJECTORY
             </h2>
-            <span className="font-pixel text-[10px] border-3 border-[#0B3D2E] bg-[#FFF6C2] px-2.5 py-2 text-[#0B3D2E]">
+            <span className="font-pixel text-[9px] sm:text-[10px] border-2 sm:border-3 border-[#0B3D2E] bg-[#FFF6C2] px-2 sm:px-2.5 py-1.5 sm:py-2 text-[#0B3D2E]">
               SIGNAL PATH
             </span>
-            <span className="font-hand text-2xl sm:text-3xl -rotate-2 text-[#0B3D2E]">
-              interactive sketch box · drag & zoom to explore →
+            <span className="font-hand text-xl sm:text-3xl -rotate-2 text-[#0B3D2E]">
+              interactive sketch box · drag &amp; zoom to explore →
             </span>
           </div>
 
