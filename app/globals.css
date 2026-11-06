@@ -84,7 +84,7 @@ a {
   color: #FFD93B !important;
   border: 3px solid #0B3D2E !important;
   box-shadow: 4px 4px 0 #FF5C8A !important;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease, color 0.1s ease !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
 }
 .btn-dark:hover {
   background-color: #FFD93B !important;
