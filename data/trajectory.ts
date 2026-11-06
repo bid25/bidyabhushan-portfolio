@@ -62,14 +62,14 @@ export const careerGraph: CareerGraph = {
       kind: "milestone",
       status: "active",
       label: "Aerostars",
-      org: "UAV Society, MAIT",
+      org: "Technical Society, MAIT",
       detail: "Member → Core Technical & Creative Team (Mar 2026)",
       start: "2025-09",
       end: null,
       summary:
         "Joined as a member in September 2025; moved into the core technical and creative team in March 2026. Ongoing.",
       branches: leaves(
-        ["AI/ML scope", "ML training", "IoT development", "Drone development", "Embedded engineering", "Hardware assembly"],
+        ["AI/ML scope", "ML training", "IoT development", "Embedded systems", "Embedded engineering", "Hardware assembly"],
         "aerostars"
       ),
     },
@@ -100,6 +100,58 @@ export const careerGraph: CareerGraph = {
         ["Gemini API integration", "Structured output prompting", "Supabase RLS", "Expo / EAS Build", "Three.js"],
         "abc-ft"
       ),
+    },
+    {
+      id: "broccoli",
+      kind: "milestone",
+      status: "active",
+      label: "Broccoli — Solo Flagship",
+      org: "Google Play Store / Solo Build",
+      detail: "Calorie & Body-Comp Platform (Published)",
+      start: "2026-08",
+      end: null,
+      summary:
+        "Solo end-to-end architecture, development, and Play Store release of a precision calorie & body composition platform. Features offline-first SQLite sync with Drizzle ORM, NestJS + PostgreSQL backend, Gemini AI food estimation, Skia charts, and an adaptive Bayesian TDEE engine.",
+      branches: leaves(
+        [
+          "React Native (Expo SDK 57)",
+          "Offline-First SQLite + Drizzle",
+          "NestJS + PostgreSQL + Redis",
+          "Gemini AI Food Vision",
+          "Shopify React Native Skia",
+          "Adaptive TDEE Bayesian Engine",
+          "Play Store Release & EAS CI/CD",
+          "Dockerized Microservices",
+        ],
+        "broccoli"
+      ),
+      href: "/projects/broccoli",
+    },
+    {
+      id: "zucchini-linux",
+      kind: "milestone",
+      status: "complete",
+      label: "Zucchini Linux",
+      org: "Samsung Hardware Platform",
+      detail: "Bare-Metal Mainline Bringup & Dual-Boot",
+      start: "2026-10",
+      end: null,
+      summary:
+        "Bare-metal mainline Linux bringup and dual-boot platform on the Samsung Galaxy Tab A (SM-T295, Qualcomm SDM429). Disassembled and reverse-engineered Samsung sboot bootloader, decrypted firmware partitions, bypassed Knox security, and built an lk2nd dual-boot system running native Arch Linux ARM64 (Linux 7.1) alongside LineageOS.",
+      branches: leaves(
+        [
+          "Bootloader Reverse Eng. (sboot)",
+          "Mainline Linux Kernel (ARM64)",
+          "lk2nd Dual-Boot Bootloader",
+          "Device Tree Architecture (DTB)",
+          "FocalTech Touch & Display Drivers",
+          "Qualcomm ADSP Firmware Decryption",
+          "Arch Linux ARM64 RootFS",
+          "Bare-Metal Silicon Debugging",
+        ],
+        "zucchini"
+      ),
+      href: "/projects/zucchini-linux",
     },
     {
       id: "next",
