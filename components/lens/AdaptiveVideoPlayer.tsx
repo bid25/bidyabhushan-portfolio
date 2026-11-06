@@ -190,7 +190,7 @@ export function AdaptiveVideoPlayer() {
         </div>
 
         {/* Dynamic Centered Adaptive Video Chamber */}
-        <div className="relative w-full my-4 flex items-center justify-center min-h-[340px] sm:min-h-[460px] max-h-[72vh] overflow-hidden">
+        <div className="relative w-full my-3 sm:my-4 flex items-center justify-center min-h-[260px] sm:min-h-[460px] max-h-[72vh] overflow-hidden">
           {/* Subtle Ambient Studio Background Grid */}
           <div
             className="absolute inset-0 opacity-10 pointer-events-none"
@@ -203,12 +203,12 @@ export function AdaptiveVideoPlayer() {
 
           {/* Adaptive Auto-Rescaling Video Container */}
           <div
-            className={`relative mx-auto border-4 border-[#EDE6D8] bg-[#000] shadow-[8px_8px_0_#070B0C] overflow-hidden transition-all duration-500 ease-out flex items-center justify-center ${
+            className={`relative mx-auto border-3 sm:border-4 border-[#EDE6D8] bg-[#000] shadow-[5px_5px_0_#070B0C] sm:shadow-[8px_8px_0_#070B0C] overflow-hidden transition-all duration-500 ease-out flex items-center justify-center ${
               activeVideo.isVertical
-                ? "w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] max-h-[68vh]"
+                ? "w-full max-w-[280px] sm:max-w-[380px] aspect-[9/16] max-h-[56vh] sm:max-h-[68vh]"
                 : activeVideo.aspectLabel === "4:3"
-                ? "w-full max-w-[720px] aspect-[4/3] max-h-[66vh]"
-                : "w-full max-w-4xl aspect-video max-h-[64vh]"
+                ? "w-full max-w-[560px] sm:max-w-[720px] aspect-[4/3] max-h-[54vh] sm:max-h-[66vh]"
+                : "w-full max-w-4xl aspect-video max-h-[48vh] sm:max-h-[64vh]"
             }`}
           >
             <video
@@ -287,9 +287,9 @@ export function AdaptiveVideoPlayer() {
         </div>
 
         {/* Interactive Bottom Control Toolbar */}
-        <div className="mt-4 pt-3 border-t-3 border-[#EDE6D8]/20 flex flex-wrap items-center justify-between gap-3 select-none">
+        <div className="mt-3 sm:mt-4 pt-3 border-t-3 border-[#EDE6D8]/20 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 select-none">
           {/* Left Controls: Play / Pause & Replay */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={togglePlay}
@@ -356,12 +356,12 @@ export function AdaptiveVideoPlayer() {
           </div>
 
           {/* Right Controls: Instagram Post Link & Fullscreen */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between sm:justify-end gap-2">
             <a
               href={activeVideo.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bt px-3 py-1.5 bg-[#FF5C8A] hover:bg-[#0F1517] text-[#0F1517] hover:!text-[#EDE6D8] font-mono font-bold text-xs tracking-wider border-2 border-[#0F1517] shadow-[3px_3px_0_#070B0C] flex items-center gap-1.5 cursor-pointer transition-all"
+              className="bt flex-1 sm:flex-none justify-center px-3 py-1.5 bg-[#FF5C8A] hover:bg-[#0F1517] text-[#0F1517] hover:!text-[#EDE6D8] font-mono font-bold text-xs tracking-wider border-2 border-[#0F1517] shadow-[3px_3px_0_#070B0C] flex items-center gap-1.5 cursor-pointer transition-all"
             >
               <span>WATCH ON @unfocused.nerd</span>
               <ExternalLink size={13} />
@@ -370,7 +370,7 @@ export function AdaptiveVideoPlayer() {
             <button
               type="button"
               onClick={toggleFullscreen}
-              className="bt px-2.5 py-1.5 bg-[#0F1517] hover:bg-[#1F4A4F] !text-[#EDE6D8] font-mono font-bold text-xs border-2 border-[#EDE6D8] shadow-[3px_3px_0_#070B0C] flex items-center gap-1 cursor-pointer"
+              className="bt px-2.5 py-1.5 bg-[#0F1517] hover:bg-[#1F4A4F] !text-[#EDE6D8] font-mono font-bold text-xs border-2 border-[#EDE6D8] shadow-[3px_3px_0_#070B0C] flex items-center gap-1 cursor-pointer shrink-0"
               style={{ color: "#EDE6D8" }}
               title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
             >
@@ -381,8 +381,8 @@ export function AdaptiveVideoPlayer() {
       </div>
 
       {/* Filmstrip Carousel: Select between all 8 Videography Works */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between gap-3 mb-3 select-none">
+      <div className="mt-6 sm:mt-8">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3 select-none">
           <div className="flex items-center gap-2">
             <Film size={16} className="text-[#0F1517]" />
             <span className="font-pixel text-xs sm:text-sm text-[#0F1517] uppercase tracking-wide">
@@ -396,112 +396,115 @@ export function AdaptiveVideoPlayer() {
 
         {/* Sprocket-punched Filmstrip Horizontal Tray */}
         <div className="relative border-3 sm:border-4 border-[#0F1517] bg-[#070B0C] p-2.5 sm:p-4 shadow-[4px_4px_0_#C99A55] sm:shadow-[8px_8px_0_#C99A55] overflow-x-auto">
-          {/* Upper Sprocket Holes */}
-          <div
-            className="h-2.5 mb-3 opacity-60"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, #EDE6D8 0 14px, transparent 14px 28px)",
-              backgroundSize: "28px 10px",
-            }}
-          />
+          {/* Track wrapper to guarantee sprocket continuity over all cards */}
+          <div className="w-max min-w-full flex flex-col">
+            {/* Upper Sprocket Holes */}
+            <div
+              className="h-2.5 mb-3 opacity-60 w-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, #EDE6D8 0 14px, transparent 14px 28px)",
+                backgroundSize: "28px 10px",
+              }}
+            />
 
-          {/* Video Cards Grid / Carousel */}
-          <div className="flex items-stretch gap-4 pb-1">
-            {LENS_VIDEOS.map((vid, idx) => {
-              const isSelected = vid.id === activeVideo.id;
-              return (
-                <div
-                  key={vid.id}
-                  onClick={() => {
-                    setActiveVideo(vid);
-                    setHasUserInteracted(true);
-                  }}
-                  className={`group relative flex-shrink-0 w-48 sm:w-56 border-3 cursor-pointer p-2.5 flex flex-col justify-between transition-all select-none ${
-                    isSelected
-                      ? "border-[#FF5C8A] bg-[#0F1517] shadow-[5px_5px_0_#FF5C8A] -translate-y-1"
-                      : "border-[#EDE6D8]/60 bg-[#0A1012] hover:border-[#C99A55] hover:bg-[#0F1517]"
-                  }`}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
+            {/* Video Cards Grid / Carousel */}
+            <div className="flex items-stretch gap-3 sm:gap-4 pb-1">
+              {LENS_VIDEOS.map((vid, idx) => {
+                const isSelected = vid.id === activeVideo.id;
+                return (
+                  <div
+                    key={vid.id}
+                    onClick={() => {
                       setActiveVideo(vid);
                       setHasUserInteracted(true);
-                    }
-                  }}
-                >
-                  {/* Poster Box */}
-                  <div className="relative w-full aspect-[4/3] border-2 border-[#EDE6D8]/40 overflow-hidden bg-[#000]">
-                    <Image
-                      src={vid.poster}
-                      alt={vid.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="220px"
-                    />
+                    }}
+                    className={`group relative flex-shrink-0 w-44 sm:w-56 border-3 cursor-pointer p-2 sm:p-2.5 flex flex-col justify-between transition-all select-none ${
+                      isSelected
+                        ? "border-[#FF5C8A] bg-[#0F1517] shadow-[4px_4px_0_#FF5C8A] sm:shadow-[5px_5px_0_#FF5C8A] -translate-y-1"
+                        : "border-[#EDE6D8]/60 bg-[#0A1012] hover:border-[#C99A55] hover:bg-[#0F1517]"
+                    }`}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveVideo(vid);
+                        setHasUserInteracted(true);
+                      }
+                    }}
+                  >
+                    {/* Poster Box */}
+                    <div className="relative w-full aspect-[4/3] border-2 border-[#EDE6D8]/40 overflow-hidden bg-[#000]">
+                      <Image
+                        src={vid.poster}
+                        alt={vid.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="220px"
+                      />
 
-                    {/* Format Pill Overlay */}
-                    <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-[#0F1517]/90 text-[#C99A55] font-mono text-[9px] font-bold border border-[#C99A55]/40 uppercase">
-                      {vid.aspectLabel} {vid.isVertical ? "REEL" : "CINE"}
-                    </div>
+                      {/* Format Pill Overlay */}
+                      <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-[#0F1517]/90 text-[#C99A55] font-mono text-[9px] font-bold border border-[#C99A55]/40 uppercase">
+                        {vid.aspectLabel} {vid.isVertical ? "REEL" : "CINE"}
+                      </div>
 
-                    {/* Audio Status Pill */}
-                    <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-[#0F1517]/90 font-mono text-[9px] border border-[#EDE6D8]/30">
-                      {vid.hasAudio ? (
-                        <span className="text-[#EDE6D8]">AUDIO</span>
-                      ) : (
-                        <span className="text-[#FF5C8A]">SILENT</span>
+                      {/* Audio Status Pill */}
+                      <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-[#0F1517]/90 font-mono text-[9px] border border-[#EDE6D8]/30">
+                        {vid.hasAudio ? (
+                          <span className="text-[#EDE6D8]">AUDIO</span>
+                        ) : (
+                          <span className="text-[#FF5C8A]">SILENT</span>
+                        )}
+                      </div>
+
+                      {/* Duration Watermark */}
+                      <div className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 bg-[#0F1517]/90 !text-[#EDE6D8] font-mono text-[9px] font-bold tabular-nums">
+                        {formatTime(vid.duration)}
+                      </div>
+
+                      {/* Currently Playing Indicator */}
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-[#FF5C8A]/20 flex items-center justify-center">
+                          <span className="font-pixel text-[10px] bg-[#FF5C8A] !text-[#0F1517] px-2 py-1 font-bold shadow-[2px_2px_0_#070B0C]">
+                            PLAYING
+                          </span>
+                        </div>
                       )}
                     </div>
 
-                    {/* Duration Watermark */}
-                    <div className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 bg-[#0F1517]/90 !text-[#EDE6D8] font-mono text-[9px] font-bold tabular-nums">
-                      {formatTime(vid.duration)}
-                    </div>
-
-                    {/* Currently Playing Indicator */}
-                    {isSelected && (
-                      <div className="absolute inset-0 bg-[#FF5C8A]/20 flex items-center justify-center">
-                        <span className="font-pixel text-[10px] bg-[#FF5C8A] !text-[#0F1517] px-2 py-1 font-bold shadow-[2px_2px_0_#070B0C]">
-                          PLAYING
-                        </span>
+                    {/* Card Meta Content */}
+                    <div className="mt-2 sm:mt-2.5">
+                      <div className="flex items-center justify-between text-[10px] font-mono text-[#C99A55] font-bold mb-1">
+                        <span>CUT #{String(idx + 1).padStart(2, "0")}</span>
+                        {vid.isHero && <span className="text-[#FF5C8A]">HERO</span>}
                       </div>
-                    )}
+                      <div
+                        className={`font-pixel text-[11px] sm:text-xs uppercase tracking-tight line-clamp-2 min-h-[2rem] leading-snug ${
+                          isSelected
+                            ? "!text-[#FF5C8A]"
+                            : "!text-[#EDE6D8] group-hover:text-[#C99A55]"
+                        }`}
+                        style={{ color: isSelected ? "#FF5C8A" : "#EDE6D8" }}
+                      >
+                        {vid.title}
+                      </div>
+                    </div>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* Card Meta Content */}
-                  <div className="mt-2.5">
-                    <div className="flex items-center justify-between text-[10px] font-mono text-[#C99A55] font-bold mb-1">
-                      <span>CUT #{String(idx + 1).padStart(2, "0")}</span>
-                      {vid.isHero && <span className="text-[#FF5C8A]">HERO</span>}
-                    </div>
-                    <div
-                      className={`font-pixel text-[11px] sm:text-xs uppercase tracking-tight line-clamp-2 min-h-[2rem] leading-snug ${
-                        isSelected
-                          ? "!text-[#FF5C8A]"
-                          : "!text-[#EDE6D8] group-hover:text-[#C99A55]"
-                      }`}
-                      style={{ color: isSelected ? "#FF5C8A" : "#EDE6D8" }}
-                    >
-                      {vid.title}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {/* Lower Sprocket Holes */}
+            <div
+              className="h-2.5 mt-3 opacity-60 w-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, #EDE6D8 0 14px, transparent 14px 28px)",
+                backgroundSize: "28px 10px",
+              }}
+            />
           </div>
-
-          {/* Lower Sprocket Holes */}
-          <div
-            className="h-2.5 mt-3 opacity-60"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, #EDE6D8 0 14px, transparent 14px 28px)",
-              backgroundSize: "28px 10px",
-            }}
-          />
         </div>
       </div>
     </div>

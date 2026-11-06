@@ -36,8 +36,7 @@ export function Nav() {
             className="group inline-flex items-center text-decoration-none"
           >
             <span
-              className="glitch-mark font-pixel text-base bg-[#0B3D2E] !text-[#FFD93B] px-3.5 py-1.5 border-3 border-[#0B3D2E] shadow-[3px_3px_0_#0A0A0A] group-hover:scale-105 group-hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all inline-flex items-center justify-center min-h-[44px] h-[44px] select-none cursor-pointer"
-              style={{ color: "#FFD93B", backgroundColor: "#0B3D2E" }}
+              className="glitch-mark font-pixel text-base bg-[#0B3D2E] !text-[#FFD93B] px-3.5 py-1.5 border-3 border-[#FFD93B] shadow-[3px_3px_0_#0A0A0A] group-hover:scale-105 group-hover:-translate-y-0.5 group-hover:bg-[#FFD93B] group-hover:border-[#0B3D2E] group-hover:!text-[#0B3D2E] active:translate-x-0.5 active:translate-y-0.5 transition-all inline-flex items-center justify-center min-h-[44px] h-[44px] select-none cursor-pointer"
             >
               <span className="glitch-text" data-text="DEV">
                 DEV
