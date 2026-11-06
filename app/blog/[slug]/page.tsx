@@ -175,7 +175,8 @@ export default async function BlogPostPage({
             </div>
             <Link
               href="/blog"
-              className="btn font-pixel text-xs bg-[#0B3D2E] text-[#FFD93B] px-4 py-2.5 border-3 border-[#0B3D2E] shadow-[4px_4px_0_#FF5C8A]"
+              style={{ backgroundColor: "#0B3D2E", color: "#FFD93B" }}
+              className="btn inline-flex items-center justify-center font-pixel text-xs px-5 py-3 border-3 border-[#0B3D2E] shadow-[4px_4px_0_#FF5C8A] hover:bg-[#FFD93B] hover:!text-[#0B3D2E] transition-all"
             >
               ← BACK TO BLOG DOSSIERS
             </Link>
