@@ -62,6 +62,7 @@ export default function BlogPage() {
     <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 box-border pb-20">
       {/* Header */}
       <div className="relative pt-16 pb-6">
+        {/* Decorative Zigzag */}
         <svg
           aria-hidden="true"
           width="120"
@@ -76,10 +77,6 @@ export default function BlogPage() {
             strokeWidth="6"
           />
         </svg>
-
-        <span className="font-hand text-2xl sm:text-3xl -rotate-2 text-[#0B3D2E] block mb-3">
-          write it down, ship it later
-        </span>
 
         <h1 className="gl m-0 font-pixel text-2xl sm:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
           RESEARCH &amp; BLOG DOSSIERS
