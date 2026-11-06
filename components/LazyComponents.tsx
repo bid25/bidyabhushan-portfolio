@@ -14,7 +14,7 @@ export const LazyDotGrid = dynamic(() => import("./DotGrid").then((mod) => mod.d
 // where this column sits above all the copy. See PERF-PLAN.md §1.3b.
 export const LazyProfileCard = dynamic(
   () => import("./ProfileCard").then((mod) => mod.default || mod),
-  { ssr: false, loading: () => <div className="h-full w-full bg-void/50" /> }
+  { loading: () => <div className="h-full w-full bg-[#07241A]" /> }
 );
 export const LazyRadar = dynamic(() => import("./Radar").then((mod) => mod.default || mod), { ssr: false });
 export const LazyInfiniteMenu = dynamic(() => import("./InfiniteMenu").then((mod) => mod.default || mod), { ssr: false });

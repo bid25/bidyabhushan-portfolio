@@ -1,39 +1,41 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Instrument_Sans } from "next/font/google";
+import { Press_Start_2P, Space_Mono, Caveat } from "next/font/google";
 import { Nav } from "@/components/Nav";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
-import { LazyLiquidEther } from "@/components/LazyComponents";
+import { Footer } from "@/components/Footer";
 import { PointerCursor } from "@/components/PointerCursor";
-import { HeavyComponentWrapper } from "@/components/HeavyComponentWrapper";
-import { AtmosphereFallback } from "@/components/AtmosphereFallback";
-import { VercelIntegrations } from "@/components/VercelIntegrations";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-display",
+const pressStart = Press_Start_2P({
+  weight: "400",
+  variable: "--font-pixel",
   subsets: ["latin"],
   display: "swap",
 });
 
-const instrumentSans = Instrument_Sans({
-  variable: "--font-body",
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
+  variable: "--font-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const caveat = Caveat({
+  weight: "700",
+  variable: "--font-hand",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Bidya Bhushan Nanda — Full-Stack & AI/ML Engineer",
+  title: "Bidya Bhushan Nanda — Portfolio",
   description:
-    "Portfolio of Bidya Bhushan Nanda. Full-stack engineering across frontend, backend, and infrastructure.",
+    "Full-Stack & AI/ML Engineer. React Native, Node, and the infrastructure behind them. B.Tech Electronics, MAIT, class of 2029.",
   other: {
     google: "notranslate",
   },
 };
 
-// viewportFit: "cover" is what makes env(safe-area-inset-*) resolve to real
-// pixel values on notched/Dynamic-Island phones instead of always being 0.
-// Without this export Next only emits the bare default viewport meta tag.
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -48,30 +50,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jetbrainsMono.variable} ${instrumentSans.variable} h-full antialiased`}
+      className={`${pressStart.variable} ${spaceMono.variable} ${caveat.variable} min-h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col relative bg-void overflow-x-clip">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-        <PointerCursor targetSelector="a, button, [role='button'], .cursor-target" />
-        <div className="fixed inset-0 pointer-events-none -z-50 opacity-90 dark:opacity-50 saturate-[1.5] contrast-[1.2] dark:saturate-100 dark:contrast-100 mix-blend-multiply dark:mix-blend-screen">
-          <HeavyComponentWrapper fallback={<AtmosphereFallback />}>
-            <LazyLiquidEther 
-              colors={['#00E5FF', '#FF0055', '#4A00E0']} 
-              mouseForce={15} 
-              cursorSize={80} 
-            />
-          </HeavyComponentWrapper>
-        </div>
-        <Nav />
-        <SmoothScroll>{children}</SmoothScroll>
-        <VercelIntegrations />
-        </ThemeProvider>
+      <body className="min-h-screen flex flex-col relative bg-[#FFD93B] text-[#0B3D2E] dg overflow-x-clip selection:bg-[#FF5C8A] selection:text-[#0B3D2E]">
+        <SmoothScroll>
+          <PointerCursor targetSelector="a, button, .btn, .card, input, select, textarea, .cursor-target" />
+          <Nav />
+          <main className="flex-1 w-full flex flex-col">{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
