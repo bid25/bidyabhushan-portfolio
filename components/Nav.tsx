@@ -2,134 +2,151 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { ThemeToggle } from "./ThemeToggle";
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
+const navLinks = [
+  { href: "/", label: "HOME" },
+  { href: "/projects", label: "PROJECTS" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/blog", label: "BLOG" },
+  { href: "/contact", label: "CONTACT", isContact: true },
 ];
 
 export function Nav() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Close the mobile panel whenever the route changes.
   useEffect(() => {
-    setOpen(false);
+    setIsOpen(false);
   }, [pathname]);
 
-  // Lock background scroll while the mobile panel is open. Lenis's syncTouch
-  // is false in this project (native touch scroll), so a plain overflow
-  // lock on body is enough -- no Lenis instance needs to be reached into.
-  useEffect(() => {
-    if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [open]);
-
-  // Close on Escape for keyboard users.
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  if (pathname === "/lens" || pathname === "/broccoli" || pathname?.startsWith("/broccoli")) {
+    return null;
+  }
 
   return (
-    <header
-      className="sticky top-0 z-50 border-b border-ash/30 bg-void"
-      style={{ paddingTop: "env(safe-area-inset-top)" }}
-    >
-      <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-4 sm:px-8 lg:px-16">
-        <Link
-          href="/"
-          className="font-display text-sm font-semibold tracking-tight text-bone"
-        >
-          BN
-        </Link>
+    <nav className="w-full max-w-[1240px] mx-auto pt-6 px-4 sm:px-8 box-border relative z-50">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-4 border-ink bg-panel p-3 sm:px-4 shadow-[8px_8px_0_#0B3D2E]">
+        {/* Brand Logo Switchers: DEV (Lens switch) + BROCCOLI Flagship Pill */}
+        <div className="flex items-center gap-2.5">
+          <Link
+            href="/lens"
+            title="Switch to Photography & Film Showcase (/lens)"
+            className="group inline-flex items-center text-decoration-none"
+          >
+            <span
+              className="glitch-mark font-pixel text-base bg-[#0B3D2E] !text-[#FFD93B] px-3.5 py-1.5 border-3 border-[#0B3D2E] shadow-[3px_3px_0_#0A0A0A] group-hover:scale-105 group-hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all inline-flex items-center justify-center min-h-[44px] h-[44px] select-none cursor-pointer"
+              style={{ color: "#FFD93B", backgroundColor: "#0B3D2E" }}
+            >
+              <span className="glitch-text" data-text="DEV">
+                DEV
+              </span>
+            </span>
+          </Link>
 
-        {/* Desktop nav -- full row, hidden below md */}
-        <ul className="hidden items-center gap-6 md:flex">
-          {links.map(({ href, label }) => {
+          <Link
+            href="/broccoli"
+            title="Broccoli — Caloric & Body Composition Instrument (/broccoli)"
+            className="hidden md:inline-flex group items-center text-decoration-none"
+          >
+            <span className="bg-[#1A1F14] group-hover:bg-[#B9D94A] border-3 border-[#B9D94A] group-hover:border-[#1A1F14] px-3.5 shadow-[3px_3px_0_#0A0A0A] flex items-center justify-center min-h-[44px] h-[44px] group-hover:scale-105 group-hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all select-none cursor-pointer">
+              <img
+                src="/images/broccoli-logo-light-crop.png"
+                alt="Broccoli"
+                className="h-[20px] w-auto block group-hover:hidden object-contain"
+              />
+              <img
+                src="/images/broccoli-logo-ring-dot.png"
+                alt="Broccoli"
+                className="h-[20px] w-auto hidden group-hover:block object-contain"
+              />
+            </span>
+          </Link>
+        </div>
+
+        {/* Desktop Links */}
+        <div className="hidden md:flex flex-wrap items-center gap-2 font-bold font-mono text-sm">
+          {navLinks.map((link) => {
             const isActive =
-              // `usePathname()` is typed `string | null` — null during the brief
-              // window before the router mounts. Coerced rather than guarded so
-              // `isActive` stays a plain boolean for `aria-current`.
-              href === "/" ? pathname === "/" : !!pathname?.startsWith(href);
+              link.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(link.href);
+
+            const activeClass = isActive ? "active" : "";
+            const contactClass = link.isContact ? "contact" : "";
 
             return (
-              <li key={href}>
-                <Link
-                  href={href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`cursor-target font-body text-xs font-medium uppercase tracking-[0.05em] transition-colors ${
-                    isActive ? "text-amber" : "text-ash hover:text-bone"
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`btn nav-link-dev px-3.5 py-2 min-h-[44px] flex items-center justify-center ${activeClass} ${contactClass}`}
+              >
+                {link.label}
+              </Link>
             );
           })}
-          <li>
-            <ThemeToggle />
-          </li>
-        </ul>
-
-        {/* Mobile controls -- hidden at md and above */}
-        <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav-panel"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="inline-flex h-11 w-11 items-center justify-center text-ash transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
         </div>
-      </nav>
 
-      {/* Mobile panel -- link list, only present in the DOM while open */}
-      {open && (
-        <div id="mobile-nav-panel" className="border-t border-ash/30 bg-void md:hidden">
-          <ul className="mx-auto flex max-w-[1200px] flex-col px-4 py-2 sm:px-8">
-            {links.map(({ href, label }) => {
-              const isActive =
-                // `usePathname()` is typed `string | null` — null during the brief
-              // window before the router mounts. Coerced rather than guarded so
-              // `isActive` stays a plain boolean for `aria-current`.
-              href === "/" ? pathname === "/" : !!pathname?.startsWith(href);
+        {/* Mobile Hamburger Toggle */}
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Close navigation" : "Open navigation"}
+          className="md:hidden border-3 border-ink bg-ink text-canvas p-2 flex items-center justify-center cursor-pointer hover:bg-pink hover:text-ink transition-colors"
+        >
+          {isOpen ? <X className="w-6 h-6 stroke-[3]" /> : <Menu className="w-6 h-6 stroke-[3]" />}
+        </button>
+      </div>
 
-              return (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`flex min-h-[44px] items-center font-body text-sm font-medium uppercase tracking-[0.05em] transition-colors ${
-                      isActive ? "text-amber" : "text-ash hover:text-bone"
-                    }`}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+      {/* Mobile Drawer */}
+      {isOpen && (
+        <div className="md:hidden mt-2 border-4 border-ink bg-panel p-4 shadow-[8px_8px_0_#0B3D2E] flex flex-col gap-2 font-bold font-mono">
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(link.href);
+
+            const activeClass = isActive ? "active" : "";
+            const contactClass = link.isContact ? "contact" : "";
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`nav-link-dev px-4 py-3 min-h-[44px] flex items-center justify-between text-base ${activeClass} ${contactClass}`}
+              >
+                <span>{link.label}</span>
+                <span className="font-pixel text-xs">→</span>
+              </Link>
+            );
+          })}
+
+          {/* Mobile Broccoli Flagship Link */}
+          <Link
+            href="/broccoli"
+            className="nav-link-dev broccoli px-4 py-3 min-h-[51px] flex items-center justify-between text-base mt-2 shadow-[3px_3px_0_#0A0A0A] group"
+          >
+            <span className="flex items-center gap-2">
+              <img
+                src="/images/broccoli-logo-light-crop.png"
+                alt="Broccoli"
+                className="h-[22px] w-auto block group-hover:hidden object-contain"
+              />
+              <img
+                src="/images/broccoli-logo-ring-dot.png"
+                alt="Broccoli"
+                className="h-[22px] w-auto hidden group-hover:block object-contain"
+              />
+            </span>
+            <span className="font-pixel text-xs text-[#B9D94A] group-hover:text-[#1A1F14] transition-colors">
+              →
+            </span>
+          </Link>
         </div>
       )}
-    </header>
+    </nav>
   );
 }
