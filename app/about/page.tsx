@@ -10,16 +10,22 @@ export const metadata: Metadata = {
 
 const skills = [
   "React Native",
+  "TypeScript",
   "Node.js",
   "NestJS",
-  "Prisma",
+  "ARM64 Linux Kernel",
+  "Bare-Metal Bringup",
   "PostgreSQL",
+  "SQLite FTS5",
+  "Prisma",
   "Redis",
   "Gemini API",
   "Supabase RLS",
   "Expo / EAS",
   "Three.js",
-  "Embedded",
+  "Embedded C++",
+  "Python",
+  "Docker",
   "IoT",
 ];
 
@@ -106,16 +112,21 @@ export default function AboutPage() {
           </div>
 
           <p className="m-0 text-base sm:text-lg leading-relaxed font-medium">
-            Full-stack and AI/ML engineer. B.Tech Electronics at MAIT, Delhi
-            (class of 2029). Core technical engineer building HOSHCARE, a mobile
-            app for medical records.
+            Full-stack, AI/ML &amp; Systems engineer. B.Tech Electronics at MAIT,
+            Delhi (class of 2029). Creator of Broccoli, my own solo caloric and
+            body-composition instrument on Google Play. Developing HOSHCARE, an
+            enterprise medical records mobile platform for the company I work
+            with (AB Connectz). Brought up Zucchini Linux bare-metal on
+            Qualcomm ARM64 hardware.
           </p>
 
           <p className="m-0 text-sm sm:text-base leading-relaxed text-[#0B3D2E]/90">
-            Most of my learning came from things breaking at trust boundaries:
-            silent network failures, schema migrations, and hardware quirks.
-            I care deeply about diagnostic rigor, data isolation, and shipping
-            software that stays up.
+            My engineering bridges low-level hardware and production apps: from
+            reverse-engineering bootloaders and running mainline kernels for
+            Zucchini Linux, to architecting offline SQLite databases and Gemini
+            vision pipelines for Broccoli, and hardening secure document
+            extraction flows for HOSHCARE. I care deeply about diagnostic rigor,
+            data isolation at trust boundaries, and shipping systems that stay up.
           </p>
 
           {/* Skill Badges */}

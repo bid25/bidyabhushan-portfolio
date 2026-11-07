@@ -41,10 +41,11 @@ export default function Home() {
             </h1>
 
             <p className="mt-6 mb-8 text-base sm:text-lg max-w-[560px] border-l-8 border-[#0B3D2E] pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed">
-              Full-Stack &amp; AI/ML Engineer. React Native, Node, and the
-              infrastructure behind them. B.Tech Electronics, MAIT, class of
-              2029. Currently building HOSHCARE, a mobile app for medical
-              records.
+              Full-Stack, AI/ML &amp; Systems Engineer. B.Tech Electronics, MAIT,
+              class of 2029. Creator of Broccoli, my own caloric and
+              body-composition instrument on Google Play. Developing HOSHCARE, a
+              medical records app for the company I work with (AB Connectz).
+              Brought up Zucchini Linux bare-metal on Qualcomm ARM64 hardware.
             </p>
 
             <div className="flex flex-wrap items-center gap-3.5 w-full">
