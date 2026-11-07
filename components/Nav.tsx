@@ -49,16 +49,16 @@ export function Nav() {
             title="Broccoli - Caloric & Body Composition Instrument (/broccoli)"
             className="hidden md:inline-flex group items-center text-decoration-none"
           >
-            <span className="bg-[#1A1F14] group-hover:bg-[#B9D94A] border-3 border-[#B9D94A] group-hover:border-[#1A1F14] px-3.5 shadow-[3px_3px_0_#0A0A0A] flex items-center justify-center min-h-[44px] h-[44px] group-hover:scale-105 group-hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all select-none cursor-pointer">
+            <span className="bg-[#1A1F14] group-hover:bg-[#B9D94A] group-active:bg-[#B9D94A] border-3 border-[#B9D94A] group-hover:border-[#1A1F14] group-active:border-[#1A1F14] px-3.5 shadow-[3px_3px_0_#0A0A0A] flex items-center justify-center min-h-[44px] h-[44px] group-hover:scale-105 group-hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 transition-all select-none cursor-pointer">
               <img
                 src="/images/broccoli-logo-light-crop.png"
                 alt="Broccoli"
-                className="h-[20px] w-auto block group-hover:hidden object-contain"
+                className="h-[20px] w-auto block group-hover:hidden group-active:hidden object-contain"
               />
               <img
-                src="/images/broccoli-logo-ring-dot.png"
+                src="/images/broccoli-logo-on-lime.png"
                 alt="Broccoli"
-                className="h-[20px] w-auto hidden group-hover:block object-contain"
+                className="h-[20px] w-auto hidden group-hover:block group-active:block object-contain"
               />
             </span>
           </Link>
@@ -132,15 +132,15 @@ export function Nav() {
               <img
                 src="/images/broccoli-logo-light-crop.png"
                 alt="Broccoli"
-                className="h-[22px] w-auto block group-hover:hidden object-contain"
+                className="h-[22px] w-auto block group-hover:hidden group-active:hidden object-contain"
               />
               <img
-                src="/images/broccoli-logo-ring-dot.png"
+                src="/images/broccoli-logo-on-lime.png"
                 alt="Broccoli"
-                className="h-[22px] w-auto hidden group-hover:block object-contain"
+                className="h-[22px] w-auto hidden group-hover:block group-active:block object-contain"
               />
             </span>
-            <span className="font-pixel text-xs text-[#B9D94A] group-hover:text-[#1A1F14] transition-colors">
+            <span className="font-pixel text-xs text-[#B9D94A] group-hover:text-[#1A1F14] group-active:text-[#1A1F14] transition-colors">
               →
             </span>
           </Link>

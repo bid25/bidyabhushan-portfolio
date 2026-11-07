@@ -125,7 +125,8 @@ a {
   color: #B9D94A !important;
   border: 3px solid #B9D94A !important;
 }
-.nav-link-dev.broccoli:hover {
+.nav-link-dev.broccoli:hover,
+.nav-link-dev.broccoli:active {
   background-color: #B9D94A !important;
   color: #1A1F14 !important;
 }
