@@ -55,3 +55,9 @@
   border-right: none;
   border-top: none;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .target-cursor-wrapper {
+    display: none !important;
+  }
+}

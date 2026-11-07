@@ -4,6 +4,15 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   /* config options here */
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  async redirects() {
+    return [
+      {
+        source: '/lens-portforio',
+        destination: '/lens-portfolio',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       { source: '/broccoli', destination: '/broccoli.html' },

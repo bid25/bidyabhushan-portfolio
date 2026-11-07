@@ -11,7 +11,7 @@ export default function Home() {
     <div className="flex flex-col w-full">
       {/* ── HERO CONTAINER ──────────────────────────────── */}
       <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 box-border">
-        <section className="relative grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center pt-28 sm:pt-32 lg:pt-36 pb-14">
+        <section className="relative grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-10 items-center pt-24 sm:pt-32 lg:pt-36 pb-8 sm:pb-14">
           {/* Decorative Zigzag */}
           <svg
             aria-hidden="true"
@@ -40,38 +40,41 @@ export default function Home() {
               <InteractiveName />
             </h1>
 
-            <p className="mt-6 mb-8 text-base sm:text-lg max-w-[560px] border-l-8 border-[#0B3D2E] pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed">
-              Full-Stack, AI/ML &amp; Systems Engineer. B.Tech Electronics, MAIT,
-              class of 2029. Creator of Broccoli, my own caloric and
-              body-composition instrument on Google Play. Developing HOSHCARE, a
-              medical records app for the company I work with (AB Connectz).
-              Brought up Zucchini Linux bare-metal on Qualcomm ARM64 hardware.
+            <p className="mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg max-w-[630px] border-l-4 sm:border-l-8 border-[#0B3D2E] pl-3 sm:pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed">
+              Full-Stack &amp; BSP Engineer (B.Tech Electronics, MAIT &apos;29).{" "}
+              <span className="inline-block">I build</span> from production apps down to bare silicon: creator of Broccoli
+              (calorie tracker available on Google Play), developer on HOSHCARE (care
+              coordination platform at AB Connectz), while exploring AI/ML systems
+              engineering. First globally to bring up the <span className="inline-block">SM-T295</span> tablet bare-metal,
+              dual-booting Arch Linux and LineageOS on Qualcomm ARM64.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3.5 w-full">
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-3.5 w-full">
               <Link
                 href="/projects"
                 style={{ backgroundColor: "#0B3D2E", color: "#FFD93B" }}
-                className="btn inline-flex items-center justify-center min-h-[48px] px-6 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A]"
+                className="btn inline-flex items-center justify-center min-h-[48px] px-6 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[5px_5px_0_#FF5C8A] sm:shadow-[6px_6px_0_#FF5C8A] w-full sm:w-auto text-center"
               >
                 VIEW PROJECTS →
               </Link>
-              <Link
-                href="/contact"
-                style={{ backgroundColor: "#FFF6C2", color: "#0B3D2E" }}
-                className="btn inline-flex items-center justify-center min-h-[48px] px-6 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#0B3D2E]"
-              >
-                GET IN TOUCH
-              </Link>
-              <a
-                href="/Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ backgroundColor: "transparent", color: "#0B3D2E" }}
-                className="btn inline-flex items-center justify-center min-h-[48px] px-5 py-3 font-bold font-mono border-4 border-[#FF5C8A] shadow-[6px_6px_0_#0B3D2E]"
-              >
-                RESUME.PDF
-              </a>
+              <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:w-auto sm:gap-3.5">
+                <Link
+                  href="/contact"
+                  style={{ backgroundColor: "#FFF6C2", color: "#0B3D2E" }}
+                  className="btn inline-flex items-center justify-center min-h-[48px] px-3 sm:px-6 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[6px_6px_0_#0B3D2E] text-center text-xs sm:text-base"
+                >
+                  GET IN TOUCH
+                </Link>
+                <a
+                  href="/Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ backgroundColor: "transparent", color: "#0B3D2E" }}
+                  className="btn inline-flex items-center justify-center min-h-[48px] px-3 sm:px-5 py-3 font-bold font-mono border-4 border-[#FF5C8A] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[6px_6px_0_#0B3D2E] text-center text-xs sm:text-base"
+                >
+                  RESUME.PDF
+                </a>
+              </div>
             </div>
           </div>
 

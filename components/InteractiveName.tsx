@@ -60,7 +60,7 @@ export function InteractiveName() {
 
   // First 5 chars correspond to BIDYA
   const bidyaPart = line1.slice(0, 5);
-  const bhushanPart = line1.slice(5);
+  const bhushanPart = line1.length > 5 ? line1.slice(5).trimStart() : "";
 
   return (
     <div

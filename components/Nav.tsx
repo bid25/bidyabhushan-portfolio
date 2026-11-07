@@ -21,7 +21,7 @@ export function Nav() {
     setIsOpen(false);
   }, [pathname]);
 
-  if (pathname === "/lens" || pathname === "/broccoli" || pathname?.startsWith("/broccoli")) {
+  if (pathname === "/lens" || pathname?.startsWith("/lens") || pathname === "/broccoli" || pathname?.startsWith("/broccoli")) {
     return null;
   }
 
