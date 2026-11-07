@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async rewrites() {
     return [
+      { source: '/broccoli', destination: '/broccoli.html' },
+      { source: '/broccoli/index.html', destination: '/broccoli.html' },
       { source: '/privacy', destination: '/privacy.html' },
       { source: '/terms', destination: '/terms.html' },
       { source: '/medical-disclaimer', destination: '/medical-disclaimer.html' },
