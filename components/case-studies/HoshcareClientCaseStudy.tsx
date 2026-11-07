@@ -320,7 +320,7 @@ export function HoshcareClientCaseStudy() {
             </div>
 
             {/* SVG Schematic */}
-            <div key={replayKey}>
+            <div key={replayKey} className={!isIntersecting ? "pipeline-paused" : ""}>
               <svg
                 role="img"
                 aria-label="Schematic: Photo Capture to Structured Extraction, Human Review, and Permanent Lock"
@@ -356,7 +356,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth={selectedStage === 0 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "0.2s" : "0.05s" }}
+                    style={{ animationDelay: "0.2s" }}
                   />
                   <path
                     className="dw"
@@ -367,7 +367,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "0.8s" : "0.15s" }}
+                    style={{ animationDelay: "0.8s" }}
                   />
                   <path
                     className="dw"
@@ -378,7 +378,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "1.2s" : "0.25s" }}
+                    style={{ animationDelay: "1.2s" }}
                   />
                   <text
                     className="fi"
@@ -389,7 +389,7 @@ export function HoshcareClientCaseStudy() {
                     fontSize="22"
                     fill={selectedStage === 0 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "1.4s" : "0.3s" }}
+                    style={{ animationDelay: "1.4s" }}
                   >
                     photo
                   </text>
@@ -405,7 +405,7 @@ export function HoshcareClientCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "1.8s" : "0.5s" }}
+                  style={{ animationDelay: "1.8s" }}
                 />
 
                 {/* ── Box 2: structured fields ── */}
@@ -435,7 +435,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth={selectedStage === 1 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "2.6s" : "0.7s" }}
+                    style={{ animationDelay: "2.6s" }}
                   />
                   <text
                     className="fi"
@@ -444,7 +444,7 @@ export function HoshcareClientCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="20"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.2s" : "0.9s" }}
+                    style={{ animationDelay: "3.2s" }}
                   >
                     doctor ------
                   </text>
@@ -455,7 +455,7 @@ export function HoshcareClientCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="20"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.4s" : "1.0s" }}
+                    style={{ animationDelay: "3.4s" }}
                   >
                     date ------
                   </text>
@@ -466,7 +466,7 @@ export function HoshcareClientCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="20"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.6s" : "1.1s" }}
+                    style={{ animationDelay: "3.6s" }}
                   >
                     diagnosis ------
                   </text>
@@ -477,7 +477,7 @@ export function HoshcareClientCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="20"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.8s" : "1.2s" }}
+                    style={{ animationDelay: "3.8s" }}
                   >
                     medications ------
                   </text>
@@ -490,7 +490,7 @@ export function HoshcareClientCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 1 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "4.0s" : "1.3s" }}
+                    style={{ animationDelay: "4.0s" }}
                   >
                     structured fields
                   </text>
@@ -506,7 +506,7 @@ export function HoshcareClientCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "4.4s" : "1.5s" }}
+                  style={{ animationDelay: "4.4s" }}
                 />
 
                 {/* ── Box 3: you review it ── */}
@@ -536,7 +536,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth={selectedStage === 2 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "5.1s" : "1.7s" }}
+                    style={{ animationDelay: "5.1s" }}
                   />
                   {/* Pink checkmark */}
                   <path
@@ -548,7 +548,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth="3.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "5.8s" : "2.0s" }}
+                    style={{ animationDelay: "5.8s" }}
                   />
                   <text
                     className="fi"
@@ -559,7 +559,7 @@ export function HoshcareClientCaseStudy() {
                     fontSize="18"
                     fill={selectedStage === 2 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "6.2s" : "2.2s" }}
+                    style={{ animationDelay: "6.2s" }}
                   >
                     you review it
                   </text>
@@ -571,7 +571,7 @@ export function HoshcareClientCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="15"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "6.4s" : "2.3s" }}
+                    style={{ animationDelay: "6.4s" }}
                   >
                     (nothing saves yet)
                   </text>
@@ -587,7 +587,7 @@ export function HoshcareClientCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "6.8s" : "2.5s" }}
+                  style={{ animationDelay: "6.8s" }}
                 />
 
                 {/* ── Box 4: Padlock ── */}
@@ -618,7 +618,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth={selectedStage === 3 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "7.4s" : "2.7s" }}
+                    style={{ animationDelay: "7.4s" }}
                   />
                   {/* Shackle */}
                   <path
@@ -630,7 +630,7 @@ export function HoshcareClientCaseStudy() {
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "7.9s" : "2.9s" }}
+                    style={{ animationDelay: "7.9s" }}
                   />
                   <text
                     className="fi"
@@ -641,7 +641,7 @@ export function HoshcareClientCaseStudy() {
                     fontSize="22"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "8.3s" : "3.1s" }}
+                    style={{ animationDelay: "8.3s" }}
                   >
                     locked.
                   </text>

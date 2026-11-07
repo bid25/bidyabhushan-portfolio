@@ -324,7 +324,7 @@ export function ZucchiniLinuxCaseStudy() {
             </div>
 
             {/* SVG Schematic - Slowed deliberate drawing + Interactive Boxes */}
-            <div key={replayKey}>
+            <div key={replayKey} className={!isIntersecting ? "pipeline-paused" : ""}>
               <svg
                 role="img"
                 aria-label="Schematic: Qualcomm Sahara EDL to Bootloader Patch, Initramfs Switcher, and Dual OS Userland"
@@ -361,7 +361,7 @@ export function ZucchiniLinuxCaseStudy() {
                     strokeWidth={selectedStage === 0 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "0.2s" : "0.05s" }}
+                    style={{ animationDelay: "0.2s" }}
                   />
                   <text
                     className="fi"
@@ -371,7 +371,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="22"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 0 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "0.8s" : "0.2s" }}
+                    style={{ animationDelay: "0.8s" }}
                   >
                     edl 9008 dump
                   </text>
@@ -382,7 +382,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "1.0s" : "0.3s" }}
+                    style={{ animationDelay: "1.0s" }}
                   >
                     qualcomm sahara
                   </text>
@@ -394,7 +394,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="16"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "1.2s" : "0.4s" }}
+                    style={{ animationDelay: "1.2s" }}
                   >
                     firehose raw eMMC
                   </text>
@@ -407,7 +407,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 0 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "1.4s" : "0.5s" }}
+                    style={{ animationDelay: "1.4s" }}
                   >
                     low-level dump
                   </text>
@@ -423,7 +423,7 @@ export function ZucchiniLinuxCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "1.8s" : "0.7s" }}
+                  style={{ animationDelay: "1.8s" }}
                 />
 
                 {/* ── Box 2: bootloader disarm (x: 266 to 476) ── */}
@@ -453,7 +453,7 @@ export function ZucchiniLinuxCaseStudy() {
                     strokeWidth={selectedStage === 1 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "2.6s" : "1.0s" }}
+                    style={{ animationDelay: "2.6s" }}
                   />
                   <text
                     className="fi"
@@ -463,7 +463,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="22"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 1 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "3.2s" : "1.2s" }}
+                    style={{ animationDelay: "3.2s" }}
                   >
                     bootloader patch
                   </text>
@@ -474,7 +474,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.4s" : "1.3s" }}
+                    style={{ animationDelay: "3.4s" }}
                   >
                     • AVB 2.0 disarmed
                   </text>
@@ -485,7 +485,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.6s" : "1.4s" }}
+                    style={{ animationDelay: "3.6s" }}
                   >
                     • dm-verity disabled
                   </text>
@@ -496,7 +496,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.8s" : "1.5s" }}
+                    style={{ animationDelay: "3.8s" }}
                   >
                     • unlocked execution
                   </text>
@@ -509,7 +509,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 1 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "4.0s" : "1.6s" }}
+                    style={{ animationDelay: "4.0s" }}
                   >
                     abl / xbl patched
                   </text>
@@ -525,7 +525,7 @@ export function ZucchiniLinuxCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "4.4s" : "1.8s" }}
+                  style={{ animationDelay: "4.4s" }}
                 />
 
                 {/* ── Box 3: initramfs dual-boot (x: 558 to 768) ── */}
@@ -555,7 +555,7 @@ export function ZucchiniLinuxCaseStudy() {
                     strokeWidth={selectedStage === 2 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "5.1s" : "2.0s" }}
+                    style={{ animationDelay: "5.1s" }}
                   />
                   <text
                     className="fi"
@@ -565,7 +565,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="22"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 2 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "5.6s" : "2.2s" }}
+                    style={{ animationDelay: "5.6s" }}
                   >
                     dual-boot menu
                   </text>
@@ -576,7 +576,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "5.8s" : "2.3s" }}
+                    style={{ animationDelay: "5.8s" }}
                   >
                     volume key interrupt
                   </text>
@@ -587,7 +587,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "6.0s" : "2.4s" }}
+                    style={{ animationDelay: "6.0s" }}
                   >
                     fbcon visual prompt
                   </text>
@@ -599,7 +599,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="16"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "6.2s" : "2.5s" }}
+                    style={{ animationDelay: "6.2s" }}
                   >
                     payload switcher
                   </text>
@@ -612,7 +612,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 2 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "6.4s" : "2.6s" }}
+                    style={{ animationDelay: "6.4s" }}
                   >
                     initramfs hook
                   </text>
@@ -628,7 +628,7 @@ export function ZucchiniLinuxCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "6.8s" : "2.8s" }}
+                  style={{ animationDelay: "6.8s" }}
                 />
 
                 {/* ── Box 4: arch userland (x: 838 to 924) ── */}
@@ -658,7 +658,7 @@ export function ZucchiniLinuxCaseStudy() {
                     strokeWidth={selectedStage === 3 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "7.4s" : "3.0s" }}
+                    style={{ animationDelay: "7.4s" }}
                   />
                   <text
                     className="fi"
@@ -669,7 +669,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="20"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 3 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "7.9s" : "3.2s" }}
+                    style={{ animationDelay: "7.9s" }}
                   >
                     ARCH
                   </text>
@@ -681,7 +681,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "8.1s" : "3.3s" }}
+                    style={{ animationDelay: "8.1s" }}
                   >
                     ARM64
                   </text>
@@ -694,7 +694,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="17"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "8.3s" : "3.4s" }}
+                    style={{ animationDelay: "8.3s" }}
                   >
                     Lineage
                   </text>
@@ -707,7 +707,7 @@ export function ZucchiniLinuxCaseStudy() {
                     fontSize="18"
                     fill={selectedStage === 3 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "8.5s" : "3.5s" }}
+                    style={{ animationDelay: "8.5s" }}
                   >
                     bare-metal
                   </text>

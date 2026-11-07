@@ -346,7 +346,7 @@ export function BroccoliCaseStudy() {
             </div>
 
             {/* SVG Schematic */}
-            <div key={replayKey}>
+            <div key={replayKey} className={!isIntersecting ? "pipeline-paused" : ""}>
               <svg
                 role="img"
                 aria-label="Schematic: Food Entry to Local SQLite DB, Tolerance Matrix, and Mechanical Dial"
@@ -383,7 +383,7 @@ export function BroccoliCaseStudy() {
                     strokeWidth={selectedStage === 0 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "0.2s" : "0.05s" }}
+                    style={{ animationDelay: "0.2s" }}
                   />
                   <text
                     className="fi"
@@ -393,7 +393,7 @@ export function BroccoliCaseStudy() {
                     fontSize="22"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 0 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "0.8s" : "0.15s" }}
+                    style={{ animationDelay: "0.8s" }}
                   >
                     food entry
                   </text>
@@ -404,7 +404,7 @@ export function BroccoliCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "1.0s" : "0.2s" }}
+                    style={{ animationDelay: "1.0s" }}
                   >
                     natural language
                   </text>
@@ -416,7 +416,7 @@ export function BroccoliCaseStudy() {
                     fontSize="16"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "1.2s" : "0.25s" }}
+                    style={{ animationDelay: "1.2s" }}
                   >
                     zero network wait
                   </text>
@@ -429,7 +429,7 @@ export function BroccoliCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 0 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "1.4s" : "0.3s" }}
+                    style={{ animationDelay: "1.4s" }}
                   >
                     input intent
                   </text>
@@ -445,7 +445,7 @@ export function BroccoliCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "1.8s" : "0.4s" }}
+                  style={{ animationDelay: "1.8s" }}
                 />
 
                 {/* ── Box 2: local sqlite db (x: 266 to 476) ── */}
@@ -475,7 +475,7 @@ export function BroccoliCaseStudy() {
                     strokeWidth={selectedStage === 1 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "2.6s" : "0.55s" }}
+                    style={{ animationDelay: "2.6s" }}
                   />
                   <text
                     className="fi"
@@ -485,7 +485,7 @@ export function BroccoliCaseStudy() {
                     fontSize="22"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 1 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "3.2s" : "0.65s" }}
+                    style={{ animationDelay: "3.2s" }}
                   >
                     local sqlite db
                   </text>
@@ -496,7 +496,7 @@ export function BroccoliCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.4s" : "0.7s" }}
+                    style={{ animationDelay: "3.4s" }}
                   >
                     • FTS5 search index
                   </text>
@@ -507,7 +507,7 @@ export function BroccoliCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.6s" : "0.75s" }}
+                    style={{ animationDelay: "3.6s" }}
                   >
                     • sub-1.4ms lookups
                   </text>
@@ -518,7 +518,7 @@ export function BroccoliCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "3.8s" : "0.8s" }}
+                    style={{ animationDelay: "3.8s" }}
                   >
                     • 100% offline autonomy
                   </text>
@@ -531,7 +531,7 @@ export function BroccoliCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 1 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "4.0s" : "0.85s" }}
+                    style={{ animationDelay: "4.0s" }}
                   >
                     embedded storage
                   </text>
@@ -547,7 +547,7 @@ export function BroccoliCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "4.4s" : "0.95s" }}
+                  style={{ animationDelay: "4.4s" }}
                 />
 
                 {/* ── Box 3: tolerance matrix (x: 558 to 768) ── */}
@@ -577,7 +577,7 @@ export function BroccoliCaseStudy() {
                     strokeWidth={selectedStage === 2 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "5.1s" : "1.1s" }}
+                    style={{ animationDelay: "5.1s" }}
                   />
                   <text
                     className="fi"
@@ -587,7 +587,7 @@ export function BroccoliCaseStudy() {
                     fontSize="22"
                     fill="#0B3D2E"
                     fontWeight={selectedStage === 2 ? "bold" : "normal"}
-                    style={{ animationDelay: isIntersecting ? "5.6s" : "1.2s" }}
+                    style={{ animationDelay: "5.6s" }}
                   >
                     tolerance matrix
                   </text>
@@ -598,7 +598,7 @@ export function BroccoliCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "5.8s" : "1.25s" }}
+                    style={{ animationDelay: "5.8s" }}
                   >
                     confidence corridor
                   </text>
@@ -609,7 +609,7 @@ export function BroccoliCaseStudy() {
                     fontFamily="Caveat, cursive"
                     fontSize="17"
                     fill="#0B3D2E"
-                    style={{ animationDelay: isIntersecting ? "6.0s" : "1.3s" }}
+                    style={{ animationDelay: "6.0s" }}
                   >
                     macro band computations
                   </text>
@@ -621,7 +621,7 @@ export function BroccoliCaseStudy() {
                     fontSize="16"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "6.2s" : "1.35s" }}
+                    style={{ animationDelay: "6.2s" }}
                   >
                     honest statistics
                   </text>
@@ -634,7 +634,7 @@ export function BroccoliCaseStudy() {
                     fontSize="20"
                     fill={selectedStage === 2 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "6.4s" : "1.4s" }}
+                    style={{ animationDelay: "6.4s" }}
                   >
                     uncertainty math
                   </text>
@@ -650,7 +650,7 @@ export function BroccoliCaseStudy() {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ animationDelay: isIntersecting ? "6.8s" : "1.45s" }}
+                  style={{ animationDelay: "6.8s" }}
                 />
 
                 {/* ── Box 4: mechanical dial (x: 838 to 924) ── */}
@@ -680,7 +680,7 @@ export function BroccoliCaseStudy() {
                     strokeWidth={selectedStage === 3 ? "3.5" : "2.5"}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    style={{ animationDelay: isIntersecting ? "7.4s" : "1.55s" }}
+                    style={{ animationDelay: "7.4s" }}
                   />
                   {/* Dial circle */}
                   <circle
@@ -692,7 +692,7 @@ export function BroccoliCaseStudy() {
                     fill="none"
                     stroke={selectedStage === 3 ? "#FF5C8A" : "#0B3D2E"}
                     strokeWidth="2.5"
-                    style={{ animationDelay: isIntersecting ? "7.8s" : "1.65s" }}
+                    style={{ animationDelay: "7.8s" }}
                   />
                   <line
                     className="dw"
@@ -704,7 +704,7 @@ export function BroccoliCaseStudy() {
                     stroke="#FF5C8A"
                     strokeWidth="3"
                     strokeLinecap="round"
-                    style={{ animationDelay: isIntersecting ? "8.1s" : "1.7s" }}
+                    style={{ animationDelay: "8.1s" }}
                   />
                   <text
                     className="fi"
@@ -715,7 +715,7 @@ export function BroccoliCaseStudy() {
                     fontSize="20"
                     fill="#FF5C8A"
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "8.3s" : "1.75s" }}
+                    style={{ animationDelay: "8.3s" }}
                   >
                     60 FPS!
                   </text>
@@ -728,7 +728,7 @@ export function BroccoliCaseStudy() {
                     fontSize="18"
                     fill={selectedStage === 3 ? "#FF5C8A" : "#0B3D2E"}
                     fontWeight="bold"
-                    style={{ animationDelay: isIntersecting ? "8.5s" : "1.8s" }}
+                    style={{ animationDelay: "8.5s" }}
                   >
                     dial physics
                   </text>

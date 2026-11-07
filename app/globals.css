@@ -521,6 +521,11 @@ input:focus, textarea:focus {
   stroke-dashoffset: 1;
   animation: dw 2.2s cubic-bezier(0.25, 1, 0.5, 1) both;
 }
+.pipeline-paused .dw,
+.pipeline-paused .dw-slow,
+.pipeline-paused .fi {
+  animation-play-state: paused !important;
+}
 
 /* 14. Fade Reveal */
 @keyframes wr {
