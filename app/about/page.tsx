@@ -112,21 +112,31 @@ export default function AboutPage() {
           </div>
 
           <p className="m-0 text-base sm:text-lg leading-relaxed font-medium">
-            Full-stack, AI/ML &amp; Systems engineer. B.Tech Electronics at MAIT,
-            Delhi (class of 2029). Creator of Broccoli, my own solo caloric and
-            body-composition instrument on Google Play. Developing HOSHCARE, an
-            enterprise medical records mobile platform for the company I work
-            with (AB Connectz). Brought up Zucchini Linux bare-metal on
-            Qualcomm ARM64 hardware.
+            I am an electronics undergraduate at MAIT, Delhi (class of 2029) who
+            fell in love with writing software. I am happiest working where
+            physical reality meets code: tracing signals from a sensor, shorting
+            test-points on bare silicon, or building offline-first apps that
+            people actually rely on every day.
           </p>
 
           <p className="m-0 text-sm sm:text-base leading-relaxed text-[#0B3D2E]/90">
-            My engineering bridges low-level hardware and production apps: from
-            reverse-engineering bootloaders and running mainline kernels for
-            Zucchini Linux, to architecting offline SQLite databases and Gemini
-            vision pipelines for Broccoli, and hardening secure document
-            extraction flows for HOSHCARE. I care deeply about diagnostic rigor,
-            data isolation at trust boundaries, and shipping systems that stay up.
+            Most of what I know came from breaking things at the boundaries:
+            silent network drops, schema migrations, and hardware quirks. I care
+            about diagnostic rigor, knowing what the system is doing under the
+            hood, and building things that stay up.
+          </p>
+
+          <p className="m-0 text-sm sm:text-base leading-relaxed text-[#0B3D2E]/90">
+            When I am not in a terminal or building software, I am usually behind
+            a camera shooting live concert stages, street documentary, and 35mm
+            film (which you can explore in{" "}
+            <Link
+              href="/lens"
+              className="underline font-bold text-[#0B3D2E] hover:text-[#FF5C8A] transition-colors"
+            >
+              /lens
+            </Link>
+            ).
           </p>
 
           {/* Skill Badges */}
