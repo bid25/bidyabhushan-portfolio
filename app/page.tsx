@@ -40,7 +40,20 @@ export default function Home() {
               <InteractiveName />
             </h1>
 
-            <p className="mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg max-w-[620px] border-l-4 sm:border-l-8 border-[#0B3D2E] pl-3 sm:pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed w-full">
+            {/* ── DESKTOP / PC PARAGRAPH (md:block hidden) ────────── */}
+            <p className="hidden md:block mt-6 mb-8 text-base lg:text-lg max-w-[620px] border-l-8 border-[#0B3D2E] pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed">
+              Full-Stack &amp; BSP Engineer with an electronics foundation<br />
+              (MAIT &apos;29). I build from production apps down to bare<br />
+              silicon: creator of Broccoli (calorie tracker available<br />
+              on Google Play), developer on HOSHCARE (care coordination<br />
+              platform at AB Connectz), and exploring AI/ML<br />
+              engineering. First globally to develop bare-metal bringup<br />
+              for the SM-T295 tablet series, creating a dual-boot setup<br />
+              with Arch Linux and LineageOS on Qualcomm ARM64.
+            </p>
+
+            {/* ── MOBILE PARAGRAPH (block md:hidden) ────────────────── */}
+            <p className="block md:hidden mt-5 mb-6 text-sm font-mono text-[#0B3D2E] font-medium border-l-4 border-[#0B3D2E] pl-3.5 leading-[1.6] tracking-[-0.015em] w-full">
               Full-Stack &amp; BSP Engineer with an electronics foundation{" "}
               <span className="inline-block">(MAIT&nbsp;&apos;29).</span> I build from production apps down to bare silicon: creator of Broccoli (calorie tracker available on Google Play), developer on HOSHCARE (care coordination platform at AB Connectz), and exploring AI/ML engineering. First globally to develop bare-metal bringup for the <span className="inline-block">SM-T295</span> tablet series, creating a dual-boot setup with Arch Linux and <span className="inline-block">LineageOS&nbsp;on&nbsp;Qualcomm&nbsp;ARM64.</span>
             </p>
