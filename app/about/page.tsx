@@ -32,6 +32,8 @@ const skillsRow2 = [
   "Docker",
 ];
 
+const allSkills = [...skillsRow1, ...skillsRow2];
+
 export default function AboutPage() {
   return (
     <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 box-border pb-20">
@@ -165,16 +167,29 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Full-width Skills Section - 2 lines evenly spread on desktop, neatly wrapping on mobile */}
+      {/* Full-width Skills Section - 2 lines evenly spread on desktop, structured grid on mobile */}
       <div className="w-full pt-3 sm:pt-4">
         <div className="font-pixel text-[11px] sm:text-xs text-[#0B3D2E] mb-2.5 flex items-center gap-2">
           <span className="inline-block w-2.5 h-2.5 bg-[#0B3D2E]" />
           <span>TECH STACK &amp; TOOLBOX</span>
         </div>
 
-        <div className="flex flex-col gap-2.5 sm:gap-3.5 w-full">
+        {/* Mobile & Tablet: Balanced 2-column grid (3-col on sm) with uniform box widths */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5 w-full lg:hidden">
+          {allSkills.map((skill) => (
+            <span
+              key={skill}
+              className="ch border-3 border-[#0B3D2E] bg-[#FFF6C2] px-2 py-2 font-bold text-xs shadow-[2px_2px_0_#0B3D2E] whitespace-nowrap text-center flex items-center justify-center hover:bg-[#FFD93B] hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+
+        {/* Desktop: 2 rows of 9 flex items evenly filling the container */}
+        <div className="hidden lg:flex flex-col gap-2.5 sm:gap-3.5 w-full">
           {/* Line 1 */}
-          <div className="flex flex-wrap lg:flex-nowrap justify-center lg:justify-between items-center gap-2 sm:gap-3 w-full">
+          <div className="flex flex-nowrap justify-between items-center gap-2 sm:gap-3 w-full">
             {skillsRow1.map((skill) => (
               <span
                 key={skill}
@@ -186,7 +201,7 @@ export default function AboutPage() {
           </div>
 
           {/* Line 2 */}
-          <div className="flex flex-wrap lg:flex-nowrap justify-center lg:justify-between items-center gap-2 sm:gap-3 w-full">
+          <div className="flex flex-nowrap justify-between items-center gap-2 sm:gap-3 w-full">
             {skillsRow2.map((skill) => (
               <span
                 key={skill}

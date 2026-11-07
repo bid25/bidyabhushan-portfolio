@@ -40,13 +40,9 @@ export default function Home() {
               <InteractiveName />
             </h1>
 
-            <p className="mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg max-w-[630px] border-l-4 sm:border-l-8 border-[#0B3D2E] pl-3 sm:pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed">
-              Full-Stack &amp; BSP Engineer (B.Tech Electronics, MAIT &apos;29).{" "}
-              <span className="inline-block">I build</span> from production apps down to bare silicon: creator of Broccoli
-              (calorie tracker available on Google Play), developer on HOSHCARE (care
-              coordination platform at AB Connectz), while exploring AI/ML systems
-              engineering. First globally to bring up the <span className="inline-block">SM-T295</span> tablet bare-metal,
-              dual-booting Arch Linux and LineageOS on Qualcomm ARM64.
+            <p className="mt-4 sm:mt-6 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg max-w-[620px] border-l-4 sm:border-l-8 border-[#0B3D2E] pl-3 sm:pl-4 font-mono text-[#0B3D2E] font-medium leading-relaxed w-full">
+              Full-Stack &amp; BSP Engineer with an electronics foundation{" "}
+              <span className="inline-block">(MAIT&nbsp;&apos;29).</span> I build from production apps down to bare silicon: creator of Broccoli (calorie tracker available on Google Play), developer on HOSHCARE (care coordination platform at AB Connectz), and exploring AI/ML engineering. First globally to develop bare-metal bringup for the <span className="inline-block">SM-T295</span> tablet series, creating a dual-boot setup with Arch Linux and <span className="inline-block">LineageOS&nbsp;on&nbsp;Qualcomm&nbsp;ARM64.</span>
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-3.5 w-full">
