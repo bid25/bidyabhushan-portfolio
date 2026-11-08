@@ -6,9 +6,171 @@ import { FeaturedProjectsInteractive } from "@/components/FeaturedProjectsIntera
 import { TrajectoryTimeline } from "@/components/TrajectoryTimeline";
 import { LensTeaser } from "@/components/LensTeaser";
 
+const rootStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://bidyabhushan.in/#person",
+      name: "Bidya Bhushan Nanda",
+      alternateName: [
+        // Core B/V First Name Variants
+        "Bidya",
+        "Vidya",
+        "Bidhya",
+        "Vidhya",
+
+        // B-Prefix Variants (Bhushan / Bhusan / Bushan / Bhooshan)
+        "Bidya Bhushan",
+        "Bidya Bhushan Nanda",
+        "Bidya Bhusan",
+        "Bidya Bhusan Nanda",
+        "Bidya Bushan",
+        "Bidya Bushan Nanda",
+        "Bidya Bhooshan",
+        "Bidya Bhooshan Nanda",
+        "Bidya Booshan",
+        "Bidya Booshan Nanda",
+
+        // V-Prefix Variants (Bhushan / Bhusan / Bushan / Bhooshan)
+        "Vidya Bhushan",
+        "Vidya Bhushan Nanda",
+        "Vidya Bhusan",
+        "Vidya Bhusan Nanda",
+        "Vidya Bushan",
+        "Vidya Bushan Nanda",
+        "Vidya Bhooshan",
+        "Vidya Bhooshan Nanda",
+        "Vidya Booshan",
+        "Vidya Booshan Nanda",
+
+        // Bidhya / Vidhya Variants
+        "Bidhya Bhushan",
+        "Bidhya Bhushan Nanda",
+        "Vidhya Bhushan",
+        "Vidhya Bhushan Nanda",
+        "Bidhya Bhusan",
+        "Bidhya Bhusan Nanda",
+        "Vidhya Bhusan",
+        "Vidhya Bhusan Nanda",
+
+        // Compound Single-Word Variants
+        "Bidyabhushan",
+        "Bidyabhushan Nanda",
+        "Bidyabhusan",
+        "Bidyabhusan Nanda",
+        "Bidyabushan",
+        "Bidyabushan Nanda",
+        "Bidyabhooshan",
+        "Bidyabhooshan Nanda",
+        "Vidyabhushan",
+        "Vidyabhushan Nanda",
+        "Vidyabhusan",
+        "Vidyabhusan Nanda",
+        "Vidyabushan",
+        "Vidyabushan Nanda",
+        "Vidyabhooshan",
+        "Vidyabhooshan Nanda",
+        "Bidhyabhushan",
+        "Bidhyabhushan Nanda",
+        "Vidhyabhushan",
+        "Vidhyabhushan Nanda",
+
+        // Fully Compressed (No spaces)
+        "Bidyabhushannanda",
+        "Vidyabhushannanda",
+        "Bidyabhusannanda",
+        "Vidyabhusannanda",
+        "Bidyabushannanda",
+        "Vidyabushannanda",
+
+        // First + Last (Skipping middle name)
+        "Bidya Nanda",
+        "Vidya Nanda",
+        "Bidhya Nanda",
+        "Vidhya Nanda",
+
+        // Online Monikers, Slugs & Handles
+        "bid25",
+        "bid 25",
+        "bid_25",
+        "bidyabhushan25",
+        "unfocused.nerd",
+        "unfocused nerd",
+        "unfocusednerd",
+        "unfocused_nerd",
+        "bid_notfound",
+        "bidnotfound",
+      ],
+      url: "https://bidyabhushan.in",
+      image: "https://bidyabhushan.in/opengraph-image.jpg",
+      jobTitle: [
+        "Full-Stack & BSP Engineer",
+        "Board Support Package Engineer",
+        "Director & Cinematographer",
+        "Creator of Broccoli",
+      ],
+      description:
+        "Full-Stack & BSP Engineer with an electronics foundation (MAIT '29). First globally to develop bare-metal Linux bringup for Samsung SM-T295 on Qualcomm ARM64. Director & Cinematographer (unfocused.nerd). Creator of Broccoli (nutrition instrument on Google Play).",
+      alumniOf: {
+        "@type": "EducationalOrganization",
+        name: "Maharaja Agrasen Institute of Technology",
+      },
+      knowsAbout: [
+        "Board Support Package (BSP)",
+        "Bare-Metal Bringup",
+        "ARM64 Linux Kernel",
+        "Qualcomm EDL",
+        "React Native",
+        "TypeScript",
+        "Node.js",
+        "PostgreSQL",
+        "SQLite FTS5",
+        "Cinematography",
+        "Film Directing",
+        "Visual Storytelling",
+      ],
+      sameAs: [
+        "https://github.com/bid25",
+        "https://linkedin.com/in/bidya-bhushan-nanda",
+        "https://www.instagram.com/unfocused.nerd/",
+        "https://www.instagram.com/bid_notfound/",
+        "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile",
+      ],
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://bidyabhushan.in/#broccoli",
+      name: "Broccoli",
+      operatingSystem: "Android",
+      applicationCategory: "HealthApplication",
+      description:
+        "Precision caloric and body composition tracker for Android. Shows the margin of error on every calorie, learns what your body really burns, and works with no signal.",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      author: {
+        "@id": "https://bidyabhushan.in/#person",
+      },
+      creator: {
+        "@id": "https://bidyabhushan.in/#person",
+      },
+      installUrl:
+        "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
+      url: "https://bidyabhushan.in/broccoli",
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <div className="flex flex-col w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(rootStructuredData) }}
+      />
       {/* ── HERO CONTAINER ──────────────────────────────── */}
       <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 box-border">
         <section className="relative grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-10 items-center pt-24 sm:pt-32 lg:pt-36 pb-8 sm:pb-14">

@@ -4,9 +4,12 @@ import { PixelBroccoli } from "@/components/PixelBroccoli";
 import { PixelZucchini } from "@/components/PixelZucchini";
 
 export const metadata: Metadata = {
-  title: "PROJECTS - Bidya Bhushan Nanda",
+  title: "Projects",
   description:
-    "Things I’ve built, shipped and sometimes replaced. Case studies and technical postmortems.",
+    "Systems and software built from bare silicon to production apps. Case studies and technical postmortems.",
+  alternates: {
+    canonical: "/projects",
+  },
 };
 
 const projects = [

@@ -97,9 +97,64 @@ export async function generateMetadata({
   if (!project) {
     return { title: "Project Not Found" };
   }
+
+  const projectKeywords: Record<string, string[]> = {
+    broccoli: [
+      "Broccoli",
+      "Broccoli App",
+      "Brocoli",
+      "Brocolli",
+      "Broccoli Calorie Tracker",
+      "Broccoli Nutrition Tracker",
+      "Broccoli Android",
+      "Broccoli Google Play",
+      "Grams Not Guesses",
+      "Margin of Error Nutrition",
+      "Bidya Bhushan Broccoli",
+      "Vidya Bhushan Broccoli",
+      "Bidya Bhusan Broccoli",
+      "Vidya Bushan Broccoli",
+      "Bidyabhushan Broccoli",
+      "Vidyabhushan Broccoli",
+      "Bidya Broccoli",
+      "Vidya Broccoli",
+      "com.bidyabhushan.mobile",
+    ],
+    "zucchini-linux": [
+      "Zucchini-Linux",
+      "SM-T295",
+      "SM-T295 Bare-Metal Bringup",
+      "Qualcomm EDL",
+      "Qualcomm ARM64",
+      "Arch Linux ARM64",
+      "LineageOS Dual Boot",
+      "Bidya Bhushan",
+      "Vidya Bhushan",
+      "Bidya Bhusan",
+      "Vidya Bushan",
+      "Bidyabhushan",
+      "Vidyabhushan",
+      "BSP Engineer Delhi",
+    ],
+  };
+
   return {
-    title: `${project.title} - Bidya Bhushan Nanda`,
+    title: project.title,
     description: project.description,
+    keywords: projectKeywords[slug] || [
+      "Bidya Bhushan Nanda",
+      "Vidya Bhushan Nanda",
+      project.title,
+    ],
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
+    openGraph: {
+      title: `${project.title} | Bidya Bhushan Nanda`,
+      description: project.description,
+      url: `https://bidyabhushan.in/projects/${slug}`,
+      type: "article",
+    },
   };
 }
 
@@ -134,8 +189,72 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
+  const authorAlternateNames = [
+    "Bidya",
+    "Bidya Bhushan",
+    "Vidya",
+    "Vidya Bhushan",
+    "Vidya Bushan",
+    "Bidya Bhusan",
+    "Bidyabhushan",
+    "Bidyabhushan Nanda",
+    "Vidyabhushan",
+    "Vidyabhushan Nanda",
+    "Bidyabhusan",
+    "Vidyabhusan",
+    "Bidya Nanda",
+    "Vidya Nanda",
+    "bid25",
+  ];
+
+  const projectSchema =
+    slug === "broccoli"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "Broccoli",
+          alternateName: [
+            "Broccoli App",
+            "Broccoli Calorie Tracker",
+            "Brocoli",
+            "Brocolli",
+            "Broccoli: grams, not guesses",
+            "Broccoli Nutrition Tracker",
+            "Broccoli Body Composition Instrument",
+          ],
+          operatingSystem: "Android",
+          applicationCategory: "HealthApplication",
+          description: project.description,
+          author: {
+            "@type": "Person",
+            name: "Bidya Bhushan Nanda",
+            alternateName: authorAlternateNames,
+            url: "https://bidyabhushan.in",
+          },
+          installUrl:
+            "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
+          url: "https://bidyabhushan.in/broccoli",
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "TechArticle",
+          headline: project.title,
+          description: project.description,
+          author: {
+            "@type": "Person",
+            name: "Bidya Bhushan Nanda",
+            alternateName: authorAlternateNames,
+            url: "https://bidyabhushan.in",
+          },
+          url: `https://bidyabhushan.in/projects/${slug}`,
+        };
+
   return (
     <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-8 py-10 font-mono text-[#0B3D2E]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
       {/* Top back navigation */}
       <div className="mb-8">
         <Link

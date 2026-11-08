@@ -3,9 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "ABOUT - Bidya Bhushan Nanda",
+  title: "About",
   description:
-    "Electronics roots, software habits. Full-stack & AI/ML engineer, class of 2029 at MAIT Delhi.",
+    "Electronics roots, software habits. Full-Stack & BSP Engineer building from bare silicon up to production systems. MAIT Delhi class of 2029.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 const skillsRow1 = [

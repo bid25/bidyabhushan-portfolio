@@ -48,12 +48,16 @@ export async function generateMetadata({
 
   const { metadata } = (await postModules[slug as PostSlug]()) as unknown as MDXModule;
   return {
-    title: `${metadata.title} - Bidya Bhushan Nanda`,
+    title: metadata.title,
     description: metadata.summary,
     authors: [{ name: "Bidya Bhushan Nanda" }],
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
-      title: metadata.title,
+      title: `${metadata.title} | Bidya Bhushan Nanda`,
       description: metadata.summary,
+      url: `https://bidyabhushan.in/blog/${slug}`,
       type: "article",
       publishedTime: metadata.date,
     },
@@ -92,8 +96,44 @@ export default async function BlogPostPage({
     });
   }
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    headline: metadata.title,
+    description: metadata.summary,
+    author: {
+      "@type": "Person",
+      name: "Bidya Bhushan Nanda",
+      alternateName: [
+        "Bidya",
+        "Bidya Bhushan",
+        "Vidya",
+        "Vidya Bhushan",
+        "Vidya Bushan",
+        "Bidya Bhusan",
+        "Bidyabhushan",
+        "Bidyabhushan Nanda",
+        "Vidyabhushan",
+        "Vidyabhushan Nanda",
+        "Bidyabhusan",
+        "Vidyabhusan",
+        "Bidya Nanda",
+        "Vidya Nanda",
+        "bid25",
+      ],
+      url: "https://bidyabhushan.in",
+    },
+    datePublished: metadata.date,
+    url: `https://bidyabhushan.in/blog/${slug}`,
+    keywords: metadata.topics,
+  };
+
   return (
     <article className="w-full max-w-[1100px] mx-auto px-4 sm:px-8 py-10 sm:py-16 text-[#0B3D2E] font-mono">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       {/* Top back navigation */}
       <div className="mb-6">
         <Link

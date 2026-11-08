@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "Style Guide - Bidya Bhushan Nanda",
   description: "Design system reference for the Terminal Session direction.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 const colors = [

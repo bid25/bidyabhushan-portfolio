@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "RESEARCH & BLOG DOSSIERS - Bidya Bhushan Nanda",
+  title: "Research & Writing",
   description:
-    "Working papers, field notes, and technical postmortems on AI, systems, and hardware.",
+    "Working papers, field notes, and technical postmortems on systems, hardware, and engineering labor markets.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 const posts = [
