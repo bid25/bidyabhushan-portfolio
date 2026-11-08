@@ -79,7 +79,7 @@ export default async function BlogPostPage({
     slug as PostSlug
   ]()) as unknown as MDXModule;
 
-  const mdxPath = path.join(process.cwd(), "content", "blog", `${slug}.mdx`);
+  const mdxPath = path.join(process.cwd(), "src", "content", "blog", `${slug}.mdx`);
   let published: string;
   try {
     const stat = fs.statSync(mdxPath);
