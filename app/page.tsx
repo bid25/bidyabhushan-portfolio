@@ -146,6 +146,13 @@ const rootStructuredData = {
       applicationCategory: "HealthApplication",
       description:
         "Precision caloric and body composition tracker for Android. Shows the margin of error on every calorie, learns what your body really burns, and works with no signal.",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        ratingCount: "1",
+        bestRating: "5",
+        worstRating: "1",
+      },
       offers: {
         "@type": "Offer",
         price: "0",

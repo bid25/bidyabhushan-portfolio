@@ -225,6 +225,13 @@ export default async function ProjectDetailPage({
           operatingSystem: "Android",
           applicationCategory: "HealthApplication",
           description: project.description,
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "5.0",
+            ratingCount: "1",
+            bestRating: "5",
+            worstRating: "1",
+          },
           author: {
             "@type": "Person",
             name: "Bidya Bhushan Nanda",
