@@ -57,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${metadata.title} | Bidya Bhushan Nanda`,
       description: metadata.summary,
-      url: `https://bidyabhushan.in/blog/${slug}`,
+      url: `https://www.bidyabhushan.in/blog/${slug}`,
       type: "article",
       publishedTime: metadata.date,
     },
@@ -121,10 +121,10 @@ export default async function BlogPostPage({
         "Vidya Nanda",
         "bid25",
       ],
-      url: "https://bidyabhushan.in",
+      url: "https://www.bidyabhushan.in",
     },
     datePublished: metadata.date,
-    url: `https://bidyabhushan.in/blog/${slug}`,
+    url: `https://www.bidyabhushan.in/blog/${slug}`,
     keywords: metadata.topics,
   };
 

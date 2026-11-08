@@ -152,7 +152,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${project.title} | Bidya Bhushan Nanda`,
       description: project.description,
-      url: `https://bidyabhushan.in/projects/${slug}`,
+      url: `https://www.bidyabhushan.in/projects/${slug}`,
       type: "article",
     },
   };
@@ -229,11 +229,11 @@ export default async function ProjectDetailPage({
             "@type": "Person",
             name: "Bidya Bhushan Nanda",
             alternateName: authorAlternateNames,
-            url: "https://bidyabhushan.in",
+            url: "https://www.bidyabhushan.in",
           },
           installUrl:
             "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
-          url: "https://bidyabhushan.in/broccoli",
+          url: "https://www.bidyabhushan.in/broccoli",
         }
       : {
           "@context": "https://schema.org",
@@ -244,9 +244,9 @@ export default async function ProjectDetailPage({
             "@type": "Person",
             name: "Bidya Bhushan Nanda",
             alternateName: authorAlternateNames,
-            url: "https://bidyabhushan.in",
+            url: "https://www.bidyabhushan.in",
           },
-          url: `https://bidyabhushan.in/projects/${slug}`,
+          url: `https://www.bidyabhushan.in/projects/${slug}`,
         };
 
   return (

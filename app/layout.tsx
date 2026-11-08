@@ -30,7 +30,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bidyabhushan.in"),
+  metadataBase: new URL("https://www.bidyabhushan.in"),
   title: {
     default: "Bidya Bhushan Nanda | Full-Stack & BSP Engineer",
     template: "%s | Bidya Bhushan Nanda",
@@ -166,12 +166,12 @@ export const metadata: Metadata = {
     "com.bidyabhushan.mobile",
   ],
   authors: [
-    { name: "Bidya Bhushan Nanda", url: "https://bidyabhushan.in" },
-    { name: "Vidya Bhushan Nanda", url: "https://bidyabhushan.in" },
-    { name: "Bidya Bhusan Nanda", url: "https://bidyabhushan.in" },
-    { name: "Vidya Bushan Nanda", url: "https://bidyabhushan.in" },
-    { name: "Bidyabhushan Nanda", url: "https://bidyabhushan.in" },
-    { name: "Vidyabhushan Nanda", url: "https://bidyabhushan.in" },
+    { name: "Bidya Bhushan Nanda", url: "https://www.bidyabhushan.in" },
+    { name: "Vidya Bhushan Nanda", url: "https://www.bidyabhushan.in" },
+    { name: "Bidya Bhusan Nanda", url: "https://www.bidyabhushan.in" },
+    { name: "Vidya Bushan Nanda", url: "https://www.bidyabhushan.in" },
+    { name: "Bidyabhushan Nanda", url: "https://www.bidyabhushan.in" },
+    { name: "Vidyabhushan Nanda", url: "https://www.bidyabhushan.in" },
   ],
   creator: "Bidya Bhushan Nanda",
   alternates: {
@@ -180,7 +180,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://bidyabhushan.in",
+    url: "https://www.bidyabhushan.in",
     siteName: "Bidya Bhushan Nanda",
     title: "Bidya Bhushan Nanda | Full-Stack & BSP Engineer, Filmmaker, Creator of Broccoli",
     description:

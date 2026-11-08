@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://bidyabhushan.in/lens",
+    url: "https://www.bidyabhushan.in/lens",
     title: "Bidya Bhushan Nanda | Cinematography & Visual Showcase",
     description:
       "Visual direction and photography showcase by Bidya Bhushan Nanda (unfocused.nerd).",

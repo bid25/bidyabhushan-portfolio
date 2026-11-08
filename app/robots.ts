@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
         "/api/",
       ],
     },
-    sitemap: "https://bidyabhushan.in/sitemap.xml",
+    sitemap: "https://www.bidyabhushan.in/sitemap.xml",
   };
 }
 

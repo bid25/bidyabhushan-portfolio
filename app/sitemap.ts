@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://bidyabhushan.in";
+  const baseUrl = "https://www.bidyabhushan.in";
   const now = new Date();
 
   // Core hubs & landing pages

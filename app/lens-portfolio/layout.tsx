@@ -90,7 +90,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://bidyabhushan.in/lens-portfolio",
+    url: "https://www.bidyabhushan.in/lens-portfolio",
     title: "Bidya Bhushan Nanda | Cinematography & Visual Portfolio",
     description:
       "Visual direction, cinematography, and photography showcase by Bidya Bhushan Nanda (unfocused.nerd).",
@@ -116,7 +116,7 @@ const lensStructuredData = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
   name: "Bidya Bhushan Nanda - Creative & Cinematography Showcase",
-  url: "https://bidyabhushan.in/lens-portfolio",
+  url: "https://www.bidyabhushan.in/lens-portfolio",
   mainEntity: {
     "@type": "Person",
     name: "Bidya Bhushan Nanda",
@@ -140,7 +140,7 @@ const lensStructuredData = {
       "bid25",
     ],
     jobTitle: ["Director & Cinematographer", "Photographer"],
-    url: "https://bidyabhushan.in",
+    url: "https://www.bidyabhushan.in",
     sameAs: [
       "https://www.instagram.com/unfocused.nerd/",
       "https://github.com/bid25",

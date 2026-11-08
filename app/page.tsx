@@ -11,7 +11,7 @@ const rootStructuredData = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://bidyabhushan.in/#person",
+      "@id": "https://www.bidyabhushan.in/#person",
       name: "Bidya Bhushan Nanda",
       alternateName: [
         // Core B/V First Name Variants
@@ -102,8 +102,8 @@ const rootStructuredData = {
         "bid_notfound",
         "bidnotfound",
       ],
-      url: "https://bidyabhushan.in",
-      image: "https://bidyabhushan.in/opengraph-image.jpg",
+      url: "https://www.bidyabhushan.in",
+      image: "https://www.bidyabhushan.in/opengraph-image.jpg",
       jobTitle: [
         "Full-Stack & BSP Engineer",
         "Board Support Package Engineer",
@@ -140,7 +140,7 @@ const rootStructuredData = {
     },
     {
       "@type": "SoftwareApplication",
-      "@id": "https://bidyabhushan.in/#broccoli",
+      "@id": "https://www.bidyabhushan.in/#broccoli",
       name: "Broccoli",
       operatingSystem: "Android",
       applicationCategory: "HealthApplication",
@@ -152,14 +152,14 @@ const rootStructuredData = {
         priceCurrency: "USD",
       },
       author: {
-        "@id": "https://bidyabhushan.in/#person",
+        "@id": "https://www.bidyabhushan.in/#person",
       },
       creator: {
-        "@id": "https://bidyabhushan.in/#person",
+        "@id": "https://www.bidyabhushan.in/#person",
       },
       installUrl:
         "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
-      url: "https://bidyabhushan.in/broccoli",
+      url: "https://www.bidyabhushan.in/broccoli",
     },
   ],
 };
