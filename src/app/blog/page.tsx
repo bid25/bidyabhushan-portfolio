@@ -25,10 +25,27 @@ const posts = [
     topics: ["AI", "LABOUR MARKETS", "SOFTWARE ENGINEERING"],
     status: "PREPRINT DRAFT",
     statusBg: "#FF5C8A",
+    isComingSoon: false,
+  },
+  {
+    slug: "sm-t295-linux-bringup",
+    dossier: "DOSSIER 02 // SYSTEMS MONOGRAPH",
+    date: "NOV 2026",
+    title: "DUAL-BOOTING MAINLINE LINUX & ANDROID",
+    subtitle:
+      "A Second-Stage Bootloader Bring-Up of the Samsung Galaxy Tab A 8.0 (SM-T295)",
+    description:
+      "Dual-booting near-mainline Linux 7.1.3 and LineageOS 21 on a vendor-locked Qualcomm SDM429 tablet. S-Boot PMIC matching, 199 MiB idle memory, and bare-metal hardware bring-up.",
+    readingTime: "16 MIN READ",
+    handwrittenNote: "published preprint: read the bring-up paper!",
+    topics: ["MOBILE LINUX", "QUALCOMM SDM429", "LK2ND", "DUAL BOOT"],
+    status: "PUBLISHED PREPRINT",
+    statusBg: "#FF5C8A",
+    isComingSoon: false,
   },
   {
     slug: "hoshcare-bringup-notes",
-    dossier: "DOSSIER 02 // FIELD LOG",
+    dossier: "DOSSIER 03 // FIELD LOG",
     date: "JUN 2026",
     title: "BUILDING OFFLINE-FIRST MEDICAL OCR",
     subtitle:
@@ -37,25 +54,9 @@ const posts = [
       "Lessons learned building HOSHCARE: handling unstructured prescription documents, structured output extraction with Gemini, and row-level data isolation.",
     readingTime: "12 MIN READ",
     handwrittenNote: "remedying silent Expo bugs",
-    topics: ["REACT NATIVE", "GEMINI API", "EXPO"],
+    topics: ["REACT NATIVE", "GEMINI API", "EXPO", "SQLITE CACHE"],
     status: "UPCOMING DRAFT",
     statusBg: "#FFD93B",
-    isComingSoon: true,
-  },
-  {
-    slug: "sm-t295-linux-bringup",
-    dossier: "DOSSIER 03 // HARDWARE LOG",
-    date: "MAY 2026",
-    title: "REVERSING THE SM-T295 BOOTLOADER",
-    subtitle:
-      "From Qualcomm EDL recovery to dual-booting Arch Linux on a Galaxy Tab",
-    description:
-      "Deep dive into probing the bootloader, partition maps, kernel UART, and running Arch Linux on bare metal tablet silicon.",
-    readingTime: "18 MIN READ",
-    handwrittenNote: "bare-metal Qualcomm bring-up",
-    topics: ["ARM64", "LINUX", "HARDWARE"],
-    status: "IN LAB LOG",
-    statusBg: "#FFF6C2",
     isComingSoon: true,
   },
 ];
@@ -90,22 +91,27 @@ export default function BlogPage() {
       </div>
 
       {/* Grid of Dossier Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-10 items-stretch">
         {posts.map((post, index) => {
           const cardInner = (
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-between h-full w-full">
               {/* Dossier Tab Header */}
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3 border-b-2 border-dashed border-[#0B3D2E]/40 pb-2.5">
-                  <span className="font-pixel text-[9px] text-[#0B3D2E]/80 font-bold">
-                    {post.dossier}
-                  </span>
-                  <span
-                    className="font-pixel text-[9px] px-2 py-0.5 border-2 border-[#0B3D2E] font-bold"
-                    style={{ background: post.statusBg, color: "#0B3D2E" }}
-                  >
-                    {post.status}
-                  </span>
+                <div className="mb-3 border-b-2 border-dashed border-[#0B3D2E]/40 pb-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-pixel text-[9px] text-[#0B3D2E]/80 font-bold">
+                      {post.dossier.split(" // ")[0]} //
+                    </span>
+                    <span
+                      className="font-pixel text-[9px] px-2 py-0.5 border-2 border-[#0B3D2E] font-bold shrink-0 whitespace-nowrap"
+                      style={{ background: post.statusBg, color: "#0B3D2E" }}
+                    >
+                      {post.status}
+                    </span>
+                  </div>
+                  <div className="font-pixel text-[9px] text-[#0B3D2E]/80 font-bold mt-1">
+                    {post.dossier.split(" // ")[1]}
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between gap-2 mb-2 font-mono text-xs">
@@ -117,21 +123,21 @@ export default function BlogPage() {
                   </span>
                 </div>
 
-                <h2 className="font-pixel text-base leading-snug my-3 text-[#0B3D2E]">
+                <h2 className="font-pixel text-sm sm:text-base leading-snug my-3 text-[#0B3D2E] min-h-[44px] sm:min-h-[48px] flex items-center">
                   {post.title}
                 </h2>
 
-                <p className="m-0 mb-4 font-mono text-xs sm:text-sm leading-relaxed text-[#0B3D2E]/90">
+                <p className="m-0 mb-4 font-mono text-xs sm:text-sm leading-relaxed text-[#0B3D2E]/90 min-h-[84px] sm:min-h-[92px]">
                   {post.description}
                 </p>
 
                 {/* Handwritten margin note */}
-                <div className="mb-4 font-hand text-xl text-[#FF5C8A] -rotate-1 font-bold">
+                <div className="mb-4 font-hand text-xl text-[#FF5C8A] -rotate-1 font-bold min-h-[30px] flex items-center">
                   ✎ {post.handwrittenNote}
                 </div>
 
                 {/* Topics */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="flex flex-wrap gap-1.5 mb-4 min-h-[52px] sm:min-h-[56px] content-start">
                   {post.topics.map((t) => (
                     <span
                       key={t}
@@ -144,11 +150,17 @@ export default function BlogPage() {
               </div>
 
               {/* Action footer */}
-              <div className="font-bold border-t-3 border-dashed border-[#0B3D2E] pt-3 text-sm flex items-center justify-between text-[#0B3D2E]">
+              <div className="font-bold border-t-3 border-dashed border-[#0B3D2E] pt-3 text-sm flex items-center justify-between text-[#0B3D2E] mt-auto">
                 <span className="font-pixel text-[10px]">
                   {post.isComingSoon ? "UPCOMING DRAFT" : "OPEN DOSSIER"}
                 </span>
-                <span className="font-pixel text-xs">→</span>
+                {post.isComingSoon ? (
+                  <span className="font-pixel text-[8px] px-1.5 py-0.5 bg-[#FFD93B] border border-[#0B3D2E] text-[#0B3D2E]">
+                    QUEUED
+                  </span>
+                ) : (
+                  <span className="font-pixel text-xs">→</span>
+                )}
               </div>
             </div>
           );
@@ -157,7 +169,7 @@ export default function BlogPage() {
             return (
               <div
                 key={post.slug}
-                className="card pop border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF6C2]/85 shadow-[5px_5px_0_#0B3D2E] sm:shadow-[8px_8px_0_#0B3D2E] p-4 sm:p-6 relative flex flex-col justify-between"
+                className="card pop flex flex-col justify-between h-full border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-4 sm:p-6 relative"
                 style={{ animationDelay: `${index * 120}ms` }}
               >
                 {cardInner}
@@ -169,7 +181,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="card pop block border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-4 sm:p-6 relative flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[14px_14px_0_#0B3D2E] transition-all"
+              className="card pop flex flex-col justify-between h-full border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[10px_10px_0_#0B3D2E] p-4 sm:p-6 relative hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[14px_14px_0_#0B3D2E] transition-all"
               style={{ animationDelay: `${index * 120}ms` }}
             >
               {cardInner}
