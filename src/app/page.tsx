@@ -306,7 +306,7 @@ export default function Home() {
                   GET IN TOUCH
                 </Link>
                 <a
-                  href="/Resume.pdf"
+                  href="/resumes/Bidya_Bhushan_Nanda_Comprehensive_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ backgroundColor: "transparent", color: "#0B3D2E" }}

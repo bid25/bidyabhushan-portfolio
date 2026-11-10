@@ -23,6 +23,19 @@ const nextConfig: NextConfig = {
       { source: '/delete-account', destination: '/delete-account.html' },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*.pdf',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({

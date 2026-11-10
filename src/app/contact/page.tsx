@@ -38,7 +38,7 @@ const CHANNELS = [
   {
     id: "resume",
     label: "RESUME → View / Download PDF",
-    href: "/Resume.pdf",
+    href: "/resumes/Bidya_Bhushan_Nanda_Comprehensive_Resume.pdf",
     channelClass: "contact-resume",
     color: "#E5252A",
     external: true,
