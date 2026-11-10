@@ -7,11 +7,24 @@ import { PixelHabanero } from "@/components/PixelHabanero";
 import { HoshcareLogo } from "@/components/HoshcareIcon";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Engineering Projects & Systems Case Studies",
   description:
-    "Systems and software built from bare silicon to production apps. Case studies and technical postmortems.",
+    "Systems and software built from bare silicon to production apps: Zucchini Linux ARM64 kernel bring-up, Kestrel Rust UAV flight control, Broccoli on Google Play, and Habanero AI.",
   alternates: {
     canonical: "/projects",
+  },
+  openGraph: {
+    title: "Engineering Projects & Systems Case Studies | Bidya Bhushan Nanda",
+    description:
+      "Deep-dive technical case studies covering ARM64 bootloaders, Rust 50 Hz UAV flight control, offline-first SQLite architectures, and compound AI engines.",
+    url: "https://www.bidyabhushan.in/projects",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects | Bidya Bhushan Nanda",
+    description:
+      "Bare-metal Linux bring-up, Rust UAV ground station, Broccoli on Google Play, and compound AI.",
   },
 };
 

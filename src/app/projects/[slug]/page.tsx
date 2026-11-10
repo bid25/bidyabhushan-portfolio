@@ -227,6 +227,20 @@ export async function generateMetadata({
       description: project.description,
       url: `https://www.bidyabhushan.in/projects/${slug}`,
       type: "article",
+      images: [
+        {
+          url: "/opengraph-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      images: ["/twitter-image.jpg"],
     },
   };
 }

@@ -62,6 +62,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Technical case studies
   const projectSlugs = [
     "zucchini-linux",
+    "kestrel",
+    "habanero",
     "broccoli",
     "hoshcare-client",
     "hoshcare-api",
@@ -75,7 +77,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Research dossiers & publications
-  const blogSlugs = ["augmentation-not-obsolescence"];
+  const blogSlugs = [
+    "augmentation-not-obsolescence",
+    "sm-t295-linux-bringup",
+  ];
 
   const blogRoutes: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,

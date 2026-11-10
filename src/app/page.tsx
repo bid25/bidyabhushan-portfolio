@@ -120,12 +120,24 @@ const rootStructuredData = {
         "Board Support Package (BSP)",
         "Bare-Metal Bringup",
         "ARM64 Linux Kernel",
-        "Qualcomm EDL",
+        "Qualcomm SDM429",
+        "S-Boot Reverse Engineering",
+        "LK2ND Bootloader",
+        "Rust",
+        "Tokio",
+        "MAVLink v2",
+        "PX4 Autopilot",
+        "ArduPilot",
+        "UAV Ground Control Station",
         "React Native",
+        "Expo SDK",
         "TypeScript",
         "Node.js",
+        "NestJS",
         "PostgreSQL",
         "SQLite FTS5",
+        "Local LLMs",
+        "Compound AI",
         "Cinematography",
         "Film Directing",
         "Visual Storytelling",
@@ -139,6 +151,18 @@ const rootStructuredData = {
       ],
     },
     {
+      "@type": "WebSite",
+      "@id": "https://www.bidyabhushan.in/#website",
+      url: "https://www.bidyabhushan.in",
+      name: "Bidya Bhushan Nanda | Engineering & Systems Portfolio",
+      description:
+        "Full-Stack & BSP Engineer. Bare-metal ARM64 bringup, Creator of Broccoli on Google Play, Kestrel UAV Ground Control Station, and Habanero AI.",
+      publisher: {
+        "@id": "https://www.bidyabhushan.in/#person",
+      },
+      inLanguage: "en-US",
+    },
+    {
       "@type": "SoftwareApplication",
       "@id": "https://www.bidyabhushan.in/#broccoli",
       name: "Broccoli",
@@ -149,7 +173,7 @@ const rootStructuredData = {
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: "5.0",
-        ratingCount: "1",
+        ratingCount: "20",
         bestRating: "5",
         worstRating: "1",
       },
@@ -167,6 +191,44 @@ const rootStructuredData = {
       installUrl:
         "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
       url: "https://www.bidyabhushan.in/broccoli",
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://www.bidyabhushan.in/#zucchini-linux",
+      name: "Zucchini Linux",
+      description:
+        "Near-mainline Linux 7.1.3 and LineageOS 21 dual-boot bring-up on Qualcomm Snapdragon 429 (Samsung Galaxy Tab A 8.0 SM-T295) with S-Boot bypass.",
+      programmingLanguage: "C",
+      operatingSystem: "Linux",
+      author: {
+        "@id": "https://www.bidyabhushan.in/#person",
+      },
+      url: "https://www.bidyabhushan.in/projects/zucchini-linux",
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://www.bidyabhushan.in/#kestrel",
+      name: "Kestrel Ground Control Station",
+      description:
+        "High-reliability UAV ground control station in Rust and Tauri v2. 50 Hz lock-free telemetry, MAVLink v2 ingestion, and offline PMTiles vector maps.",
+      programmingLanguage: "Rust",
+      author: {
+        "@id": "https://www.bidyabhushan.in/#person",
+      },
+      url: "https://www.bidyabhushan.in/projects/kestrel",
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://www.bidyabhushan.in/#habanero",
+      name: "Habanero Engine",
+      description:
+        "100% offline compound AI engine on Apple Silicon Metal with topological DAG scheduler and 8-stage deterministic verification gauntlet.",
+      operatingSystem: "macOS",
+      applicationCategory: "DeveloperApplication",
+      author: {
+        "@id": "https://www.bidyabhushan.in/#person",
+      },
+      url: "https://www.bidyabhushan.in/projects/habanero",
     },
   ],
 };

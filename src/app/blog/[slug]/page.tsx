@@ -67,6 +67,27 @@ export async function generateMetadata({
       url: `https://www.bidyabhushan.in/blog/${slug}`,
       type: "article",
       publishedTime: metadata.date,
+      images: [
+        {
+          url:
+            slug === "sm-t295-linux-bringup"
+              ? "/images/zucchini-paper/img-001.png"
+              : "/opengraph-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: metadata.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.summary,
+      images: [
+        slug === "sm-t295-linux-bringup"
+          ? "/images/zucchini-paper/img-001.png"
+          : "/twitter-image.jpg",
+      ],
     },
   };
 }

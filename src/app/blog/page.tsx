@@ -2,11 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Research & Writing",
+  title: "Research Papers, Monographs & Writing",
   description:
-    "Working papers, field notes, and technical postmortems on systems, hardware, and engineering labor markets.",
+    "Working papers, bare-metal hardware monographs, and technical postmortems by Bidya Bhushan Nanda. Empirical data on engineering economics and systems bring-up.",
   alternates: {
     canonical: "/blog",
+  },
+  openGraph: {
+    title: "Research Papers & Systems Monographs | Bidya Bhushan Nanda",
+    description:
+      "Empirical research monographs on ARM64 Linux second-stage bootloader bring-up and labour-market economics under AI capability benchmarks.",
+    url: "https://www.bidyabhushan.in/blog",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Research & Blog Dossiers | Bidya Bhushan Nanda",
+    description:
+      "Systems monographs, second-stage bootloaders, and engineering economics papers.",
   },
 };
 

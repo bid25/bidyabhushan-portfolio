@@ -3,11 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Bidya Bhushan Nanda | Systems & Full-Stack Engineer",
   description:
     "Electronics roots, software habits. Full-Stack & BSP Engineer building from bare silicon up to production systems. MAIT Delhi class of 2029.",
   alternates: {
     canonical: "/about",
+  },
+  openGraph: {
+    title: "About Bidya Bhushan Nanda | Systems & Full-Stack Engineer",
+    description:
+      "Full-Stack & BSP Engineer working where hardware meets software: ARM64 kernel bring-up, Rust flight systems, React Native, and compound AI.",
+    url: "https://www.bidyabhushan.in/about",
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Bidya Bhushan Nanda",
+    description:
+      "Full-Stack & BSP Engineer. Electronics foundation (MAIT '29), filmmaker, and creator of Broccoli on Google Play.",
   },
 };
 
