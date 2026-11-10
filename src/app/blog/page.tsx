@@ -82,7 +82,7 @@ export default function BlogPage() {
           />
         </svg>
 
-        <h1 className="gl m-0 font-pixel text-2xl sm:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
+        <h1 className="gl m-0 font-pixel text-xl sm:text-2xl md:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
           RESEARCH &amp; BLOG DOSSIERS
         </h1>
         <p className="mt-6 mb-0 text-base sm:text-lg max-w-[640px] border-l-8 border-[#0B3D2E] pl-4 text-[#0B3D2E] font-medium leading-relaxed font-mono">

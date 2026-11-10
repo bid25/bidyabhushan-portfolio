@@ -24,7 +24,7 @@ const projects = [
     description:
       "Caloric & body composition tracker built with precision. Shipped to Google Play worldwide.",
     tags: ["REACT NATIVE", "REANIMATED", "SQLITE"],
-    cta: "VIEW PRODUCT →",
+    cta: "VIEW PRODUCT",
     graphic: <PixelBroccoli width={90} height={90} />,
   },
   {
@@ -35,7 +35,7 @@ const projects = [
     description:
       "SM-T295 tablet reverse engineered for bare-metal dual-boot of Arch Linux and LineageOS.",
     tags: ["ARM64", "ARCH LINUX", "LINEAGEOS"],
-    cta: "READ BRING-UP LOG →",
+    cta: "READ BRING-UP LOG",
     graphic: <PixelZucchini width={180} height={75} rotate={-6} />,
   },
   {
@@ -46,7 +46,7 @@ const projects = [
     description:
       "High-reliability UAV ground station in Rust & Tauri v2. 50 Hz lock-free telemetry, <220 MB RAM, and offline vector maps.",
     tags: ["RUST", "TOKIO", "TAURI V2", "MAVLINK", "WEBRTC"],
-    cta: "INSPECT ARCHITECTURE →",
+    cta: "INSPECT ARCHITECTURE",
     graphic: <PixelDroneGcs width={130} height={72} />,
   },
   {
@@ -57,7 +57,7 @@ const projects = [
     description:
       "100% offline compound AI work-engineer on Apple Silicon Metal with DAG scheduler & 8-stage G0-G7 hardware verification gauntlet.",
     tags: ["C11 ATOMICS", "LOCAL LLM", "DAG", "PLAYWRIGHT"],
-    cta: "INSPECT SPEC & GAUNTLET →",
+    cta: "INSPECT SPEC & GAUNTLET",
     graphic: <PixelHabanero width={85} height={75} rotate={-4} />,
   },
   {
@@ -68,7 +68,7 @@ const projects = [
     description:
       "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Merged browser prototype & design foundations.",
     tags: ["REACT NATIVE", "GEMINI API", "EXPO"],
-    cta: "READ CASE STUDY →",
+    cta: "READ CASE STUDY",
     graphic: <HoshcareLogo width={160} height={39} />,
   },
   {
@@ -79,7 +79,7 @@ const projects = [
     description:
       "Node/Express/Prisma backend: auth, uploads, extraction pipeline with retry and record locking. Replaced by a shared NestJS backend.",
     tags: ["NODE", "PRISMA", "POSTGRESQL", "NESTJS"],
-    cta: "READ CASE STUDY →",
+    cta: "READ CASE STUDY",
     graphic: <HoshcareLogo width={160} height={39} />,
   },
 ];
@@ -121,7 +121,7 @@ export default function ProjectsPage() {
           />
         </svg>
 
-        <h1 className="gl m-0 font-pixel text-2xl sm:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
+        <h1 className="gl m-0 font-pixel text-xl sm:text-2xl md:text-3xl leading-snug bg-[#FFF6C2] border-4 border-[#0B3D2E] px-4 py-3 shadow-[6px_6px_0_#0B3D2E] inline-block text-[#0B3D2E]">
           PROJECTS
         </h1>
         <p className="mt-6 mb-0 text-base sm:text-lg max-w-[620px] border-l-8 border-[#0B3D2E] pl-4 text-[#0B3D2E] font-medium leading-relaxed font-mono">

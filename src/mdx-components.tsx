@@ -67,6 +67,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </a>
     ),
+    pre: ({ children }) => (
+      <pre className="my-6 overflow-x-auto max-w-full rounded-none border-2 sm:border-3 border-[#0B3D2E] bg-[#041812] p-3.5 sm:p-5 font-mono text-xs sm:text-sm text-[#A7F3D0] shadow-[3px_3px_0_#0B3D2E] sm:shadow-[5px_5px_0_#0B3D2E]">
+        {children}
+      </pre>
+    ),
+    code: ({ children, className }) => (
+      <code className={`${className || ""} font-mono text-[12px] sm:text-sm break-words`}>
+        {children}
+      </code>
+    ),
     ...components,
   };
 }

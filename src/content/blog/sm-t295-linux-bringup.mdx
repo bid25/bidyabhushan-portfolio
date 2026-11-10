@@ -39,7 +39,7 @@ We contribute:
 1. **A second-stage bootloader injection scheme** in which `lk2nd` is wrapped in a boot image that Samsung's S-Boot accepts, avoiding vendor device-tree overlay merging through an exact PMIC selector match while the factory bootloader stays unmodified (Section 4).
 2. **A non-destructive storage mapping** that places an Arch root filesystem on the userdata partition, reuses Android partitions as swap and scratch space, and hands off to LineageOS through a warm reset with a Qualcomm reset cookie (Section 4).
 3. **Peripheral enablement work**: a device tree for the SDM429's four-core topology, a DRM driver for the JD9367 (TXD) panel, a rotated 24-bpp shadow blitter for Xorg fbdev, and a PMIC power-off fix by direct SPMI programming (Section 5).
-4. **A development record**: dated photographs of successes and failures, and preliminary measurements with their caveats (Sections 6–8).
+4. **A development record**: dated photographs of successes and failures, and preliminary measurements with their caveats (Sections 6-8).
 
 Preliminary single-device measurements show **199 MiB** of memory in use at idle against **1,380 MiB** on stock Android 11, a cold boot to desktop in **11.2 s** against **34.6 s**, and **620 mW** desktop-idle draw. We include photographs taken during development and state the limits plainly: the photographed desktop session uses software rendering, the Android side runs with SELinux permissive, and the Knox warranty flag is tripped.
 
@@ -63,7 +63,7 @@ This paper makes the following contributions:
 1. A bootloader injection scheme that runs `lk2nd` as a second stage from the boot slot, bypassing vendor overlay merging by matching the board's PMIC selector, with the factory `aboot` never written (Section 4).
 2. A non-destructive storage layout and a warm-reset handoff that lets the same menu start either Arch Linux ARM or LineageOS 21 (Section 4).
 3. Peripheral enablement for display, touch, power-off, USB gadget and connectivity, with the debugging method used to find each fault (Section 5).
-4. A development record: dated photographs of successes and failures, and preliminary measurements with their caveats (Sections 6–8).
+4. A development record: dated photographs of successes and failures, and preliminary measurements with their caveats (Sections 6-8).
 
 The two operating systems run one at a time; the boot menu selects which. We call this *dual boot*, not concurrent operation.
 
@@ -89,7 +89,7 @@ S-Boot hosts Samsung's Download Mode (the Odin protocol, also implemented by Hei
 
 Because the tablet has no exposed serial header, early iterations are blind, and a bricked device would end the project. We therefore fix a recovery policy before any code runs. Let W be the set of partitions the project writes. The policy is:
 
-<div className="my-6 p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E]">
+<div className="my-6 p-3 sm:p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E] overflow-x-auto max-w-full">
   <code>aboot ∉ W, &nbsp; W ⊆ &#123;boot, recovery, vbmeta, userdata, system, vendor, product, cache&#125;</code> &nbsp;&nbsp;&nbsp;&nbsp;(1)
 </div>
 
@@ -138,7 +138,7 @@ With an exact match, S-Boot sets `dtbo_needed = false` and no vendor overlay is 
 
 ### 4.3 Boot image layout
 
-S-Boot also checks image structure. The accepted layout is shown in Figure 2. An early standalone image failed with `SECURE CHECK FAIL : boot.img` (Figure 5a) because the assembly script zeroed the padding between the signature header and the 512 KiB boundary. Binary comparison against the last working image showed an internal AVB hash descriptor at byte offset 356,352 (`0x57000`) inside that range. Preserving the whole 0–512 KiB prefix of the working `lk2nd` image and placing the Stage-2 kernel at 512 KiB removed the failure.
+S-Boot also checks image structure. The accepted layout is shown in Figure 2. An early standalone image failed with `SECURE CHECK FAIL : boot.img` (Figure 5a) because the assembly script zeroed the padding between the signature header and the 512 KiB boundary. Binary comparison against the last working image showed an internal AVB hash descriptor at byte offset 356,352 (`0x57000`) inside that range. Preserving the whole 0-512 KiB prefix of the working `lk2nd` image and placing the Stage-2 kernel at 512 KiB removed the failure.
 
 <BootImageLayoutDiagram
   figure="Figure 2"
@@ -154,7 +154,7 @@ The eMMC (`QD63MB`, 29.1 GiB) carries 69 partitions from Samsung's PIT. Table 2 
   caption="Partition roles and reallocation on 29.1 GiB eMMC"
   head={["Partition", "Stock Role", "Zucchini Linux Role", "Filesystem / Capacity"]}
   rows={[
-    ["p1–15", "Qualcomm firmware", "Untouched", "Proprietary modem, tz, rpm blobs"],
+    ["p1-15", "Qualcomm firmware", "Untouched", "Proprietary modem, tz, rpm blobs"],
     ["p16", "aboot (S-Boot)", "Never written", "Samsung factory primary bootloader"],
     ["p17", "vbmeta", "Patched", "AVB v1.0 null verification hash"],
     ["p26", "dtbo", "Bypassed", "Skipped via PMIC selector match"],
@@ -219,7 +219,7 @@ Early boots produced no display, no USB and no LED activity. Two mechanisms reco
 
 ### 5.2 CPU topology
 
-The SDM429 exposes four Cortex-A53 cores at MPIDR affinities `0x100`–`0x103`, while the inherited platform tree describes eight. The kernel tried to start the missing cores through PSCI and received error code `-22`, and `cpuidle-psci` refused to register idle states while any listed CPU lacked them. The device tree deletes the absent cores and rebuilds the CPU map:
+The SDM429 exposes four Cortex-A53 cores at MPIDR affinities `0x100`-`0x103`, while the inherited platform tree describes eight. The kernel tried to start the missing cores through PSCI and received error code `-22`, and `cpuidle-psci` refused to register idle states while any listed CPU lacked them. The device tree deletes the absent cores and rebuilds the CPU map:
 
 ```dts
 /* Rebuilt CPU topology for Snapdragon 429 4-core cluster */
@@ -250,13 +250,13 @@ also visible on the menu in Figure 3a. The panel is a Jadechem JD9367 in Tongxin
 
 **Rotation.** The panel is an 800×1280 portrait array; the desktop runs at 1280×800. Upstream `xf86-video-fbdev` disables rotation on 24-bpp framebuffers because pixels are not 4-byte aligned (stride 2,400 bytes). A patched shadow blitter, `fbdevUpdateRotate32to24`, renders into a 32-bpp landscape buffer and copies damaged rectangles into the 24-bpp portrait framebuffer using:
 
-<div className="my-6 p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E]">
+<div className="my-6 p-3 sm:p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E] overflow-x-auto max-w-full">
   <code>x_p = y_l, &nbsp; y_p = 799 − x_l, &nbsp; addr = 2400 · y_p + 3 · x_p</code> &nbsp;&nbsp;&nbsp;&nbsp;(2)
 </div>
 
 with byte order B, G, R for this controller. The touch transformation matrix is:
 
-<div className="my-4 p-3 border border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold">
+<div className="my-4 p-3 border border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold overflow-x-auto max-w-full">
   <code>Touch Matrix = [ 0, 1, 0, &nbsp; -1, 0, 1, &nbsp; 0, 0, 1 ]</code>
 </div>
 
@@ -266,7 +266,7 @@ with byte order B, G, R for this controller. The touch transformation matrix is:
 
 **Power-off.** `poweroff` rebooted the tablet. S-Boot leaves the PMIC's `PS_HOLD_RST_CTL` register (SPMI `0x085a`) at `0x01` (warm reset), so dropping `PS_HOLD` restarts the SoC. Because the kernel lacked debugfs register writes, a root-only userspace daemon maps the SPMI write channel for APID 37 through `/dev/mem` at:
 
-<div className="my-6 p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E]">
+<div className="my-6 p-3 sm:p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E] overflow-x-auto max-w-full">
   <code>0x02400000 + 0x128000 = 0x02528000</code> &nbsp;&nbsp;&nbsp;&nbsp;(3)
 </div>
 
@@ -303,7 +303,7 @@ The photographs below were taken during development; dates come from the camera 
   caption="Timeline reconstructed from photographs, 15 October to 9 November 2026."
 />
 
-Between 15 and 17 October S-Boot rejected, then accepted, a custom image (Figure 5a–c). On 18 October `lk2nd` reached fastboot (Figure 3a) and revealed the panel identity (Section 5.3). On 21 October the Arch Linux ARM XFCE desktop ran on kernel `7.1.3-g6406df31eeed-dirty` (Figure 7a). The 23 October Download Mode capture (Figure 5d) shows a vbmeta check failing during a flashing iteration.
+Between 15 and 17 October S-Boot rejected, then accepted, a custom image (Figure 5a-c). On 18 October `lk2nd` reached fastboot (Figure 3a) and revealed the panel identity (Section 5.3). On 21 October the Arch Linux ARM XFCE desktop ran on kernel `7.1.3-g6406df31eeed-dirty` (Figure 7a). The 23 October Download Mode capture (Figure 5d) shows a vbmeta check failing during a flashing iteration.
 
 <PaperGallery
   figure="Figure 5"
@@ -339,7 +339,7 @@ Between 15 and 17 October S-Boot rejected, then accepted, a custom image (Figure
   note="The warning in (c) means S-Boot successfully loaded non-Samsung software, which was the primary bootloader milestone."
 />
 
-Two boot logs bracket the storage work (Figure 6). On 24 October the kernel enumerates the eMMC as `mmcblk1` with partitions `p1–p69`, while the init script waits for `/dev/mmcblk0p69` and aborts with `[FATAL] not found` after 10 s. The log also shows missing firmware for the wireless subsystem (`wcnss.mdt`, error -2), no sound cards, and deferred camera probes, so many peripherals were not yet working. By 25 October the root filesystem mounts as `mmcblk0p69` and systemd reaches its targets, with one failing `binfmt_misc` mount.
+Two boot logs bracket the storage work (Figure 6). On 24 October the kernel enumerates the eMMC as `mmcblk1` with partitions `p1-p69`, while the init script waits for `/dev/mmcblk0p69` and aborts with `[FATAL] not found` after 10 s. The log also shows missing firmware for the wireless subsystem (`wcnss.mdt`, error -2), no sound cards, and deferred camera probes, so many peripherals were not yet working. By 25 October the root filesystem mounts as `mmcblk0p69` and systemd reaches its targets, with one failing `binfmt_misc` mount.
 
 <PaperGallery
   figure="Figure 6"

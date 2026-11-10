@@ -46,7 +46,7 @@ export function BootImageLayoutDiagram({
             <span>INTERNAL AVB HASH DESCRIPTOR (CRITICAL)</span>
           </div>
           <p className="m-0 text-[11px] text-[#FFFDF0] leading-relaxed">
-            Must be preserved verbatim. Early assembly scripts zeroed the 0–512 KiB padding, causing S-Boot to abort with <code className="bg-[#0B3D2E] text-[#FF5C8A] px-1 font-bold">SECURE CHECK FAIL : boot.img</code>.
+            Must be preserved verbatim. Early assembly scripts zeroed the 0-512 KiB padding, causing S-Boot to abort with <code className="bg-[#0B3D2E] text-[#FF5C8A] px-1 font-bold">SECURE CHECK FAIL : boot.img</code>.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export function BootImageLayoutDiagram({
         {/* Section 5: AVB Footer at partition boundary */}
         <div className="border border-[#34D399] bg-[#06231A] p-2.5">
           <div className="flex justify-between items-center text-[10px] text-[#34D399] border-b border-[#0B3D2E] pb-1 mb-1 font-bold">
-            <span>64 MiB − 64 B</span>
+            <span>64 MiB - 64 B</span>
             <span>AVB v1.0 FOOTER (&ldquo;AVBf&rdquo;)</span>
           </div>
           <p className="m-0 text-[10px] text-[#A7F3D0] leading-tight">

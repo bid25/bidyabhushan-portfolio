@@ -9,6 +9,7 @@ interface PaperHeroProps {
   subtitle: string;
   meta: string[];
   pdf?: string;
+  docRef?: string;
 }
 
 export function PaperHero({
@@ -17,6 +18,7 @@ export function PaperHero({
   subtitle,
   meta,
   pdf,
+  docRef = "DOC. REF: WP-2026-07 // NBER RECOMPOSITION",
 }: PaperHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +32,7 @@ export function PaperHero({
         </div>
 
         <div className="font-pixel text-[10px] text-[#0B3D2E]/70">
-          DOC. REF: WP-2026-07 // NBER RECOMPOSITION
+          {docRef}
         </div>
       </div>
 

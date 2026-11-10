@@ -85,7 +85,7 @@ export function TimelineDiagram({
           </span>
         </div>
         <span className="block font-mono text-base font-bold text-[#0B3D2E]">
-          Chronological Development Sequence (15 Oct – 9 Nov 2026)
+          Chronological Development Sequence (15 Oct - 9 Nov 2026)
         </span>
         <p className="mt-1 mb-0 font-mono text-xs text-[#0B3D2E]/80">
           {caption}

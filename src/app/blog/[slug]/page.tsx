@@ -28,6 +28,7 @@ interface PostMeta {
   quote?: string;
   series?: string;
   badge?: string;
+  docRef?: string;
   citation?: string;
 }
 
@@ -135,7 +136,7 @@ export default async function BlogPostPage({
   };
 
   return (
-    <article className="w-full max-w-[1100px] mx-auto px-4 sm:px-8 py-10 sm:py-16 text-[#0B3D2E] font-mono">
+    <article className="w-full max-w-[1100px] mx-auto px-3 sm:px-6 md:px-8 py-8 sm:py-16 text-[#0B3D2E] font-mono">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -151,7 +152,7 @@ export default async function BlogPostPage({
       </div>
 
       {/* Main Archival Research Dossier Card */}
-      <div className="un border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] p-4 sm:p-8 md:p-12 relative overflow-x-clip max-w-full">
+      <div className="un border-3 sm:border-4 border-[#0B3D2E] bg-[#FFFDF0] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] p-3.5 sm:p-8 md:p-12 relative overflow-x-clip max-w-full">
         {/* Archival Manuscript Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b-3 border-[#0B3D2E] pb-4 mb-8">
           <div className="font-pixel text-[10px] text-[#0B3D2E] flex items-center gap-2">
@@ -172,6 +173,7 @@ export default async function BlogPostPage({
             subtitle={metadata.subtitle}
             meta={[published, "Bidya Bhushan Nanda", metadata.readingTime]}
             pdf={metadata.pdf}
+            docRef={metadata.docRef || (slug === "sm-t295-linux-bringup" ? "DOC. REF: SYS-2026-11 // HARDWARE MONOGRAPH" : undefined)}
           />
         </header>
 

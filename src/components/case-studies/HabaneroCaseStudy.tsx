@@ -216,8 +216,8 @@ export function HabaneroCaseStudy() {
           </div>
 
           {/* Title with circled HABANERO and pink swoosh */}
-          <div className="my-5">
-            <h1 className="m-0 font-hand font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.15] text-[#0B3D2E]">
+          <div className="my-5 min-w-0">
+            <h1 className="m-0 font-hand font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.15] text-[#0B3D2E] break-words">
               <span className="inline-block border-3 sm:border-4 border-[#FF5C8A] rounded-full px-3 sm:px-5 -rotate-2">
                 HABANERO
               </span>{" "}
@@ -288,7 +288,7 @@ export function HabaneroCaseStudy() {
                 borderBottom: "2px dashed #0B3D2E33",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="flex-wrap">
                 <span
                   style={{
                     fontFamily: "'Press Start 2P', monospace",
@@ -300,6 +300,9 @@ export function HabaneroCaseStudy() {
                 >
                   INTERACTIVE PIPELINE
                 </span>
+                <span className="sm:hidden font-pixel text-[8px] bg-[#0B3D2E] text-[#FFD93B] px-1.5 py-0.5">
+                  SWIPE ⇄
+                </span>
                 <span
                   style={{
                     fontFamily: "'Space Mono', monospace",
@@ -307,6 +310,7 @@ export function HabaneroCaseStudy() {
                     fontWeight: "700",
                     color: "#0B3D2E",
                   }}
+                  className="hidden sm:inline"
                 >
                   Click any box to inspect architecture
                 </span>
@@ -331,12 +335,13 @@ export function HabaneroCaseStudy() {
             </div>
 
             {/* SVG Schematic: Habanero Engine */}
-            <div key={replayKey} className={!isIntersecting ? "pipeline-paused" : ""}>
+            <div key={replayKey} className={`w-full overflow-x-auto pb-2 ${!isIntersecting ? "pipeline-paused" : ""}`}>
               <svg
                 role="img"
                 aria-label="Schematic: Chief Architect DAG to Parallel Execution, G0-G7 Gauntlet, and Sovereign Release"
                 viewBox="0 0 940 230"
-                style={{ width: "100%", display: "block" }}
+                className="w-full min-w-[620px] sm:min-w-0"
+                style={{ display: "block" }}
               >
                 {/* ── Box 1: chief architect (x: 24 to 184) ── */}
                 <g

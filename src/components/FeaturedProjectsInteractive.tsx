@@ -429,7 +429,7 @@ export function FeaturedProjectsInteractive() {
 
             <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 items-center">
               <div>
-                <h3 className="m-0 font-pixel text-3xl sm:text-4xl text-[#FFD93B] leading-tight">
+                <h3 className="m-0 font-pixel text-2xl sm:text-3xl lg:text-4xl text-[#FFD93B] leading-tight">
                   BROCCOLI<span className="bl text-[#FF5C8A]">_</span>
                 </h3>
                 <p className="mt-3 mb-6 text-sm sm:text-base font-mono text-[#FFD93B]/90 leading-relaxed">
@@ -531,7 +531,7 @@ export function FeaturedProjectsInteractive() {
                   {/* Tolerance band explanation */}
                   <div className="border-t-2 border-dashed border-[#0B3D2E]/40 pt-2 font-mono text-[11px] flex flex-wrap items-center justify-between gap-1 text-[#0B3D2E]">
                     <span>
-                      <strong>Honest Range:</strong> {minTolerance} – {maxTolerance} kcal (±4% error tolerance)
+                      <strong>Honest Range:</strong> {minTolerance} - {maxTolerance} kcal (±4% error tolerance)
                     </span>
                     <span className="font-pixel text-[9px] text-[#0B3D2E] bg-[#FFD93B] px-1">
                       REAL BIOFEEDBACK
@@ -544,7 +544,7 @@ export function FeaturedProjectsInteractive() {
                   <Link
                     href="/projects/broccoli"
                     style={{ backgroundColor: "#FFD93B", color: "#0B3D2E" }}
-                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A]"
+                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A] w-full sm:w-auto"
                   >
                     READ CASE STUDY →
                   </Link>
@@ -553,7 +553,7 @@ export function FeaturedProjectsInteractive() {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ backgroundColor: "#FFF6C2", color: "#0B3D2E" }}
-                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FFD93B]"
+                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FFD93B] w-full sm:w-auto"
                   >
                     GET ON GOOGLE PLAY ↗
                   </a>
@@ -595,7 +595,7 @@ export function FeaturedProjectsInteractive() {
 
             <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 items-center relative z-10 font-mono">
               <div>
-                <h3 className="m-0 font-pixel text-3xl sm:text-4xl text-[#FFD93B] leading-tight">
+                <h3 className="m-0 font-pixel text-2xl sm:text-3xl lg:text-4xl text-[#FFD93B] leading-tight">
                   ZUCCHINI-LINUX<span className="bl text-[#FF5C8A]">_</span>
                 </h3>
                 <p className="mt-3 mb-5 text-sm sm:text-base text-[#FFD93B]/90 leading-relaxed">
@@ -690,7 +690,7 @@ export function FeaturedProjectsInteractive() {
                   <Link
                     href="/projects/zucchini-linux"
                     style={{ backgroundColor: "#FF5C8A", color: "#0B3D2E" }}
-                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#FFD93B] shadow-[6px_6px_0_#FFD93B]"
+                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#FFD93B] shadow-[6px_6px_0_#FFD93B] w-full sm:w-auto"
                   >
                     READ BRING-UP LOG →
                   </Link>
@@ -732,7 +732,7 @@ export function FeaturedProjectsInteractive() {
 
             <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 items-center relative z-10 font-mono">
               <div>
-                <h3 className="m-0 font-pixel text-3xl sm:text-4xl text-[#0B3D2E] leading-tight">
+                <h3 className="m-0 font-pixel text-2xl sm:text-3xl lg:text-4xl text-[#0B3D2E] leading-tight">
                   HABANERO ENGINE<span className="bl text-[#FF5C8A]">_</span>
                 </h3>
                 <p className="mt-3 mb-5 text-sm sm:text-base text-[#0B3D2E]/90 leading-relaxed">
@@ -781,7 +781,7 @@ export function FeaturedProjectsInteractive() {
                   </div>
 
                   {/* 4-Wave Pipeline Stepper Buttons */}
-                  <div className="grid grid-cols-4 gap-1.5 mb-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
                     {activeHabaneroData.waves.map((wave, idx) => {
                       const isActive = activeDagWave === idx;
                       const isPast = activeDagWave > idx;
@@ -843,7 +843,7 @@ export function FeaturedProjectsInteractive() {
                   <Link
                     href="/projects/habanero"
                     style={{ backgroundColor: "#0B3D2E", color: "#FFD93B" }}
-                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A] hover:scale-105"
+                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A] hover:scale-105 w-full sm:w-auto"
                   >
                     READ CASE STUDY →
                   </Link>
