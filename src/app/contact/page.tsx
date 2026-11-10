@@ -37,11 +37,11 @@ const CHANNELS = [
   },
   {
     id: "resume",
-    label: "RESUME → View / Download PDF",
-    href: "/Resume.pdf",
+    label: "RESUMES → 3 Specialization Tracks (/resume)",
+    href: "/resume",
     channelClass: "contact-resume",
     color: "#E5252A",
-    external: true,
+    external: false,
   },
 ];
 

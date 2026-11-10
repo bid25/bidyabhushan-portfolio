@@ -5,6 +5,7 @@ import { StackMarquee } from "@/components/StackMarquee";
 import { FeaturedProjectsInteractive } from "@/components/FeaturedProjectsInteractive";
 import { TrajectoryTimeline } from "@/components/TrajectoryTimeline";
 import { LensTeaser } from "@/components/LensTeaser";
+import { ResumeHeroSelector } from "@/components/ResumeHeroSelector";
 
 const rootStructuredData = {
   "@context": "https://schema.org",
@@ -243,15 +244,7 @@ export default function Home() {
                 >
                   GET IN TOUCH
                 </Link>
-                <a
-                  href="/Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ backgroundColor: "transparent", color: "#0B3D2E" }}
-                  className="btn inline-flex items-center justify-center min-h-[48px] px-3 sm:px-5 py-3 font-bold font-mono border-4 border-[#FF5C8A] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[6px_6px_0_#0B3D2E] text-center text-xs sm:text-base"
-                >
-                  RESUME.PDF
-                </a>
+                <ResumeHeroSelector />
               </div>
             </div>
           </div>
