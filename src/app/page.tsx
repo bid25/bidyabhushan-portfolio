@@ -5,7 +5,6 @@ import { StackMarquee } from "@/components/StackMarquee";
 import { FeaturedProjectsInteractive } from "@/components/FeaturedProjectsInteractive";
 import { TrajectoryTimeline } from "@/components/TrajectoryTimeline";
 import { LensTeaser } from "@/components/LensTeaser";
-import { ResumeHeroSelector } from "@/components/ResumeHeroSelector";
 
 const rootStructuredData = {
   "@context": "https://schema.org",
@@ -244,8 +243,38 @@ export default function Home() {
                 >
                   GET IN TOUCH
                 </Link>
-                <ResumeHeroSelector />
+                <a
+                  href="/Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ backgroundColor: "transparent", color: "#0B3D2E" }}
+                  className="btn inline-flex items-center justify-center min-h-[48px] px-3 sm:px-5 py-3 font-bold font-mono border-4 border-[#FF5C8A] shadow-[5px_5px_0_#0B3D2E] sm:shadow-[6px_6px_0_#0B3D2E] text-center text-xs sm:text-base hover:bg-[#FFF6C2] transition-colors"
+                >
+                  RESUME.PDF
+                </a>
               </div>
+            </div>
+
+            {/* Subtle 1-page ATS role tracks for specialized recruiters */}
+            <div className="mt-3 font-mono text-[11px] text-[#0B3D2E]/80 flex items-center gap-2 flex-wrap">
+              <span>1-page role tracks:</span>
+              <a
+                href="/resumes/Bidya_Bhushan_Nanda_BSP_Embedded_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-[#FF5C8A] font-bold"
+              >
+                BSP &amp; Embedded (1P)
+              </a>
+              <span>·</span>
+              <a
+                href="/resumes/Bidya_Bhushan_Nanda_FullStack_AI_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-[#FF5C8A] font-bold"
+              >
+                Full-Stack &amp; AI (1P)
+              </a>
             </div>
           </div>
 
