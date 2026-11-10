@@ -1,13 +1,91 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" type="image/png" href="data:image/png;base64,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"><title>Broccoli: grams, not guesses</title>
-<meta name="description" content="A nutrition tracker for Android that shows the margin of error on every calorie, learns what your body really burns, and works with no signal.">
-<meta property="og:title" content="Broccoli: grams, not guesses">
+<link rel="icon" type="image/png" href="data:image/png;base64,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"><title>Broccoli: Calorie &amp; Nutrition Tracker App for Android</title>
+<meta name="description" content="A precision calorie and body composition tracker for Android that shows the margin of error on every calorie, learns what your body really burns, and works with no signal.">
+<meta name="keywords" content="broccoli, brocoli, brocolli, brocolie, brocli, broccolli, broccoli app, brocoli app, brocolli app, broccoli calorie tracker, brocoli calorie tracker, brocolli calorie tracker, broccoli nutrition tracker, broccoli macro tracker, broccoli food tracker, broccoli android, broccoli google play, broccoli play store, broccoli apk, caloric and body composition instrument, grams not guesses, margin of error nutrition, offline calorie tracker, adaptive tdee tracker, Bidya Bhushan Broccoli, Vidya Bhushan Broccoli, Bidya Bhusan Broccoli, Vidya Bushan Broccoli, Bidyabhushan Broccoli, Vidyabhushan Broccoli, Bidyabhusan Broccoli, Vidyabhusan Broccoli, Bidya Broccoli, Vidya Broccoli, Bidya Nanda Broccoli, Vidya Nanda Broccoli, bid25 broccoli, Broccoli by Bidya Bhushan Nanda, Broccoli by Vidya Bhushan Nanda, Bidya Bhushan Nanda, Bidya Bhushan, Vidya Bhushan, Vidya Bushan, Bidya Bhusan, Bidyabhushan Nanda, Vidyabhushan Nanda, Bidyabhushan, Vidyabhushan, Bidya Nanda, Vidya Nanda, bid25, com.bidyabhushan.mobile">
+<meta name="author" content="Bidya Bhushan Nanda (Vidya Bhushan Nanda, Bidyabhushan, Bidya Bhusan)">
+<meta property="og:title" content="Broccoli: Calorie &amp; Nutrition Tracker App for Android">
 <meta property="og:url" content="https://www.bidyabhushan.in/broccoli">
 <link rel="canonical" href="https://www.bidyabhushan.in/broccoli">
 <meta property="og:image" content="https://www.bidyabhushan.in/images/broccoli-icon-dark.png">
 <meta name="twitter:image" content="https://www.bidyabhushan.in/images/broccoli-icon-dark.png"><meta name="theme-color" content="#1A1F14"><meta name="color-scheme" content="light dark"><meta property="og:type" content="website"><meta property="og:description" content="A nutrition tracker for Android that shows the margin of error on every calorie."><meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Broccoli",
+  "alternateName": [
+    "Broccoli App",
+    "Broccoli Calorie Tracker",
+    "Brocoli",
+    "Brocolli",
+    "Broccoli: grams, not guesses",
+    "Broccoli Nutrition Tracker",
+    "Broccoli Body Composition Instrument"
+  ],
+  "operatingSystem": "Android",
+  "applicationCategory": "HealthApplication",
+  "applicationSubCategory": "Calorie & Nutrition Tracking Instrument",
+  "description": "A nutrition tracker for Android that shows the margin of error on every calorie, learns what your body really burns, and works with no signal.",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "ratingCount": "1",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Bidya Bhushan Nanda",
+    "alternateName": [
+      "Bidya",
+      "Bidya Bhushan",
+      "Vidya",
+      "Vidya Bhushan",
+      "Vidya Bushan",
+      "Bidya Bhusan",
+      "Bidyabhushan",
+      "Bidyabhushan Nanda",
+      "Vidyabhushan",
+      "Vidyabhushan Nanda",
+      "Bidyabhusan",
+      "Vidyabhusan",
+      "Bidyabushan",
+      "Vidyabushan",
+      "Bidya Nanda",
+      "Vidya Nanda",
+      "bid25"
+    ],
+    "url": "https://www.bidyabhushan.in"
+  },
+  "creator": {
+    "@type": "Person",
+    "name": "Bidya Bhushan Nanda",
+    "alternateName": [
+      "Bidya",
+      "Bidya Bhushan",
+      "Vidya",
+      "Vidya Bhushan",
+      "Vidya Bushan",
+      "Bidya Bhusan",
+      "Bidyabhushan",
+      "Vidyabhushan",
+      "Bidya Nanda",
+      "Vidya Nanda"
+    ],
+    "url": "https://www.bidyabhushan.in"
+  },
+  "installUrl": "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.bidyabhushan.mobile&pcampaignid=web_share",
+  "url": "https://www.bidyabhushan.in/broccoli"
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Figtree:wght@400;500&family=Martian+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
