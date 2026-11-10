@@ -233,6 +233,29 @@ export function ZucchiniLinuxCaseStudy() {
             </div>
           </div>
 
+          {/* Research Paper Callout Banner */}
+          <div className="my-6 border-3 border-[#0B3D2E] bg-[#FFF8D6] p-4 shadow-[4px_4px_0_#0B3D2E] flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <span className="font-pixel text-[9px] bg-[#FF5C8A] text-[#0B3D2E] border border-[#0B3D2E] px-2 py-0.5 font-bold">
+                  SYSTEMS PREPRINT // NOVEMBER 2026
+                </span>
+                <span className="font-mono text-xs text-[#0B3D2E]/75 font-semibold">
+                  16 MIN READ · EMPIRICAL HARDWARE BRING-UP
+                </span>
+              </div>
+              <div className="font-mono text-xs sm:text-sm font-bold text-[#0B3D2E] leading-snug">
+                Dual-Booting Mainline Linux and Android on a Vendor-Locked Qualcomm Tablet (SM-T295)
+              </div>
+            </div>
+            <Link
+              href="/blog/sm-t295-linux-bringup"
+              className="btn font-pixel text-xs px-4 py-2.5 bg-[#0B3D2E] text-[#FFD93B] border-2 border-[#0B3D2E] shadow-[3px_3px_0_#FF5C8A] hover:scale-105"
+            >
+              READ FULL PAPER →
+            </Link>
+          </div>
+
           {/* 1. the problem */}
           <h2
             style={{

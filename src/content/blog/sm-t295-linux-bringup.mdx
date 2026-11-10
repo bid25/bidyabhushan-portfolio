@@ -1,0 +1,544 @@
+import PaperFigure from "@/components/paper/PaperFigure";
+import PaperTable from "@/components/paper/PaperTable";
+import PaperGallery from "@/components/paper/PaperGallery";
+import BootPipelineDiagram from "@/components/paper/BootPipelineDiagram";
+import BootImageLayoutDiagram from "@/components/paper/BootImageLayoutDiagram";
+import TimelineDiagram from "@/components/paper/TimelineDiagram";
+
+export const metadata = {
+  title: "Dual-Booting Mainline Linux and Android on a Vendor-Locked Qualcomm Tablet",
+  subtitle:
+    "A Second-Stage Bootloader Bring-Up of the Samsung Galaxy Tab A 8.0 (SM-T295)",
+  slug: "sm-t295-linux-bringup",
+  kind: "Systems preprint",
+  series: "ZUCCHINI LINUX PROJECT // SYSTEMS MONOGRAPH",
+  badge: "PREPRINT DRAFT // NOVEMBER 2026",
+  date: "2026-11-09",
+  readingTime: "16 min",
+  pdf: "/papers/Dual-Booting-Mainline-Linux-Android-SM-T295_BidyaBhushanNanda.pdf",
+  summary:
+    "Running a near-mainline Linux 7.1.3 kernel with an Arch Linux ARM64 userland alongside LineageOS 21 on the Samsung Galaxy Tab A 8.0 LTE (Qualcomm SDM429). Exact PMIC matching, 199 MiB idle memory, and bare-metal bring-up.",
+  topics: [
+    "MOBILE LINUX",
+    "QUALCOMM SDM429",
+    "LK2ND",
+    "SAMSUNG S-BOOT",
+    "DEVICE TREE",
+    "DUAL BOOT",
+  ],
+  quote: "Consumer tablets routinely outlive their vendor's software support.",
+  citation:
+    "Nanda, B. B. (2026). Dual-Booting Mainline Linux and Android on a Vendor-Locked Qualcomm Tablet: A Second-Stage Bootloader Bring-Up of the Samsung Galaxy Tab A 8.0 (SM-T295). Zucchini Linux Project Preprint Draft, November 2026. New Delhi: Maharaja Agrasen Institute of Technology.",
+};
+
+## Abstract
+
+Consumer tablets routinely outlive their vendor's software support. This paper describes **Zucchini Linux**, a bring-up of a near-mainline Linux 7.1.3 kernel with an Arch Linux ARM64 userland, alongside LineageOS 21, on the Samsung Galaxy Tab A 8.0 LTE (SM-T295, Qualcomm SDM429). The two systems are selected from a boot menu at power-on.
+
+We contribute:
+1. **A second-stage bootloader injection scheme** in which `lk2nd` is wrapped in a boot image that Samsung's S-Boot accepts, avoiding vendor device-tree overlay merging through an exact PMIC selector match while the factory bootloader stays unmodified (Section 4).
+2. **A non-destructive storage mapping** that places an Arch root filesystem on the userdata partition, reuses Android partitions as swap and scratch space, and hands off to LineageOS through a warm reset with a Qualcomm reset cookie (Section 4).
+3. **Peripheral enablement work**: a device tree for the SDM429's four-core topology, a DRM driver for the JD9367 (TXD) panel, a rotated 24-bpp shadow blitter for Xorg fbdev, and a PMIC power-off fix by direct SPMI programming (Section 5).
+4. **A development record**: dated photographs of successes and failures, and preliminary measurements with their caveats (Sections 6–8).
+
+Preliminary single-device measurements show **199 MiB** of memory in use at idle against **1,380 MiB** on stock Android 11, a cold boot to desktop in **11.2 s** against **34.6 s**, and **620 mW** desktop-idle draw. We include photographs taken during development and state the limits plainly: the photographed desktop session uses software rendering, the Android side runs with SELinux permissive, and the Knox warranty flag is tripped.
+
+**Keywords:** mobile Linux · Qualcomm SDM429 · lk2nd · device tree · Samsung S-Boot · dual boot · embedded systems · hardware longevity
+
+---
+
+## 1. Introduction
+
+Tablet hardware tends to outlast its software. The Samsung Galaxy Tab A 8.0 (2019) LTE (SM-T295, codename `gto`) pairs a Qualcomm Snapdragon 429 with 2 GB of LPDDR3 and 32 GB of eMMC storage. It shipped with Android 9 and its last official firmware is Android 11 (`T295XXS6CWG2`). Under that firmware, idle memory in use is about 1.4 GB of the 1.77 GiB available (Section 7), which makes the device sluggish for ordinary use even though its Cortex-A53 cores remain adequate for a light desktop.
+
+Running a near-mainline Linux kernel on such a device is attractive but runs into four obstacles:
+
+1. **Bootloader Validation & DTBO Merging:** Samsung's primary bootloader (S-Boot) validates boot-image structure and verified-boot footers and attempts to merge vendor device-tree overlays into the kernel it loads.
+2. **Asymmetric CPU Topology:** The SDM429 exposes only four Cortex-A53 cores, while the base platform description assumes eight.
+3. **Display Panel Ambiguity:** The display panel cannot be inferred reliably from the chassis stamping alone.
+4. **Permanent Brick Risks:** Any approach that overwrites the factory bootloader risks a device that cannot be reflashed.
+
+This paper makes the following contributions:
+
+1. A bootloader injection scheme that runs `lk2nd` as a second stage from the boot slot, bypassing vendor overlay merging by matching the board's PMIC selector, with the factory `aboot` never written (Section 4).
+2. A non-destructive storage layout and a warm-reset handoff that lets the same menu start either Arch Linux ARM or LineageOS 21 (Section 4).
+3. Peripheral enablement for display, touch, power-off, USB gadget and connectivity, with the debugging method used to find each fault (Section 5).
+4. A development record: dated photographs of successes and failures, and preliminary measurements with their caveats (Sections 6–8).
+
+The two operating systems run one at a time; the boot menu selects which. We call this *dual boot*, not concurrent operation.
+
+---
+
+## 2. Background and Related Work
+
+### 2.1 Android-hybrid and mainline approaches
+
+Projects such as Ubuntu Touch and Sailfish OS use Halium or libhybris to run a GNU/Linux userland over the vendor's Android kernel, often a 3.18 or 4.9 branch. This retains proprietary GPU and camera stacks but ties the device to a vendor kernel fork that receives few updates. Mainline-focused projects such as postmarketOS instead target upstream kernels and open drivers, mostly on popular reference phones [1]. We are not aware of a public mainline bring-up for the SM-T295 or for Samsung's SDM429 LTE tablets.
+
+### 2.2 lk2nd
+
+`lk2nd` is an open-source second-stage bootloader derived from Little Kernel. It is loaded by the vendor bootloader as if it were a boot image, brings up a standard fastboot interface, and boots conventional Android boot images [2]. It supports a range of Qualcomm devices. Applying it here required accommodating S-Boot's overlay engine, signature trailer, and verified-boot structure (Section 4).
+
+### 2.3 Samsung S-Boot
+
+S-Boot hosts Samsung's Download Mode (the Odin protocol, also implemented by Heimdall), enforces image structure checks, and records a Knox warranty flag when non-Samsung software is loaded. Its on-screen failure messages, such as `SECURE CHECK FAIL : boot.img`, are the main feedback channel in early bring-up (Figure 5).
+
+---
+
+## 3. Design Constraints and Recovery Policy
+
+Because the tablet has no exposed serial header, early iterations are blind, and a bricked device would end the project. We therefore fix a recovery policy before any code runs. Let W be the set of partitions the project writes. The policy is:
+
+<div className="my-6 p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E]">
+  <code>aboot ∉ W, &nbsp; W ⊆ &#123;boot, recovery, vbmeta, userdata, system, vendor, product, cache&#125;</code> &nbsp;&nbsp;&nbsp;&nbsp;(1)
+</div>
+
+S-Boot lives in `aboot` (`p16`) and hosts Download Mode. Leaving it intact means a bad kernel or root filesystem can be undone by reflashing stock images from Download Mode. The ladder of recovery options is summarized in Table 1. The policy does not protect against every failure, such as eMMC damage, and Level 4 assumes the boot ROM remains reachable.
+
+<PaperTable
+  number="Table 1"
+  caption="Recovery ladder and intervention levels"
+  head={["Level", "Action", "Condition & Interface"]}
+  rows={[
+    ["Level 1", "Hardware forced reset", "Physical key combination (Power + Vol Down for 7 seconds)"],
+    ["Level 2", "Restore stock boot and vbmeta", "Flashed through Samsung Download Mode via Heimdall"],
+    ["Level 3", "Full stock firmware restore", "Complete multi-file firmware package restore using Odin or Heimdall"],
+    ["Level 4", "Qualcomm EDL (Emergency Download)", "EDL 9008 mode over USB using Qualcomm Sahara / Firehose protocol"],
+  ]}
+  source="Policy verified: factory aboot (p16) was never modified or flashed."
+/>
+
+The bootloader was unlocked before the work began (Download Mode reports `OEM LOCK: OFF (U)`, Figure 5d). The Knox warranty flag reads `0x1` in the menu's telemetry panel (Figure 3c), and we treat the warranty as void.
+
+---
+
+## 4. System Architecture
+
+### 4.1 Boot chain
+
+Figure 1 shows the pipeline. Qualcomm firmware and S-Boot are untouched. S-Boot loads the image in the boot slot (`p58`), which contains `lk2nd` followed by a Stage-2 Linux image. `lk2nd` draws the boot menu, reads the hardware keys (Vol Up on TLMM 91, Vol Down and Power on the PMIC PON block) and either continues into Linux or triggers the LineageOS path.
+
+<BootPipelineDiagram
+  figure="Figure 1"
+  caption="Boot pipeline. Red/tomato: never written. Yellow: lk2nd. Mint and cream: the two operating systems."
+/>
+
+### 4.2 The PMIC selector
+
+When S-Boot loads a boot image it checks whether the device tree already matches the board. If it does, it skips the vendor `dtbo` partition (`p26`); otherwise it overlays Samsung's vendor nodes onto the tree, which corrupts phandles on a mainline kernel. We extracted the selector values from the stock device tree and encoded them in the root node of `lk2nd`'s own tree:
+
+```dts
+/* lk2nd device-tree matching node for Samsung Galaxy Tab A 8.0 (SM-T295) */
+qcom,msm-id = <0x162 0>;            /* SDM429 */
+qcom,board-id = <0x08 0>;           /* MTP */
+qcom,pmic-id = <0x10016 0x25 0 0>;  /* PM8953 + PMI632 */
+```
+
+With an exact match, S-Boot sets `dtbo_needed = false` and no vendor overlay is applied.
+
+### 4.3 Boot image layout
+
+S-Boot also checks image structure. The accepted layout is shown in Figure 2. An early standalone image failed with `SECURE CHECK FAIL : boot.img` (Figure 5a) because the assembly script zeroed the padding between the signature header and the 512 KiB boundary. Binary comparison against the last working image showed an internal AVB hash descriptor at byte offset 356,352 (`0x57000`) inside that range. Preserving the whole 0–512 KiB prefix of the working `lk2nd` image and placing the Stage-2 kernel at 512 KiB removed the failure.
+
+<BootImageLayoutDiagram
+  figure="Figure 2"
+  caption="Layout of the 64 MiB boot-slot image. The internal descriptor at 0x57000 is the one an early build zeroed."
+/>
+
+### 4.4 Storage
+
+The eMMC (`QD63MB`, 29.1 GiB) carries 69 partitions from Samsung's PIT. Table 2 lists the roles. In the primary configuration (Method A) `/dev/mmcblk0p69` is formatted ext4 with label `arch_root` and holds the Arch Linux ARM64 root; the same UUID, `764013fc-a45a-4012-95b6-e916e02951df`, appears in the boot log of Figure 6b. Method B leaves stock userdata intact: the initramfs mounts `p69` and bind-mounts a subdirectory as the new root. Repurposed Android partitions provide 1,072 MiB of swap and 448 MiB of scratch space.
+
+<PaperTable
+  number="Table 2"
+  caption="Partition roles and reallocation on 29.1 GiB eMMC"
+  head={["Partition", "Stock Role", "Zucchini Linux Role", "Filesystem / Capacity"]}
+  rows={[
+    ["p1–15", "Qualcomm firmware", "Untouched", "Proprietary modem, tz, rpm blobs"],
+    ["p16", "aboot (S-Boot)", "Never written", "Samsung factory primary bootloader"],
+    ["p17", "vbmeta", "Patched", "AVB v1.0 null verification hash"],
+    ["p26", "dtbo", "Bypassed", "Skipped via PMIC selector match"],
+    ["p57", "recovery", "LineageOS boot image", "Bootable Android 14 kernel & ramdisk"],
+    ["p58", "boot", "lk2nd + Linux kernel", "64 MiB dual-stage boot image"],
+    ["p62", "system", "Linux data / staging", "Raw block staging partition"],
+    ["p63 / p65", "vendor / cache", "Linux Swap", "760 MiB + 312 MiB = 1,072 MiB swap"],
+    ["p64", "product", "Scratch space", "448 MiB scratch volume"],
+    ["p67", "modem", "Firmware", "Qualcomm modem runtime firmware"],
+    ["p69", "userdata", "Arch rootfs", "ext4 (arch_root, 24.2 GiB available)"],
+  ]}
+  source="Partition geometry extracted directly from Samsung PIT on SM-T295."
+/>
+
+### 4.5 Boot menu and the LineageOS handoff
+
+The menu (Figure 3) lists EDL, Linux, Reboot, Lineage, Shutdown, Recovery (TWRP) and Fastboot, with a hardware telemetry panel below. Jumping from `lk2nd` straight into the Android kernel left the display in a half-initialized state, because `lk2nd` has already programmed the MIPI DSI controller while the downstream kernel expects a cold start.
+
+The fix is a warm reset: the menu calls `reboot_device(RECOVERY_MODE)`, which writes the cookie `0x77665502` to shared IMEM (`0x0860065c`) and resets the PMIC. S-Boot reads the cookie and cold-boots the recovery slot (`p57`), which holds the LineageOS boot image.
+
+<PaperGallery
+  figure="Figure 3"
+  title="Evolution of the lk2nd Boot Menu on the Device"
+  caption="Dated photographs showing the progress from initial fastboot bring-up to the fully styled dual-boot menu with hardware telemetry."
+  columns={3}
+  images={[
+    {
+      src: "/images/zucchini-paper/img-000.png",
+      label: "(a) 18 OCT",
+      caption: "First lk2nd fastboot menu. Panel identity and bootloader fields populated.",
+      alt: "Photograph of tablet screen showing initial lk2nd fastboot menu",
+    },
+    {
+      src: "/images/zucchini-paper/img-001.png",
+      label: "(b) 25 OCT",
+      caption: "Menu with Linux and Lineage entries hooked to hardware volume keys.",
+      alt: "Photograph of tablet screen showing boot menu with Linux and LineageOS choices",
+    },
+    {
+      src: "/images/zucchini-paper/img-002.png",
+      label: "(c) 09 NOV",
+      caption: "Final dual-boot menu with telemetry panel (Knox 0x1, SELinux permissive).",
+      alt: "Photograph of final lk2nd menu with green telemetry panel and system specs",
+    },
+  ]}
+  note="The kernel and battery lines in (c) are static status indicators and do not reflect the running build."
+/>
+
+---
+
+## 5. Hardware Bring-Up
+
+### 5.1 Debugging without a serial port
+
+Early boots produced no display, no USB and no LED activity. Two mechanisms recovered information:
+
+1. **Early Kernel Console:** Directed to BLSP1 UART2 at `0x78B0000` via command line arguments:
+   ```bash
+   earlycon=msm_serial_dm,0x78B0000 console=ttyMSM0,115200n8
+   ```
+2. **Persistent Ramoops Buffer:** A 1 MiB ramoops region at `0x92100000` (passed with `lk2nd.pass-ramoops`) preserved the kernel dmesg log across warm reboots. After a crash or warm reset, the log was extracted directly from `/sys/fs/pstore/console-ramoops-0` upon returning to `lk2nd`.
+
+### 5.2 CPU topology
+
+The SDM429 exposes four Cortex-A53 cores at MPIDR affinities `0x100`–`0x103`, while the inherited platform tree describes eight. The kernel tried to start the missing cores through PSCI and received error code `-22`, and `cpuidle-psci` refused to register idle states while any listed CPU lacked them. The device tree deletes the absent cores and rebuilds the CPU map:
+
+```dts
+/* Rebuilt CPU topology for Snapdragon 429 4-core cluster */
+/delete-node/ &cpu0;
+/delete-node/ &cpu1;
+/delete-node/ &cpu2;
+/delete-node/ &cpu3;
+
+cpu-map {
+    cluster0 {
+        core0 { cpu = <&cpu4>; };
+        core1 { cpu = <&cpu5>; };
+        core2 { cpu = <&cpu6>; };
+        core3 { cpu = <&cpu7>; };
+    };
+};
+```
+
+### 5.3 Display
+
+**Panel identity.** The chassis stamping (`LD200709DA5`) suggested a Lead Display ILI9881C panel, but a driver for that controller produced DSI timeouts (`-110`). When `lk2nd` first booted on 18 October, `fastboot getvar all` returned:
+
+```text
+lk2nd:panel:qcom,mdss_dsi_jd9367_wxga_video_txd
+```
+
+also visible on the menu in Figure 3a. The panel is a Jadechem JD9367 in Tongxingda packaging, evidently a second-source part. A DRM panel driver with the correct DSI sequence (4-lane video mode, PM8953 rails L23 at 0.8 V and L6 at 1.8 V) was written, and a SimpleFB linear framebuffer provides the console.
+
+**Rotation.** The panel is an 800×1280 portrait array; the desktop runs at 1280×800. Upstream `xf86-video-fbdev` disables rotation on 24-bpp framebuffers because pixels are not 4-byte aligned (stride 2,400 bytes). A patched shadow blitter, `fbdevUpdateRotate32to24`, renders into a 32-bpp landscape buffer and copies damaged rectangles into the 24-bpp portrait framebuffer using:
+
+<div className="my-6 p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E]">
+  <code>x_p = y_l, &nbsp; y_p = 799 − x_l, &nbsp; addr = 2400 · y_p + 3 · x_p</code> &nbsp;&nbsp;&nbsp;&nbsp;(2)
+</div>
+
+with byte order B, G, R for this controller. The touch transformation matrix is:
+
+<div className="my-4 p-3 border border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold">
+  <code>Touch Matrix = [ 0, 1, 0, &nbsp; -1, 0, 1, &nbsp; 0, 0, 1 ]</code>
+</div>
+
+### 5.4 USB gadget and power-off
+
+**USB.** The gadget controller deferred forever on a vbus regulator (`-EPROBE_DEFER`). The inherited tree referenced a phantom handle (`vbus-supply = <0x6f>`) although VBUS detection on this board goes through the PMI632 via `extcon`. Removing the handle and binding to `&pmi632_uusb` let the ChipIdea controller probe and the CDC ACM (serial) and NCM (Ethernet) functions appear.
+
+**Power-off.** `poweroff` rebooted the tablet. S-Boot leaves the PMIC's `PS_HOLD_RST_CTL` register (SPMI `0x085a`) at `0x01` (warm reset), so dropping `PS_HOLD` restarts the SoC. Because the kernel lacked debugfs register writes, a root-only userspace daemon maps the SPMI write channel for APID 37 through `/dev/mem` at:
+
+<div className="my-6 p-4 border-2 border-[#0B3D2E] bg-[#FFFDF0] font-mono text-center text-xs sm:text-sm font-bold shadow-[3px_3px_0_#0B3D2E]">
+  <code>0x02400000 + 0x128000 = 0x02528000</code> &nbsp;&nbsp;&nbsp;&nbsp;(3)
+</div>
+
+and writes `0x84` (shutdown, enable) to `0x085a` before `PS_HOLD` is released. This produced the first full hardware power-off under Linux on this device. The boot log in Figure 6b also shows services that unbind a legacy `msm-restart` driver and bind a `PS_HOLD` driver for reboot, indicating the mechanism has evolved since this first fix.
+
+### 5.5 Other peripherals
+
+<PaperTable
+  number="Table 3"
+  caption="Peripheral hardware status and Linux driver binding summary"
+  head={["Block", "Hardware Component", "Linux Driver / Subsystem", "Bus / Hardware Notes"]}
+  rows={[
+    ["Touchscreen", "FocalTech FT8201", "edt_ft5x06", "I2C 0x38; IRQ GPIO 65"],
+    ["Wi-Fi / BT", "Qualcomm WCN3660B", "wcn36xx, btqcomsmd", "Dual-band 2.4/5 GHz; BT 4.2 LE"],
+    ["Audio Amplifiers", "2× Awinic AW87319", "awinic,aw87319", "I2C 0x58 and 0x59 stereo channels"],
+    ["Audio DSP", "Hexagon QDSP6 v5", "qcom_q6v5_pas", "PipeWire ALSA userland interface"],
+    ["Fuel Gauge", "Qualcomm PMI632", "pmi632_charger", "5,100 mAh lithium cell; JEITA limits"],
+    ["USB Gadget", "ChipIdea HS OTG", "ci_hdrc", "CDC ACM serial console + NCM Ethernet"],
+    ["Storage Controller", "Qualcomm SDHCI", "sdhci_msm", "eMMC 5.1, HS400 mode, 200 MHz bus"],
+  ]}
+  source="All drivers confirmed probing on Linux 7.1.3 near-mainline."
+/>
+
+A kernel-module version check (`-22`, *\"disagrees about version of symbol module_layout\"*) blocked the out-of-tree camera modules on the 7.2.8 branch; a small script that zeroes the `__versions` section of each module bypasses the CRC check without rebuilding the kernel. Camera bring-up remains incomplete (Section 9).
+
+---
+
+## 6. Development Record
+
+The photographs below were taken during development; dates come from the camera files. Figure 4 summarizes the sequence.
+
+<TimelineDiagram
+  figure="Figure 4"
+  caption="Timeline reconstructed from photographs, 15 October to 9 November 2026."
+/>
+
+Between 15 and 17 October S-Boot rejected, then accepted, a custom image (Figure 5a–c). On 18 October `lk2nd` reached fastboot (Figure 3a) and revealed the panel identity (Section 5.3). On 21 October the Arch Linux ARM XFCE desktop ran on kernel `7.1.3-g6406df31eeed-dirty` (Figure 7a). The 23 October Download Mode capture (Figure 5d) shows a vbmeta check failing during a flashing iteration.
+
+<PaperGallery
+  figure="Figure 5"
+  title="S-Boot's Responses During Early Bootloader Iterations"
+  caption="Visual diagnostic feedback from Samsung S-Boot during raw binary payload development."
+  columns={4}
+  images={[
+    {
+      src: "/images/zucchini-paper/img-003.png",
+      label: "(a) 15 OCT",
+      caption: "Secure check fails on boot.img (AVB offset 0x57000 zeroed).",
+      alt: "Red error text on tablet: SECURE CHECK FAIL : boot.img",
+    },
+    {
+      src: "/images/zucchini-paper/img-004.png",
+      label: "(b) 15 OCT",
+      caption: "Boot logo displayed with uninitialized framebuffer garbage.",
+      alt: "Samsung boot logo with raw horizontal pixel garbage lines",
+    },
+    {
+      src: "/images/zucchini-paper/img-005.png",
+      label: "(c) 17 OCT",
+      caption: "Custom image accepted. S-Boot displays unlocked orange state warning.",
+      alt: "Orange state warning: The phone is not running Samsung official software",
+    },
+    {
+      src: "/images/zucchini-paper/img-006.png",
+      label: "(d) 23 OCT",
+      caption: "Download Mode during flashing iteration; OEM LOCK: OFF (U).",
+      alt: "Samsung Download Mode screen showing technical device variables",
+    },
+  ]}
+  note="The warning in (c) means S-Boot successfully loaded non-Samsung software, which was the primary bootloader milestone."
+/>
+
+Two boot logs bracket the storage work (Figure 6). On 24 October the kernel enumerates the eMMC as `mmcblk1` with partitions `p1–p69`, while the init script waits for `/dev/mmcblk0p69` and aborts with `[FATAL] not found` after 10 s. The log also shows missing firmware for the wireless subsystem (`wcnss.mdt`, error -2), no sound cards, and deferred camera probes, so many peripherals were not yet working. By 25 October the root filesystem mounts as `mmcblk0p69` and systemd reaches its targets, with one failing `binfmt_misc` mount.
+
+<PaperGallery
+  figure="Figure 6"
+  title="Boot Logs and Desktop Fault Analysis from the Tablet Screen"
+  caption="Console dmesg logs captured via persistent ramoops and on-screen XFCE desktop debugging."
+  columns={3}
+  images={[
+    {
+      src: "/images/zucchini-paper/img-007.png",
+      label: "(a) 24 OCT",
+      caption: "Root device not found: init script waits for mmcblk0p69 while eMMC is mmcblk1.",
+      alt: "Terminal boot log showing fatal error waiting for root device",
+    },
+    {
+      src: "/images/zucchini-paper/img-008.png",
+      label: "(b) 25 OCT",
+      caption: "Root successfully mounted from mmcblk0p69; systemd reaches target multi-user.",
+      alt: "Green systemd OK boot messages scrolling on tablet screen",
+    },
+    {
+      src: "/images/zucchini-paper/img-009.png",
+      label: "(c) 26 OCT",
+      caption: "A panel crash in XFCE desktop session (dbus-launch exited with status 1).",
+      alt: "Photograph of tablet screen showing Failed to restart the panel error dialog",
+    },
+  ]}
+  note="Log in (b) records unbinding of legacy msm-restart and successful systemd target transitions."
+/>
+
+On 26 October the Android side showed three system notices (Figure 7c): the build is signed with public keys, SELinux is not enforcing, and a serial console is enabled. These affect the security posture discussed in Section 8. Figure 7 collects the userland screens.
+
+<PaperGallery
+  figure="Figure 7"
+  title="Userland Graphical Environments on the SM-T295 Tablet"
+  caption="Photographic evidence of Arch Linux ARM desktop and LineageOS 21 operational userlands."
+  columns={4}
+  images={[
+    {
+      src: "/images/zucchini-paper/img-010.png",
+      label: "(a) 21 OCT",
+      caption: "XFCE About Dialog: zucchini-linux, kernel 7.1.3, 1.8 GiB RAM, llvmpipe.",
+      alt: "XFCE About OS dialog on physical tablet screen",
+    },
+    {
+      src: "/images/zucchini-paper/img-011.png",
+      label: "(b) 24 OCT",
+      caption: "LineageOS 21 first-run setup wizard running Android 14.",
+      alt: "LineageOS setup wizard Welcome screen",
+    },
+    {
+      src: "/images/zucchini-paper/img-012.png",
+      label: "(c) 26 OCT",
+      caption: "Android notices: public keys, SELinux permissive, serial console enabled.",
+      alt: "Android system notification shade showing three development notices",
+    },
+    {
+      src: "/images/zucchini-paper/img-013.png",
+      label: "(d) 09 NOV",
+      caption: "LineageOS 21 lock screen at 04:51 confirming full touch input & telephony.",
+      alt: "LineageOS clock and lock screen on physical tablet",
+    },
+  ]}
+  note="(a) was straightened from an oblique photograph taken at the lab workbench."
+/>
+
+---
+
+## 7. Evaluation (Preliminary)
+
+### 7.1 Setup and caveats
+
+All measurements are from one SM-T295 unit, one run per condition, by the author. Boot time is from power-button press to an interactive UI. Memory is used RAM at idle with Wi-Fi connected and no applications open. Power is read from the PMI632 fuel gauge at a nominal 3.85 V, and runtime is projected as 19.1 Wh divided by the draw. These are indicative, not statistically established; Section 8.3 lists what is missing.
+
+### 7.2 Boot time
+
+<PaperTable
+  number="Table 4"
+  caption="Cold boot to interactive UI duration breakdown (seconds)"
+  head={["Operating Stack", "S-Boot Stage", "Loader / Kernel", "Userland Stage", "Total Cold Boot"]}
+  rows={[
+    ["Zucchini Linux (Arch + XFCE)", "1.8 s", "2.9 s (lk2nd 1.0s + decomp 1.9s)", "6.5 s", "11.2 s"],
+    ["LineageOS 21 (Android 14)", "1.8 s", "3.2 s", "18.4 s", "28.5 s*"],
+    ["Stock One UI (Android 11)", "1.8 s", "4.1 s", "28.7 s", "34.6 s"],
+  ]}
+  source="*The LineageOS stage values sum to 23.4 s, not 28.5 s; we report the end-to-end figure and flag the mismatch for re-measurement."
+/>
+
+Zucchini Linux reaches the desktop in **11.2 s**, which is **67.6% faster** than the stock firmware's 34.6 s.
+
+### 7.3 Memory
+
+<PaperTable
+  number="Table 5"
+  caption="Idle memory consumption across operating stacks (1.77 GiB / 1,812 MiB total available)"
+  head={["Operating Stack", "Used RAM", "Free RAM", "RAM Utilization"]}
+  rows={[
+    ["Stock One UI (Android 11)", "1,380 MiB", "432 MiB", "76.2%"],
+    ["LineageOS 21 (Android 14)", "740 MiB", "1,072 MiB", "40.8%"],
+    ["Zucchini Linux (Arch ARM64)", "199 MiB", "1,613 MiB", "11.0%"],
+  ]}
+  source="Idle memory measured with Wi-Fi connected and zero user apps running."
+/>
+
+Idle memory in use on Zucchini Linux is **85.6% lower** than on stock Android. The used-percentage column is recomputed from the used and total figures.
+
+<PaperFigure
+  figure="Figure 8A"
+  title="Cold Boot Duration to Interactive Desktop / Launcher"
+  source="Single SM-T295 unit, power-button press to interactive UI input."
+  note="Zucchini Linux boots 67.6% faster than stock Samsung firmware by avoiding ART runtime initialization and vendor services."
+  kind="bar"
+  max={40}
+  data={[
+    { label: "Zucchini Linux (Arch ARM64)", value: 11.2, display: "11.2 s (Fastest)", accent: "cyan" },
+    { label: "LineageOS 21 (Android 14)", value: 28.5, display: "28.5 s", accent: "amber" },
+    { label: "Stock One UI (Android 11)", value: 34.6, display: "34.6 s", accent: "ash" },
+  ]}
+/>
+
+<PaperFigure
+  figure="Figure 8B"
+  title="Idle RAM Consumption (1.77 GiB Total Pool)"
+  source="Read via /proc/meminfo at idle, Wi-Fi connected, no apps active."
+  note="199 MiB idle memory leaves 89.0% of physical RAM available for user processes, vs 23.8% on stock Samsung One UI."
+  kind="bar"
+  max={1812}
+  data={[
+    { label: "Zucchini Linux (Arch ARM64)", value: 199, display: "199 MiB (11.0%)", accent: "cyan" },
+    { label: "LineageOS 21 (Android 14)", value: 740, display: "740 MiB (40.8%)", accent: "amber" },
+    { label: "Stock One UI (Android 11)", value: 1380, display: "1,380 MiB (76.2%)", accent: "ash" },
+  ]}
+/>
+
+### 7.4 Power
+
+<PaperTable
+  number="Table 6"
+  caption="Power draw and projected battery runtime (19.1 Wh nominal pack)"
+  head={["Operating Mode", "Power Draw (mW)", "Projected Runtime (Hours)"]}
+  rows={[
+    ["Linux, screen off, Wi-Fi connected", "145 mW", "131.7 Hours (~5.5 days)"],
+    ["Linux desktop idle, 50% backlight", "620 mW", "30.8 Hours"],
+    ["Linux, full screen + 4-core CPU stress", "2,850 mW", "6.7 Hours"],
+    ["Stock Android idle, 50% backlight", "980 mW", "19.5 Hours"],
+  ]}
+  source="Power measured via Qualcomm PMI632 fuel gauge at nominal 3.85 V."
+/>
+
+### 7.5 Graphics
+
+The XFCE session in Figure 7a reports the renderer as `llvmpipe (LLVM 23.1.3)`, meaning software rasterization. Earlier project notes record `glmark2-es2` scores for the open Freedreno driver on the Adreno 504 at 1280×800 of **142 overall** against **156** for Qualcomm's Android driver (91.0%). The configuration under which those scores were collected is not captured in the evidence we hold, so we treat them as unverified until re-measured under the procedure of Section 7.1.
+
+---
+
+## 8. Discussion
+
+### 8.1 Security posture
+
+Verified boot constrains the design. S-Boot rejects images that lack AVB structures, so the boot slot carries an AVB v1.0 footer produced with a null algorithm, which satisfies the structural parser without vendor keys. This means the boot slot is not cryptographically protected.
+
+The Knox flag is tripped (Figure 3c), the Android build is signed with public test keys and runs with SELinux permissive, and a serial console is enabled (Figure 7c). The Android side is therefore a development configuration, not a hardened one. `lk2nd` runs as a normal-world bootloader loaded by S-Boot; we did not modify TrustZone.
+
+### 8.2 Upstreaming
+
+The device tree uses documented bindings for the touch (`focaltech,ft8201`), amplifier (`awinic,aw87319`) and wireless (`qcom,wcn3660b`) parts, and the panel is a standard DRM panel driver. The CPU-deletion pattern should be reusable for other SDM429/SDM439 four-core variants. We have not yet submitted patches.
+
+### 8.3 Threats to validity
+
+- **Single Device & Operator:** Measurements are taken on a single SM-T295 unit across single runs by a single operator; no variance or confidence intervals are reported.
+- **Boot Stage Mismatch:** Boot time stages for LineageOS do not sum to the reported total (Table 4, flagged explicitly).
+- **Unverified Graphics Benchmark:** The graphics acceleration result is unverified, and the photographed desktop session in Figure 7a uses software rendering (llvmpipe).
+- **Reproduction Guide Allocation:** The partition table lists the Linux-side roles; the final allocation of the Android-side partitions to LineageOS must be stated explicitly in the reproduction guide.
+- **Static Telemetry Panel:** The menu's telemetry panel contains static text (for example a kernel version and battery capacity) that lags the running build.
+
+---
+
+## 9. Conclusion and Future Work
+
+An abandoned, bootloader-restricted tablet can run a near-mainline Linux desktop and LineageOS 21 from one boot menu, with the factory bootloader left intact so recovery stays possible. The path required matching a PMIC selector, preserving a verified-boot descriptor, correcting a panel identity, fixing CPU topology, and programming a PMIC register from userspace.
+
+Next steps are:
+1. Hardware-accelerated graphics with documented and reproducible measurements (Freedreno on Adreno 504).
+2. The camera pipeline (Galaxycore GC8034 rear, GC2375H front sensors).
+3. A sensor bridge daemon for automated display orientation rotation.
+4. Validated 4G LTE cellular data and SMS through ModemManager.
+5. Repeated empirical measurements with variance metrics.
+6. Upstream device-tree patch submission to the mainline Linux kernel.
+
+---
+
+## References
+
+1. postmarketOS contributors, \"postmarketOS: real Linux distribution for phones,\" *postmarketos.org*.
+2. lk2nd contributors, \"lk2nd: a second-stage bootloader based on Little Kernel,\" *github.com/msm8916-mainline/lk2nd*.
+3. Qualcomm Technologies, Inc., \"Snapdragon 429 Mobile Platform Product Brief & Technical Specifications.\"
+4. Google LLC, \"Android Verified Boot 2.0 Specification,\" *source.android.com*.
+5. Samsung Electronics Co., Ltd., \"Open Source Release Center: SM-T295 Source Code,\" *opensource.samsung.com*.
+6. Mesa Project, \"Freedreno: open-source Gallium3D driver for Qualcomm Adreno GPUs,\" *docs.mesa3d.org*.
+7. Linux kernel documentation, \"Devicetree bindings for Qualcomm Technologies, Inc. SoCs,\" *kernel.org*.
+8. Awinic Technology Co., Ltd., \"AW87319 High Efficiency Smart K Audio Amplifier Data Sheet.\"
+9. FocalTech Systems Co., Ltd., \"FT8201 True Multi-Touch Capacitive Touch Panel Controller.\"
+10. Jadechem Inc., \"JD9367 WXGA Video Mode Display Driver Controller Specification.\"

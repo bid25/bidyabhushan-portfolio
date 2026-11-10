@@ -9,6 +9,8 @@ import path from "path";
 const postModules = {
   "augmentation-not-obsolescence": () =>
     import("@/content/blog/augmentation-not-obsolescence.mdx"),
+  "sm-t295-linux-bringup": () =>
+    import("@/content/blog/sm-t295-linux-bringup.mdx"),
 };
 
 type PostSlug = keyof typeof postModules;
@@ -23,6 +25,10 @@ interface PostMeta {
   pdf?: string;
   summary: string;
   topics: string[];
+  quote?: string;
+  series?: string;
+  badge?: string;
+  citation?: string;
 }
 
 interface MDXModule {
@@ -150,11 +156,11 @@ export default async function BlogPostPage({
         <div className="flex flex-wrap items-center justify-between gap-3 border-b-3 border-[#0B3D2E] pb-4 mb-8">
           <div className="font-pixel text-[10px] text-[#0B3D2E] flex items-center gap-2">
             <span className="inline-block w-2.5 h-2.5 bg-[#0B3D2E]"></span>
-            <span>MONOGRAPH SERIES // WORKING PAPER</span>
+            <span>{metadata.series || "MONOGRAPH SERIES // WORKING PAPER"}</span>
           </div>
 
           <div className="font-pixel text-[10px] bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] px-2.5 py-1 font-bold -rotate-2">
-            PREPRINT DRAFT // FOR REVIEW
+            {metadata.badge || "PREPRINT DRAFT // FOR REVIEW"}
           </div>
         </div>
 
@@ -176,7 +182,7 @@ export default async function BlogPostPage({
               ABSTRACT NOTE
             </span>
             <span className="font-hand text-xl text-[#0B3D2E]">
-              &ldquo;The durable human advantage is architectural intent, not implementation volume.&rdquo;
+              &ldquo;{metadata.quote || "The durable human advantage is architectural intent, not implementation volume."}&rdquo;
             </span>
           </div>
           <div className="flex flex-wrap gap-1.5 font-mono text-[11px]">
@@ -205,7 +211,11 @@ export default async function BlogPostPage({
               SUGGESTED CITATION:
             </div>
             <div className="font-mono text-xs sm:text-sm text-[#0B3D2E] leading-relaxed bg-[#FFFDF0] p-3 border-2 border-[#0B3D2E]">
-              Nanda, B. B. ({new Date(metadata.date).getFullYear()}). &ldquo;{metadata.title}: {metadata.subtitle}.&rdquo; <i>Antigravity Systems Monograph WP-2026-07</i>. New Delhi: Maharaja Agrasen Institute of Technology.
+              {metadata.citation || (
+                <>
+                  Nanda, B. B. ({new Date(metadata.date).getFullYear()}). &ldquo;{metadata.title}: {metadata.subtitle}.&rdquo; <i>Antigravity Systems Monograph WP-2026-07</i>. New Delhi: Maharaja Agrasen Institute of Technology.
+                </>
+              )}
             </div>
           </div>
 
