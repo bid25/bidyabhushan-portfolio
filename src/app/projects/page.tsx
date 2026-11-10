@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PixelBroccoli } from "@/components/PixelBroccoli";
 import { PixelZucchini } from "@/components/PixelZucchini";
+import { PixelDroneGcs } from "@/components/PixelDroneGcs";
+import { PixelHabanero } from "@/components/PixelHabanero";
+import { HoshcareLogo } from "@/components/HoshcareIcon";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -17,7 +20,7 @@ const projects = [
     slug: "broccoli",
     title: "BROCCOLI",
     badge: "LIVE ON PLAY STORE",
-    badgeClass: "bg-[#0B3D2E] text-[#FFD93B]",
+    badgeClass: "bg-[#0B3D2E] text-[#FFD93B] border-3 border-[#0B3D2E]",
     description:
       "Caloric & body composition tracker built with precision. Shipped to Google Play worldwide.",
     tags: ["REACT NATIVE", "REANIMATED", "SQLITE"],
@@ -36,24 +39,48 @@ const projects = [
     graphic: <PixelZucchini width={180} height={75} rotate={-6} />,
   },
   {
+    slug: "kestrel",
+    title: "KESTREL",
+    badge: "UNDER DEVELOPMENT",
+    badgeClass: "bg-[#FF5C8A] text-[#0B3D2E] border-3 border-[#0B3D2E]",
+    description:
+      "High-reliability UAV ground station in Rust & Tauri v2. 50 Hz lock-free telemetry, <220 MB RAM, and offline vector maps.",
+    tags: ["RUST", "TOKIO", "TAURI V2", "MAVLINK", "WEBRTC"],
+    cta: "INSPECT ARCHITECTURE →",
+    graphic: <PixelDroneGcs width={130} height={72} />,
+  },
+  {
+    slug: "habanero",
+    title: "HABANERO ENGINE",
+    badge: "UNDER DEVELOPMENT",
+    badgeClass: "bg-[#FF5C8A] text-[#0B3D2E] border-3 border-[#0B3D2E]",
+    description:
+      "100% offline compound AI work-engineer on Apple Silicon Metal with DAG scheduler & 8-stage G0-G7 hardware verification gauntlet.",
+    tags: ["C11 ATOMICS", "LOCAL LLM", "DAG", "PLAYWRIGHT"],
+    cta: "INSPECT SPEC & GAUNTLET →",
+    graphic: <PixelHabanero width={85} height={75} rotate={-4} />,
+  },
+  {
     slug: "hoshcare-client",
     title: "HOSHCARE CLIENT (FRONTEND)",
     badge: "ACTIVE // PRE-PILOT",
-    badgeClass: "bg-[#0B3D2E] text-[#FFD93B]",
+    badgeClass: "bg-[#0B3D2E] text-[#FFD93B] border-3 border-[#0B3D2E]",
     description:
       "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Merged browser prototype & design foundations.",
     tags: ["REACT NATIVE", "GEMINI API", "EXPO"],
     cta: "READ CASE STUDY →",
+    graphic: <HoshcareLogo width={160} height={39} />,
   },
   {
     slug: "hoshcare-api",
     title: "HOSHCARE API (BACKEND)",
-    badge: "SUPERSEDED JUL 2026",
+    badge: "MIGRATED // NESTJS",
     badgeClass: "bg-[#FF5C8A] text-[#0B3D2E] border-3 border-[#0B3D2E]",
     description:
       "Node/Express/Prisma backend: auth, uploads, extraction pipeline with retry and record locking. Replaced by a shared NestJS backend.",
     tags: ["NODE", "PRISMA", "POSTGRESQL", "NESTJS"],
     cta: "READ CASE STUDY →",
+    graphic: <HoshcareLogo width={160} height={39} />,
   },
 ];
 

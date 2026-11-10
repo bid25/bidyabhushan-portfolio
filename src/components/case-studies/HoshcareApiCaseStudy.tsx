@@ -174,7 +174,7 @@ export function HoshcareApiCaseStudy() {
                 padding: "3px 10px",
               }}
             >
-              SUPERSEDED JUL 2026
+              MIGRATED // NESTJS
             </span>
             <span style={{ border: "2px solid #0B3D2E", padding: "3px 10px", background: "#FFF8D6", color: "#0B3D2E" }}>
               Node.js
@@ -930,7 +930,7 @@ export function HoshcareApiCaseStudy() {
                 <tr>
                   <td className="border-2 border-[#0B3D2E] p-1.5 sm:p-2 px-2.5 font-bold">STATUS</td>
                   <td className="border-2 border-[#0B3D2E] p-1.5 sm:p-2 px-2.5 font-bold">
-                    SUPERSEDED JUL 2026
+                    MIGRATED // NESTJS
                   </td>
                 </tr>
               </tbody>

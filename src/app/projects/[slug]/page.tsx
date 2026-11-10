@@ -5,8 +5,10 @@ import { HoshcareClientCaseStudy } from "@/components/case-studies/HoshcareClien
 import { HoshcareApiCaseStudy } from "@/components/case-studies/HoshcareApiCaseStudy";
 import { BroccoliCaseStudy } from "@/components/case-studies/BroccoliCaseStudy";
 import { ZucchiniLinuxCaseStudy } from "@/components/case-studies/ZucchiniLinuxCaseStudy";
+import { DroneGcsCaseStudy } from "@/components/case-studies/DroneGcsCaseStudy";
+import { HabaneroCaseStudy } from "@/components/case-studies/HabaneroCaseStudy";
 
-// Project metadata catalog (4 active featured projects + backward-compatible aliases)
+// Project metadata catalog (6 active/featured projects + backward-compatible aliases)
 const projectCatalog: Record<
   string,
   {
@@ -24,6 +26,7 @@ const projectCatalog: Record<
     stack: ["React Native", "Reanimated 3", "SQLite", "Expo EAS"],
     description:
       "Precision caloric and body composition tracker. Built, shipped and live on Google Play worldwide.",
+    prev: { slug: "habanero", title: "HABANERO" },
     next: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
   },
   "zucchini-linux": {
@@ -33,6 +36,33 @@ const projectCatalog: Record<
     description:
       "Samsung Galaxy Tab A 8.0 reverse engineered for bare metal dual-booting of Arch Linux and LineageOS.",
     prev: { slug: "broccoli", title: "BROCCOLI" },
+    next: { slug: "kestrel", title: "KESTREL" },
+  },
+  kestrel: {
+    title: "Kestrel - UAV Flight Control",
+    status: "Under development, flight systems",
+    stack: ["Rust", "Tokio", "Tauri v2", "MAVLink v2", "Svelte 5", "WebRTC"],
+    description:
+      "Cross-platform Ground Control Station in Rust and Tauri v2. 50 Hz lock-free telemetry, 4-tier process topology, <220 MB RAM footprint, and offline vector maps.",
+    prev: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
+    next: { slug: "habanero", title: "HABANERO" },
+  },
+  "custom-drone-gcs": {
+    title: "Kestrel - UAV Flight Control",
+    status: "Under development, flight systems",
+    stack: ["Rust", "Tokio", "Tauri v2", "MAVLink v2", "Svelte 5", "WebRTC"],
+    description:
+      "Cross-platform Ground Control Station in Rust and Tauri v2. 50 Hz lock-free telemetry, 4-tier process topology, <220 MB RAM footprint, and offline vector maps.",
+    prev: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
+    next: { slug: "habanero", title: "HABANERO" },
+  },
+  habanero: {
+    title: "Habanero - Sovereign AI Engine",
+    status: "Under development, sovereign AI",
+    stack: ["TypeScript", "C11 Atomics", "Local LLMs", "Metal GPU", "Playwright"],
+    description:
+      "100% offline, airgapped compound AI work-engineer running locally on Apple Silicon Metal with topological DAG scheduler and G0-G7 hardware verification gauntlet.",
+    prev: { slug: "kestrel", title: "KESTREL" },
     next: { slug: "hoshcare-client", title: "HOSHCARE CLIENT" },
   },
   "hoshcare-client": {
@@ -41,12 +71,12 @@ const projectCatalog: Record<
     stack: ["React Native", "Expo SDK 56", "TypeScript", "React Navigation v7"],
     description:
       "React Native app for medical records: document upload, AI-assisted field extraction, review-before-save. Merged browser prototype & design foundations.",
-    prev: { slug: "zucchini-linux", title: "ZUCCHINI-LINUX" },
+    prev: { slug: "habanero", title: "HABANERO" },
     next: { slug: "hoshcare-api", title: "HOSHCARE API" },
   },
   "hoshcare-api": {
     title: "HOSHCARE API (BACKEND) - Extraction Pipeline",
-    status: "Superseded",
+    status: "Migrated to NestJS",
     stack: ["Node.js", "Express", "Prisma", "PostgreSQL", "NestJS"],
     description:
       "Node/Express/Prisma backend: auth, uploads, an extraction pipeline with retry and record locking. Superseded by NestJS in July 2026.",
@@ -136,6 +166,49 @@ export async function generateMetadata({
       "Vidyabhushan",
       "BSP Engineer Delhi",
     ],
+    kestrel: [
+      "Kestrel",
+      "Kestrel GCS",
+      "Drone Ground Control Station",
+      "Rust UAV Ground Station",
+      "MAVLink v2 Rust",
+      "Tauri v2 GCS",
+      "PX4 Ground Control",
+      "ArduPilot GCS",
+      "MediaMTX WebRTC",
+      "PMTiles Offline Map",
+      "Deck.gl Drone",
+      "Bidya Bhushan Nanda",
+      "Systems Engineer Delhi",
+    ],
+    "custom-drone-gcs": [
+      "Kestrel",
+      "Custom Drone GCS",
+      "Drone Ground Control Station",
+      "Rust UAV Ground Station",
+      "MAVLink v2 Rust",
+      "Tauri v2 GCS",
+      "PX4 Ground Control",
+      "ArduPilot GCS",
+      "MediaMTX WebRTC",
+      "PMTiles Offline Map",
+      "Deck.gl Drone",
+      "Bidya Bhushan Nanda",
+      "Systems Engineer Delhi",
+    ],
+    habanero: [
+      "Habanero AI",
+      "Habanero Sovereign Engine",
+      "Local Compound AI",
+      "Apple Silicon Metal LLM",
+      "C11 Atomics Lock-Free",
+      "Multi-Agent DAG Scheduler",
+      "Playwright Headless CI",
+      "G0-G7 Verification Gauntlet",
+      "Zero Cloud Latency AI",
+      "Bidya Bhushan Nanda",
+      "AI Systems Architect",
+    ],
   };
 
   return {
@@ -183,6 +256,10 @@ export default async function ProjectDetailPage({
     caseStudyComponent = <BroccoliCaseStudy />;
   } else if (slug === "zucchini-linux") {
     caseStudyComponent = <ZucchiniLinuxCaseStudy />;
+  } else if (slug === "kestrel" || slug === "custom-drone-gcs") {
+    caseStudyComponent = <DroneGcsCaseStudy />;
+  } else if (slug === "habanero") {
+    caseStudyComponent = <HabaneroCaseStudy />;
   } else if (slug === "hoshcare-api") {
     caseStudyComponent = <HoshcareApiCaseStudy />;
   } else {

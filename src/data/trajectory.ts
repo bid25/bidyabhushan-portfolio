@@ -154,6 +154,58 @@ export const careerGraph: CareerGraph = {
       href: "/projects/zucchini-linux",
     },
     {
+      id: "kestrel",
+      kind: "milestone",
+      status: "active",
+      label: "Kestrel GCS",
+      org: "Flight Software & Robotics",
+      detail: "Rust & Tauri v2 UAV Ground Station",
+      start: "2026-10",
+      end: null,
+      summary:
+        "Engineered Kestrel, a high-reliability, cross-platform UAV Ground Control Station in Rust, Tokio, and Tauri v2. Architected a 4-tier process topology decoupling 50 Hz MAVLink v2 telemetry from UI rendering, with <220 MB RAM usage, sub-20 ms state latency, WebRTC video streaming (<300 ms), and offline vector map rendering.",
+      branches: leaves(
+        [
+          "Rust & Tokio Systems Core",
+          "MAVLink v2 Protocol Engine",
+          "ArcSwap Lock-Free State Cache",
+          "50 Hz Binary Ring Buffer IPC",
+          "Tauri v2 Native Webview Shell",
+          "MediaMTX WebRTC Video Stream",
+          "PMTiles Offline Vector Map",
+          "PX4 & ArduPilot Dialect Normalization",
+        ],
+        "kestrel"
+      ),
+      href: "/projects/kestrel",
+    },
+    {
+      id: "habanero",
+      kind: "milestone",
+      status: "active",
+      label: "Habanero Engine",
+      org: "Local Compound AI Systems",
+      detail: "Sovereign Work-Engineer & Verification Gauntlet",
+      start: "2026-11",
+      end: null,
+      summary:
+        "Architected an airgapped compound AI work-engineer running 100% offline on Apple Silicon Metal. Engineered a topological DAG work-order scheduler, an 8-stage deterministic verification gauntlet (G0-G7) compiling bare-metal C11 with Apple Clang, and headless Playwright layout shift audits guaranteeing 0 CLS and 0 cloud network calls.",
+      branches: leaves(
+        [
+          "Local Compound AI Architecture",
+          "Topological DAG Scheduler",
+          "C11 Atomics Lock-Free Queue",
+          "G0-G7 Hardware Audit Gauntlet",
+          "Apple Silicon Metal GPU Gov.",
+          "Apple Clang Compiler Engine",
+          "Playwright Headless CLS Audit",
+          "Zero Cloud Telemetry Airgap",
+        ],
+        "habanero"
+      ),
+      href: "/projects/habanero",
+    },
+    {
       id: "next",
       kind: "future",
       status: "open",
