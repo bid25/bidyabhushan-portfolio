@@ -4,8 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { PixelBroccoli } from "@/components/PixelBroccoli";
 import { PixelZucchini } from "@/components/PixelZucchini";
+import { PixelHabanero } from "@/components/PixelHabanero";
 
-type TabId = "broccoli" | "zucchini-linux" | "hoshcare-client";
+type TabId = "broccoli" | "zucchini-linux" | "habanero";
 
 export function FeaturedProjectsInteractive() {
   const [activeTab, setActiveTab] = useState<TabId>("broccoli");
@@ -31,35 +32,145 @@ export function FeaturedProjectsInteractive() {
   // Zucchini Linux Interactive State: Command runner
   const [linuxCmd, setLinuxCmd] = useState<"neofetch" | "lsblk" | "dmesg" | "cmdline">("neofetch");
 
-  // Hoshcare Client Interactive State: Rx Extraction Simulator
-  const [selectedRx, setSelectedRx] = useState<"amox" | "metformin" | "atorvastatin">("amox");
-  const [extractionStatus, setExtractionStatus] = useState<"staging" | "locked">("staging");
+  // Habanero Interactive State: Topological DAG Wave Simulator
+  const [selectedHabaneroTask, setSelectedHabaneroTask] = useState<"ring-buffer" | "metal-governor" | "playwright-cls">("ring-buffer");
+  const [activeDagWave, setActiveDagWave] = useState<number>(0);
+  const [isWaveRunning, setIsWaveRunning] = useState<boolean>(false);
 
-  const rxPresets = {
-    amox: {
-      doc: "Dr. Vikram Sethi (Cardiology)",
-      date: "14-Oct-2026",
-      rx: "Amoxicillin 500mg TID · 7 days",
-      confidence: "99.1%",
-      diagnosis: "Post-op prophylactic course",
+  const habaneroPresets = {
+    "ring-buffer": {
+      name: "SPSC Lock-Free Ring Buffer",
+      target: "src/ring_buffer.c",
+      workOrder: "WO-SYS-041",
+      contractHash: "4e9f7a22b8c9d18f5043a29b47e29683",
+      invariants: "_Alignas(64) cache-line · memory_order_acquire/release",
+      ramUsage: "6.85",
+      waves: [
+        {
+          id: 0,
+          badge: "TOPOLOGY",
+          command: "habanero dag build --spec intent/spsc.yaml",
+          log: "Decomposed atomic memory nodes: head_idx, tail_idx, buffer[CAP]",
+          status: "Acyclic graph verified: 0 cycles detected across 4 dependency edges",
+        },
+        {
+          id: 1,
+          badge: "CONTRACT",
+          command: "habanero seal --manifest contract/ring_buffer.h",
+          log: "SHA-256 seal: 4e9f7a22b8c9d18f5043a29b47e29683",
+          status: "Interface immutable: worker subagents prohibited from header edits",
+        },
+        {
+          id: 2,
+          badge: "SYNTHESIS",
+          command: "habanero worker dispatch --role systems-c11",
+          log: "Synthesized src/ring_buffer.c with _Alignas(64) boundary padding",
+          status: "Atomic acquire-release memory orders paired on producer/consumer",
+        },
+        {
+          id: 3,
+          badge: "GAUNTLET",
+          command: "xcrun clang -std=c11 -Wall -Wextra -Werror",
+          log: "xcrun clang C11 -Werror: 0 warnings, 0 errors (100% C11 bare-metal)",
+          status: "✓ G0-G7 HARDWARE AUDIT PASSED · 0 CLOUD DEPENDENCY",
+        },
+      ],
     },
-    metformin: {
-      doc: "Dr. Ananya Roy (Endocrinology)",
-      date: "28-Sep-2026",
-      rx: "Metformin 850mg BID · 90 days",
-      confidence: "98.4%",
-      diagnosis: "Type 2 Glycemic regulation",
+    "metal-governor": {
+      name: "Dynamic Metal Memory Governor",
+      target: "core/governor.metal",
+      workOrder: "WO-MEM-019",
+      contractHash: "9b3c4f71a02d8471b3e8c95a02931d84",
+      invariants: "Active model RAM <= 7.5 GB on 16 GB Apple Silicon",
+      ramUsage: "7.42",
+      waves: [
+        {
+          id: 0,
+          badge: "TOPOLOGY",
+          command: "habanero dag build --spec intent/metal_governor.yaml",
+          log: "Probed Apple Silicon unified memory pool: 16.0 GB total",
+          status: "Configured swap protection ceiling: 7.50 GB hard boundary",
+        },
+        {
+          id: 1,
+          badge: "CONTRACT",
+          command: "habanero seal --manifest contract/governor.metal",
+          log: "SHA-256 seal: 9b3c4f71a02d8471b3e8c95a02931d84",
+          status: "Clamping rules frozen: zero runtime allocations beyond ceiling",
+        },
+        {
+          id: 2,
+          badge: "SYNTHESIS",
+          command: "habanero worker dispatch --role metal-kernel",
+          log: "Synthesized Metal shading kernel with -O3 optimization",
+          status: "Bound device memory pointers to MTLStorageModeShared zero-copy",
+        },
+        {
+          id: 3,
+          badge: "GAUNTLET",
+          command: "xcrun metal -O3 && habanero audit --telemetry memory",
+          log: "Dynamic unified RAM clamp enforced at 7.42 GB: PASS",
+          status: "✓ G0-G7 HARDWARE AUDIT PASSED · 0 OS SWAP THRASH",
+        },
+      ],
     },
-    atorvastatin: {
-      doc: "Dr. K. S. Verma (Internal Med)",
-      date: "03-Nov-2026",
-      rx: "Atorvastatin 20mg QHS · 30 days",
-      confidence: "97.8%",
-      diagnosis: "Lipid panel optimization",
+    "playwright-cls": {
+      name: "Playwright Headless UI & 0 CLS Audit",
+      target: "studio/HabaneroStudio.tsx",
+      workOrder: "WO-UI-088",
+      contractHash: "18e47b92ac039572c815d392817a02c9",
+      invariants: "CLS = 0.000 · 14:1 WCAG AAA mechanical contrast",
+      ramUsage: "6.10",
+      waves: [
+        {
+          id: 0,
+          badge: "TOPOLOGY",
+          command: "habanero dag build --spec intent/studio_layout.yaml",
+          log: "Parsed component tree: StudioSidebar, WaveTimeline, Telemetry",
+          status: "Calculated aspect reservations for dynamic canvas containers",
+        },
+        {
+          id: 1,
+          badge: "CONTRACT",
+          command: "habanero seal --manifest contract/studio_schema.ts",
+          log: "SHA-256 seal: 18e47b92ac039572c815d392817a02c9",
+          status: "UI tokens frozen: 0 runtime remote CDN asset loading",
+        },
+        {
+          id: 2,
+          badge: "SYNTHESIS",
+          command: "habanero worker dispatch --role frontend-ts",
+          log: "Synthesized studio/HabaneroStudio.tsx with strict TypeScript",
+          status: "Inlined critical font data directly; 0 CDN network calls",
+        },
+        {
+          id: 3,
+          badge: "GAUNTLET",
+          command: "playwright test --browser=chromium && habanero audit",
+          log: "Playwright headless viewport: Cumulative Layout Shift = 0.000",
+          status: "✓ G0-G7 HARDWARE AUDIT PASSED · 14:1 AAA CONTRAST",
+        },
+      ],
     },
   };
 
-  const activeRxData = rxPresets[selectedRx];
+  const activeHabaneroData = habaneroPresets[selectedHabaneroTask];
+  const currentDagWave = activeHabaneroData.waves[activeDagWave] || activeHabaneroData.waves[0];
+
+  const handleRunFullPipeline = () => {
+    setIsWaveRunning(true);
+    setActiveDagWave(0);
+    setTimeout(() => {
+      setActiveDagWave(1);
+      setTimeout(() => {
+        setActiveDagWave(2);
+        setTimeout(() => {
+          setActiveDagWave(3);
+          setIsWaveRunning(false);
+        }, 400);
+      }, 400);
+    }, 400);
+  };
 
   return (
     <section className="pt-20 pb-16 relative">
@@ -220,71 +331,71 @@ export function FeaturedProjectsInteractive() {
           </div>
         </div>
 
-        {/* Card 3: Hoshcare Client */}
+        {/* Card 3: Habanero Engine */}
         <div
           role="button"
           tabIndex={0}
-          onClick={() => setActiveTab("hoshcare-client")}
+          onClick={() => setActiveTab("habanero")}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-              setActiveTab("hoshcare-client");
+              setActiveTab("habanero");
             }
           }}
           className={`group block border-3 sm:border-4 border-[#0B3D2E] p-4 sm:p-5 cursor-pointer transition-all relative ${
-            activeTab === "hoshcare-client"
+            activeTab === "habanero"
               ? "bg-[#0B3D2E] text-[#FFFDF0] shadow-[5px_5px_0_#FF5C8A] sm:shadow-[8px_8px_0_#FF5C8A] -translate-y-0.5 sm:-translate-y-1"
               : "bg-[#FFF6C2] text-[#0B3D2E] shadow-[4px_4px_0_#0B3D2E] sm:shadow-[5px_5px_0_#0B3D2E] hover:bg-[#FFD93B] hover:text-[#0B3D2E]"
           }`}
         >
           <span
             className={`absolute -top-3.5 right-4 font-pixel text-[9px] px-2 py-1 border border-[#0B3D2E] ${
-              activeTab === "hoshcare-client"
+              activeTab === "habanero"
                 ? "bg-[#FFD93B] text-[#0B3D2E]"
                 : "bg-[#0B3D2E] text-[#FFD93B]"
             }`}
           >
-            03 · VAULT
+            03 · SOVEREIGN AI
           </span>
           <div
             className={`font-pixel text-[11px] inline-block px-2 py-0.5 mb-2 ${
-              activeTab === "hoshcare-client"
+              activeTab === "habanero"
                 ? "bg-[#FF5C8A] text-[#0B3D2E] font-bold"
                 : "bg-[#0B3D2E] text-[#FF5C8A] group-hover:bg-[#0B3D2E] group-hover:text-[#FF5C8A]"
             }`}
           >
-            CLIENT (FRONTEND)
+            COMPOUND AI ENGINE
           </div>
           <h3
             className={`my-1 font-pixel text-lg ${
-              activeTab === "hoshcare-client" ? "text-[#FFFDF0]" : "text-[#0B3D2E] group-hover:text-[#0B3D2E]"
+              activeTab === "habanero" ? "text-[#FFFDF0]" : "text-[#0B3D2E] group-hover:text-[#0B3D2E]"
             }`}
           >
-            3. HOSHCARE CLIENT
+            3. HABANERO ENGINE
           </h3>
           <p
             className={`m-0 mb-4 font-mono text-xs leading-relaxed ${
-              activeTab === "hoshcare-client" ? "text-[#FFFDF0]/90" : "text-[#0B3D2E] group-hover:text-[#0B3D2E]/90"
+              activeTab === "habanero" ? "text-[#FFFDF0]/90" : "text-[#0B3D2E] group-hover:text-[#0B3D2E]/90"
             }`}
           >
-            Medical records vault app: Gemini vision extraction, staging buffer and zero silent writes.
+            100% offline compound AI on Apple Silicon Metal. Topological DAG scheduler with 8-stage C11 hardware verification gauntlet.
           </p>
           <div
             className={`font-bold border-t-2 border-dashed pt-3 text-xs flex items-center justify-between ${
-              activeTab === "hoshcare-client"
+              activeTab === "habanero"
                 ? "border-[#FFD93B]/50 text-[#FFD93B]"
                 : "border-[#0B3D2E] text-[#0B3D2E] group-hover:border-[#0B3D2E]/50"
             }`}
           >
             <span className="font-pixel text-[10px]">
-              {activeTab === "hoshcare-client" ? "● ACTIVE PREVIEW" : "ACTIVATE OCR"}
+              {activeTab === "habanero" ? "● ACTIVE PREVIEW" : "ACTIVATE GAUNTLET"}
             </span>
             <Link
-              href="/projects/hoshcare-client"
+              href="/projects/habanero"
               onClick={(e) => e.stopPropagation()}
               style={{
-                backgroundColor: activeTab === "hoshcare-client" ? "#FFD93B" : "#0B3D2E",
-                color: activeTab === "hoshcare-client" ? "#0B3D2E" : "#FFD93B",
+                backgroundColor: activeTab === "habanero" ? "#FFD93B" : "#0B3D2E",
+                color: activeTab === "habanero" ? "#0B3D2E" : "#FFD93B",
               }}
               className="btn font-pixel text-xs px-3 py-1.5 border-2 border-[#0B3D2E] transition-all inline-flex items-center gap-1 shadow-[3px_3px_0_#0B3D2E] hover:scale-105"
             >
@@ -298,7 +409,7 @@ export function FeaturedProjectsInteractive() {
       <div className="relative">
         {/* 1. BROCCOLI STAGE */}
         {activeTab === "broccoli" && (
-          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#0B3D2E] text-[#FFD93B] shadow-[6px_6px_0_#FF5C8A] sm:shadow-[12px_12px_0_#FF5C8A] p-4 sm:p-7 md:p-9 relative">
+          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#0B3D2E] text-[#FFD93B] shadow-[6px_6px_0_#FF5C8A] sm:shadow-[12px_12px_0_#FF5C8A] p-4 sm:p-7 md:p-8 relative">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b-3 border-[#FFD93B]/30 pb-4 mb-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-pixel text-[10px] bg-[#FFD93B] text-[#0B3D2E] px-2 py-1">
@@ -451,7 +562,12 @@ export function FeaturedProjectsInteractive() {
 
               {/* Graphic Display */}
               <div className="flex flex-col items-center justify-center">
-                <PixelBroccoli width={180} height={180} />
+                <div className="bg-[#FFF8D6] border-4 border-[#0B3D2E] p-6 sm:p-8 shadow-[8px_8px_0_#0B3D2E]">
+                  <PixelBroccoli width={180} height={180} />
+                </div>
+                <div className="mt-3 font-pixel text-[10px] text-[#FFD93B] text-center">
+                  CALORIC INSTRUMENT · SHIPPED WORLDWIDE
+                </div>
               </div>
             </div>
           </div>
@@ -459,29 +575,31 @@ export function FeaturedProjectsInteractive() {
 
         {/* 2. ZUCCHINI-LINUX STAGE */}
         {activeTab === "zucchini-linux" && (
-          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#06231A] text-[#FFD93B] shadow-[6px_6px_0_#FFD93B] sm:shadow-[12px_12px_0_#FFD93B] p-4 sm:p-7 md:p-9 relative overflow-hidden">
-            {/* Window bar */}
-            <div className="flex justify-between items-center bg-[#FFD93B] text-[#06231A] font-pixel text-[10px] px-4 py-2 border-2 border-[#0B3D2E] mb-6">
-              <span>ZUCCHINI-LINUX // TTY1 CONSOLE · SM-T295 DUAL-BOOT</span>
-              <span>[ _ ][ X ]</span>
+          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#06231A] text-[#FFD93B] shadow-[6px_6px_0_#FFD93B] sm:shadow-[12px_12px_0_#FFD93B] p-4 sm:p-7 md:p-8 relative overflow-hidden">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b-3 border-[#FFD93B]/30 pb-4 mb-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-pixel text-[10px] bg-[#FFD93B] text-[#06231A] px-2 py-1 font-bold">
+                  PROJECT 02 OF 03
+                </span>
+                <span className="font-pixel text-[10px] bg-[#FF5C8A] text-[#0B3D2E] px-2 py-1 font-bold">
+                  ACTIVE // HARDWARE BRING-UP
+                </span>
+                <span className="font-mono text-xs text-[#FFD93B]/80 ml-2">
+                  // QUALCOMM SDM429 · ARM64 MAINLINE · LK2ND
+                </span>
+              </div>
+              <div className="font-pixel text-xs text-[#FF5C8A] hidden sm:block">
+                CLICK COMMAND TO EXECUTE ↓
+              </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 items-center relative z-10 font-mono">
               <div>
-                <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span className="font-pixel text-[10px] bg-[#FF5C8A] text-[#0B3D2E] px-2 py-1 font-bold">
-                    ACTIVE // HARDWARE BRING-UP
-                  </span>
-                  <span className="font-pixel text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-2 py-1 border border-[#FFD93B]">
-                    QUALCOMM SNAPDRAGON 429
-                  </span>
-                </div>
-
                 <h3 className="m-0 font-pixel text-3xl sm:text-4xl text-[#FFD93B] leading-tight">
                   ZUCCHINI-LINUX<span className="bl text-[#FF5C8A]">_</span>
                 </h3>
                 <p className="mt-3 mb-5 text-sm sm:text-base text-[#FFD93B]/90 leading-relaxed">
-                  Samsung Galaxy Tab A 8.0 (SM-T295) reverse engineered for bare-metal dual-booting of Arch Linux ARM and LineageOS 20 via Qualcomm EDL firehose exploitation.
+                  Samsung Galaxy Tab A 8.0 (SM-T295) reverse engineered for bare-metal dual-booting of Arch Linux ARM and LineageOS 21 via Qualcomm EDL firehose exploitation.
                 </p>
 
                 {/* Interactive Terminal Command Runner */}
@@ -592,166 +710,153 @@ export function FeaturedProjectsInteractive() {
           </div>
         )}
 
-        {/* 3. HOSHCARE CLIENT STAGE */}
-        {activeTab === "hoshcare-client" && (
-          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF8D6] text-[#0B3D2E] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] p-4 sm:p-7 md:p-9 relative">
+        {/* 3. HABANERO ENGINE STAGE */}
+        {activeTab === "habanero" && (
+          <div className="card border-3 sm:border-4 border-[#0B3D2E] bg-[#FFF8D6] text-[#0B3D2E] shadow-[6px_6px_0_#0B3D2E] sm:shadow-[12px_12px_0_#0B3D2E] p-4 sm:p-7 md:p-8 relative">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b-3 border-[#0B3D2E]/20 pb-4 mb-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-pixel text-[10px] bg-[#0B3D2E] text-[#FFD93B] px-2 py-1">
                   PROJECT 03 OF 03
                 </span>
-                <span className="font-pixel text-[10px] bg-[#FF5C8A] text-[#0B3D2E] px-2 py-1 font-bold">
-                  ACTIVE // PRE-PILOT
+                <span className="font-pixel text-[10px] bg-[#FF5C8A] text-[#0B3D2E] border border-[#0B3D2E] px-2 py-1 font-bold">
+                  SOVEREIGN // COMPOUND AI
                 </span>
                 <span className="font-mono text-xs text-[#0B3D2E]/80 ml-2">
-                  // REACT NATIVE · EXPO 56 · GEMINI OCR
+                  // C11 ATOMICS · APPLE SILICON METAL · LOCAL LLM
                 </span>
               </div>
               <div className="font-pixel text-xs text-[#0B3D2E] hidden sm:block">
-                INTERACTIVE OCR STAGING RUNNER ↓
+                CLICK GAUNTLET TO AUDIT ↓
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 items-center relative z-10 font-mono">
               <div>
                 <h3 className="m-0 font-pixel text-3xl sm:text-4xl text-[#0B3D2E] leading-tight">
-                  HOSHCARE CLIENT<span className="bl text-[#FF5C8A]">_</span>
+                  HABANERO ENGINE<span className="bl text-[#FF5C8A]">_</span>
                 </h3>
-                <p className="mt-3 mb-5 text-sm sm:text-base font-mono text-[#0B3D2E]/90 leading-relaxed">
-                  Medical records vault for iOS &amp; Android. Document scanning turns physical prescriptions into structured fields with strict human-in-the-loop verification before permanent write locking.
+                <p className="mt-3 mb-5 text-sm sm:text-base text-[#0B3D2E]/90 leading-relaxed">
+                  100% offline compound AI on Apple Silicon Metal. Topological DAG scheduler with 8-stage deterministic verification gauntlet (G0-G7) and zero telemetry.
                 </p>
 
-                {/* Interactive Rx Extraction Simulator */}
-                <div className="bg-[#FFF0B3] border-3 border-[#0B3D2E] p-4 sm:p-5 shadow-[6px_6px_0_#0B3D2E] mb-6">
+                {/* Interactive DAG Wave & Telemetry Console */}
+                <div className="bg-[#FFF0B3] border-3 border-[#0B3D2E] p-4 sm:p-5 shadow-[6px_6px_0_#0B3D2E] mb-6 font-mono">
+                  {/* Top Bar: Selector + Live Run Button */}
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3 border-b-2 border-dashed border-[#0B3D2E]/30 pb-2">
-                    <span className="font-pixel text-[11px] text-[#0B3D2E]">
-                      [ SIMULATE PRESCRIPTION EXTRACTION ]
-                    </span>
-                    <span className="font-pixel text-[9px] px-1.5 py-0.5 bg-[#FF5C8A] text-[#0B3D2E] font-bold">
-                      GEMINI VISION 1.5
-                    </span>
-                  </div>
-
-                  {/* Document Presets */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {[
-                      { key: "amox", label: "📄 Rx: Cardioprotective" },
-                      { key: "metformin", label: "📄 Rx: Endocrine" },
-                      { key: "atorvastatin", label: "📄 Rx: Lipid Panel" },
-                    ].map((item) => (
-                      <button
-                        key={item.key}
-                        type="button"
-                        onClick={() => {
-                          setSelectedRx(item.key as any);
-                          setExtractionStatus("staging");
-                        }}
-                        className={`font-mono text-xs px-2.5 py-1.5 border-2 border-[#0B3D2E] cursor-pointer transition-colors ${
-                          selectedRx === item.key
-                            ? "bg-[#0B3D2E] text-[#FFD93B] font-bold"
-                            : "bg-[#FFF8D6] text-[#0B3D2E] hover:bg-[#FFD93B]"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Extraction Review Card */}
-                  <div className="bg-[#FFF8D6] border-2 border-[#0B3D2E] p-3 text-xs font-mono space-y-2 mb-4">
-                    <div className="flex justify-between border-b border-[#0B3D2E]/20 pb-1">
-                      <span className="text-[#0B3D2E]/70">PRESCRIBING PHYSICIAN:</span>
-                      <strong className="text-[#0B3D2E]">{activeRxData.doc}</strong>
-                    </div>
-                    <div className="flex justify-between border-b border-[#0B3D2E]/20 pb-1">
-                      <span className="text-[#0B3D2E]/70">DATE OF RECORD:</span>
-                      <strong className="text-[#0B3D2E]">{activeRxData.date}</strong>
-                    </div>
-                    <div className="flex justify-between border-b border-[#0B3D2E]/20 pb-1">
-                      <span className="text-[#0B3D2E]/70">DIAGNOSIS NOTE:</span>
-                      <strong className="text-[#0B3D2E]">{activeRxData.diagnosis}</strong>
-                    </div>
-                    <div className="flex justify-between border-b border-[#0B3D2E]/20 pb-1">
-                      <span className="text-[#0B3D2E]/70">EXTRACTED DOSAGE:</span>
-                      <strong className="text-[#0B3D2E]">{activeRxData.rx}</strong>
-                    </div>
-                    <div className="flex justify-between items-center pt-1">
-                      <span className="text-[#0B3D2E]/70">CONFIDENCE SCORE:</span>
-                      <span className="font-pixel text-[10px] bg-[#2F9E5E] text-white px-1.5 py-0.5">
-                        {activeRxData.confidence} MATCH
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="font-pixel text-[10px] text-[#0B3D2E] mr-1">
+                        WORK-ORDER:
                       </span>
+                      {[
+                        { key: "ring-buffer", label: "C11 SPSC" },
+                        { key: "metal-governor", label: "METAL RAM" },
+                        { key: "playwright-cls", label: "0 CLS" },
+                      ].map((item) => (
+                        <button
+                          key={item.key}
+                          type="button"
+                          onClick={() => {
+                            setSelectedHabaneroTask(item.key as any);
+                            setActiveDagWave(0);
+                          }}
+                          className={`font-pixel text-[9px] px-2 py-0.5 border cursor-pointer transition-colors ${
+                            selectedHabaneroTask === item.key
+                              ? "bg-[#0B3D2E] text-[#FFD93B] border-[#0B3D2E] font-bold"
+                              : "bg-[#FFF8D6] text-[#0B3D2E] border-[#0B3D2E]/40 hover:bg-[#FFD93B]"
+                          }`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={handleRunFullPipeline}
+                      disabled={isWaveRunning}
+                      className="btn font-pixel text-[9px] px-2.5 py-1 bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] shadow-[2px_2px_0_#0B3D2E] font-bold hover:scale-105 cursor-pointer disabled:opacity-50"
+                    >
+                      {isWaveRunning ? "SIMULATING..." : "RUN DAG WAVE ▶"}
+                    </button>
                   </div>
 
-                  {/* Verification action */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-                    <div className="font-mono text-[11px] text-[#0B3D2E]">
-                      {extractionStatus === "staging" ? (
-                        <span className="text-[#FF5C8A] font-bold">
-                          ● STATUS: UNCOMMITTED STAGING BUFFER
+                  {/* 4-Wave Pipeline Stepper Buttons */}
+                  <div className="grid grid-cols-4 gap-1.5 mb-3">
+                    {activeHabaneroData.waves.map((wave, idx) => {
+                      const isActive = activeDagWave === idx;
+                      const isPast = activeDagWave > idx;
+                      return (
+                        <button
+                          key={wave.id}
+                          type="button"
+                          onClick={() => {
+                            if (!isWaveRunning) setActiveDagWave(idx);
+                          }}
+                          className={`px-1.5 py-1 text-center border-2 border-[#0B3D2E] font-mono text-[9px] sm:text-[10px] transition-all cursor-pointer ${
+                            isActive
+                              ? "bg-[#0B3D2E] text-[#FFD93B] font-bold shadow-[2px_2px_0_#FF5C8A]"
+                              : isPast
+                              ? "bg-[#A7F3D0] text-[#0B3D2E] font-semibold"
+                              : "bg-[#FFF8D6] text-[#0B3D2E]/80 hover:bg-[#FFD93B]"
+                          }`}
+                        >
+                          <div className="font-pixel text-[8px] opacity-75">WAVE 0{idx + 1}</div>
+                          <div className="font-bold truncate">{wave.badge}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Terminal Screen Output with Integrated Telemetry (min-h-[140px]) */}
+                  <div className="bg-[#041812] border-2 border-[#0B3D2E] p-3 text-xs leading-relaxed overflow-x-auto min-h-[140px] font-mono flex flex-col justify-between">
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] border-b border-[#0B3D2E] pb-1 text-[#FFD93B]">
+                        <span>$ {currentDagWave.command}</span>
+                        <span className="text-[#FF5C8A] text-[10px]">
+                          SHA: {activeHabaneroData.contractHash.slice(0, 10)}...
                         </span>
-                      ) : (
-                        <span className="text-[#2F9E5E] font-bold">
-                          ✓ STATUS: RECORD COMMITTED &amp; IMMUTABLE
-                        </span>
-                      )}
+                      </div>
+                      <div className="text-[#A7F3D0] text-[11px]">
+                        • {currentDagWave.log}
+                      </div>
+                      <div className="text-[#FFFDF0]/80 text-[11px]">
+                        • {currentDagWave.status}
+                      </div>
                     </div>
-                    {extractionStatus === "staging" ? (
-                      <button
-                        type="button"
-                        onClick={() => setExtractionStatus("locked")}
-                        className="btn font-pixel text-[10px] px-3 py-1.5 bg-[#FF5C8A] text-[#0B3D2E] border-2 border-[#0B3D2E] shadow-[3px_3px_0_#0B3D2E] font-bold"
-                      >
-                        CONFIRM &amp; LOCK RECORD 🔒
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setExtractionStatus("staging")}
-                        className="font-pixel text-[10px] px-2 py-1 bg-white border border-[#0B3D2E] text-[#0B3D2E]"
-                      >
-                        RESET STAGING
-                      </button>
-                    )}
+
+                    {/* Integrated Compact Telemetry Line */}
+                    <div className="pt-2 border-t border-[#0B3D2E]/80 flex flex-wrap items-center justify-between gap-2 text-[10px]">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#FFD93B] font-bold">RAM GOVERNOR:</span>
+                        <span className="text-[#A7F3D0]">{activeHabaneroData.ramUsage} GB / 16 GB (Clamp &le; 7.5G)</span>
+                        <span className="text-[#34D399]">0 SWAP</span>
+                      </div>
+                      <div className="text-[#34D399] font-bold">
+                        ✓ AIRGAP: 0 BYTES SENT (100% LOCAL)
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 {/* CTAs */}
                 <div className="flex flex-wrap gap-3.5">
                   <Link
-                    href="/projects/hoshcare-client"
+                    href="/projects/habanero"
                     style={{ backgroundColor: "#0B3D2E", color: "#FFD93B" }}
-                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A]"
+                    className="btn inline-flex items-center justify-center px-5 py-3 font-bold font-mono border-4 border-[#0B3D2E] shadow-[6px_6px_0_#FF5C8A] hover:scale-105"
                   >
                     READ CASE STUDY →
                   </Link>
                 </div>
               </div>
 
-              {/* Graphic Display: Architectural Pill Breakdown */}
-              <div className="flex flex-col gap-3 font-mono text-xs">
-                <div className="border-3 border-[#0B3D2E] bg-[#FFF0B3] p-4 shadow-[6px_6px_0_#0B3D2E] space-y-3">
-                  <div className="font-pixel text-[11px] text-[#0B3D2E] border-b-2 border-[#0B3D2E] pb-2">
-                    KEY CLIENT GUARANTEES
-                  </div>
-                  <div>
-                    <span className="font-bold text-[#0B3D2E]">1. Zero Client Secrets:</span>
-                    <p className="m-0 text-[#0B3D2E]/80 text-[11px]">
-                      Short-lived access tokens with automated refresh interceptors. No API credentials stored in client bundle.
-                    </p>
-                  </div>
-                  <div>
-                    <span className="font-bold text-[#0B3D2E]">2. Offline SQLite Queue:</span>
-                    <p className="m-0 text-[#0B3D2E]/80 text-[11px]">
-                      Prescriptions taken with zero cellular coverage are buffered locally with checksum verification before sync.
-                    </p>
-                  </div>
-                  <div>
-                    <span className="font-bold text-[#0B3D2E]">3. Review-Before-Save:</span>
-                    <p className="m-0 text-[#0B3D2E]/80 text-[11px]">
-                      Human-in-the-loop requirement eliminates hallucinated dosages from corrupting permanent EHR state.
-                    </p>
-                  </div>
+              {/* Graphic Display */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="bg-[#041812] border-4 border-[#FF5C8A] p-6 sm:p-8 shadow-[8px_8px_0_#FF5C8A]">
+                  <PixelHabanero width={170} height={145} rotate={-3} />
+                </div>
+                <div className="mt-3 font-pixel text-[10px] text-[#0B3D2E] text-center bg-[#FFD93B] px-3 py-1 border-2 border-[#0B3D2E] font-bold">
+                  100% AIRGAPPED · APPLE SILICON METAL
                 </div>
               </div>
             </div>
